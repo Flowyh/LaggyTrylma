@@ -1,5 +1,7 @@
 package com.laggytrylma.common;
 
+import java.awt.*;
+
 public class Piece {
     public Piece(Player owner, Square square){
         this.owner = owner;
@@ -8,5 +10,7 @@ public class Piece {
     private Player owner;
     private Square square;
 
-
+    public Color getColor(){
+        return owner.color;
+    }
 }

@@ -1,10 +1,19 @@
 package com.laggytrylma.common;
 
+import com.laggytrylma.utils.Logger;
+
+import java.awt.*;
+
 public class ClassicTrylmaBuilder implements AbstractGameBuilder{
     private Game game = new Game();
+    private Player[] players;
 
     // diagonal coordinate system (u,v) ranging from 0 to 16 (inclusive), refer to drawings
     Square[][] squares = new Square[17][17];
+
+    private float[] convertCoordinatesToXY(int u, int v){
+        return new float[] {v - u / 2f + 2, u};
+    }
 
     private boolean onBoard(int u, int v){
         boolean insideDownPointingTriangle = (u >= 4) && (v <= 12) && (u-v <= 4);
@@ -55,7 +64,8 @@ public class ClassicTrylmaBuilder implements AbstractGameBuilder{
         for(int u=0; u<17; u++){
             for(int v=0;v<17;v++){
                 if(onBoard(u, v)){
-                    squares[u][v] = new Square(0, 0);
+                    float[] xy = convertCoordinatesToXY(u, v);
+                    squares[u][v] = new Square(xy[0], xy[1]);
                     game.addSquare(squares[u][v]);
                 }
             }
@@ -73,18 +83,69 @@ public class ClassicTrylmaBuilder implements AbstractGameBuilder{
     }
 
     @Override
-    public void connectPlayers() {
-
+    public void connectPlayers(Player[] players) {
+        if(players == null || players.length != 6){
+            Logger.error("No proper players proviced, making smthing up");
+            this.players = new Player[6];
+            this.players[0] = new Player("1", new Color(0,0,0));
+            this.players[1] = new Player("2", new Color(100,0,0));
+            this.players[2] = new Player("3", new Color(0,100,0));
+            this.players[3] = new Player("4", new Color(0,0,100));
+            this.players[4] = new Player("5", new Color(0,100,100));
+            this.players[5] = new Player("6", new Color(100,100,0));
+        } else{
+            this.players = players;
+        }
     }
 
     @Override
     public void setSquareOwnership() {
-
+        for(int u=0; u<17; u++){
+            for(int v=0;v<17;v++){
+                Square square = squares[u][v];
+                if(square == null)
+                    continue;
+                if(u < 4){
+                    square.setSpawnAndTarget(players[0], players[3]);
+                }
+                else if(u - v < -4){
+                    square.setSpawnAndTarget(players[1], players[4]);
+                }
+                else if(v > 12){
+                    square.setSpawnAndTarget(players[2], players[5]);
+                }
+                else if(u > 12){
+                    square.setSpawnAndTarget(players[3], players[0]);
+                }
+                else if(u - v > 4){
+                    square.setSpawnAndTarget(players[4], players[1]);
+                }
+                else if(v < 4){
+                    square.setSpawnAndTarget(players[5], players[2]);
+                }
+                else{
+                    square.setSpawnAndTarget(null, null);
+                }
+            }
+        }
     }
 
     @Override
     public void addRules() {
 
+    }
+
+    @Override
+    public void createPieces() {
+        for(int u=0; u<17; u++) {
+            for (int v = 0; v < 17; v++) {
+                Square square = squares[u][v];
+                if(square == null)
+                    continue;
+                Piece piece = new Piece(square.getSpawn(), square);
+                square.setPiece(piece);
+            }
+        }
     }
 
     @Override

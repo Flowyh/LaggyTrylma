@@ -5,5 +5,5 @@ public class Connection {
         this.near = near;
         this.far = far;
     };
-    private Square near, far;
+    public Square near, far;
 }

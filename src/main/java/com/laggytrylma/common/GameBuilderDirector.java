@@ -8,8 +8,10 @@ public class GameBuilderDirector {
 
     public Game build(){
         builder.instantiateBoard();
-        builder.connectPlayers();
         builder.makeConnections();
+        builder.connectPlayers(null);
+        builder.setSquareOwnership();
+        builder.createPieces();
         builder.addRules();
         return builder.getResult();
     }

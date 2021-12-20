@@ -1,5 +1,12 @@
 package com.laggytrylma.common;
 
+import java.awt.*;
+
 public class Player {
-    String name;
+    public Player(String name, Color color){
+        this.name = name;
+        this.color = color;
+    }
+    public String name;
+    public Color color;
 }
