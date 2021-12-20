@@ -47,7 +47,9 @@ public class TestLogger extends AbstractSystemOutCatch {
     assertEquals("ERROR", Logger.getLoggerDepth());
     Logger.error("TEST");
     // Check info logging, should not be empty on depth = 1
-    assertEquals("[[31mERROR[0m] TEST" + System.lineSeparator(), outContent.toString());
+    LocalDateTime current = LocalDateTime.now();
+    String logTime = "[DATE: " + current.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + " TIME: " + current.format(DateTimeFormatter.ofPattern("HH:mm:ss")) + "] ";
+    assertEquals(logTime + "[[31mERROR[0m] TEST" + System.lineSeparator(), outContent.toString());
     // Reset outputStream
     outContent.reset();
     // Check other logging, should be empty on anything that requires depth > 1
@@ -63,7 +65,9 @@ public class TestLogger extends AbstractSystemOutCatch {
     assertEquals("INFO", Logger.getLoggerDepth());
     Logger.info("TEST");
     // Check info logging, should not be empty on depth = 2
-    assertEquals("[[32mINFO[0m] TEST" + System.lineSeparator(), outContent.toString());
+    LocalDateTime current = LocalDateTime.now();
+    String logTime = "[DATE: " + current.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + " TIME: " + current.format(DateTimeFormatter.ofPattern("HH:mm:ss")) + "] ";
+    assertEquals(logTime + "[[32mINFO[0m] TEST" + System.lineSeparator(), outContent.toString());
     // Reset outputStream
     outContent.reset();
     // Check other logging, should be empty on anything that requires depth > 2
@@ -78,7 +82,9 @@ public class TestLogger extends AbstractSystemOutCatch {
     assertEquals("DEBUG", Logger.getLoggerDepth());
     Logger.debug("TEST");
     // Check debug logging, should not be empty on depth = 3
-    assertEquals("[[34mDEBUG[0m] TEST" + System.lineSeparator(), outContent.toString());
+    LocalDateTime current = LocalDateTime.now();
+    String logTime = "[DATE: " + current.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + " TIME: " + current.format(DateTimeFormatter.ofPattern("HH:mm:ss")) + "] ";
+    assertEquals(logTime + "[[34mDEBUG[0m] TEST" + System.lineSeparator(), outContent.toString());
     // Reset outputStream
     outContent.reset();
     // Check other logging, should be empty on anything that requires depth > 3
@@ -95,7 +101,9 @@ public class TestLogger extends AbstractSystemOutCatch {
     assertEquals("TEST", Logger.getLoggerDepth());
     Logger.test("TEST");
     // Check test logging, should not be empty on depth = 4
-    assertEquals("[[33mTEST[0m] TEST" + System.lineSeparator(), outContent.toString());
+    LocalDateTime current = LocalDateTime.now();
+    String logTime = "[DATE: " + current.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + " TIME: " + current.format(DateTimeFormatter.ofPattern("HH:mm:ss")) + "] ";
+    assertEquals(logTime + "[[33mTEST[0m] TEST" + System.lineSeparator(), outContent.toString());
     // Reset depth to info
     Logger.setDepth(2);
   }

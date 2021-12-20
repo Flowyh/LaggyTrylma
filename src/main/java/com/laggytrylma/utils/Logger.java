@@ -11,6 +11,7 @@ public class Logger {
    * 2 - INFO
    * 3 - DEBUG
    */
+  private static boolean doLogTime = true;
   private static int depth = 2;
   public static final String ERROR_TAG = "[[31mERROR[0m] ";
   public static final String INFO_TAG = "[[32mINFO[0m] ";
@@ -28,27 +29,30 @@ public class Logger {
     };
   }
   public static void setDepth(int d) { depth = d; }
+  public static void setDoLogTime(boolean d) { doLogTime = d; }
+
   public static String logTime() {
     LocalDateTime current = LocalDateTime.now();
     DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
-    return "[DATE: " + current.format(dateFormat) + " TIME: " + current.format(timeFormat) + "] ";
+    if(doLogTime) return "[DATE: " + current.format(dateFormat) + " TIME: " + current.format(timeFormat) + "] ";
+    else return "";
   }
   public static void error(String msg) {
     if(depth < 1) return;
-    System.out.println(ERROR_TAG + msg);
+    System.out.println(logTime() + ERROR_TAG + msg);
   }
   public static void info(String msg) {
     if(depth < 2) return;
-    System.out.println(INFO_TAG + msg);
+    System.out.println(logTime() + INFO_TAG + msg);
   }
   public static void debug(String msg) {
     if (depth < 3) return;
-    System.out.println(DEBUG_TAG + msg);
+    System.out.println(logTime() + DEBUG_TAG + msg);
   }
   public static void test(String msg) {
     if (depth < 4) return;
-    System.out.println(TEST_TAG + msg);
+    System.out.println(logTime() + TEST_TAG + msg);
   }
 
 
