@@ -1,8 +1,8 @@
-package com.laggytrylma.backend.servers;
+package com.laggytrylma.backend.sockets;
 
 import com.laggytrylma.backend.ctx.ISocketHandler;
+import com.laggytrylma.backend.servers.DummyServer;
 import com.laggytrylma.utils.Logger;
-
 import java.io.IOException;
 import java.util.UUID;
 

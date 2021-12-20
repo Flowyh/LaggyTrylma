@@ -1,9 +1,7 @@
-package com.laggytrylma.backend.servers;
+package com.laggytrylma.backend.sockets;
 
 import com.laggytrylma.backend.ctx.AbstractSocket;
 import com.laggytrylma.backend.ctx.AbstractSocketBuilder;
-import com.laggytrylma.backend.sockets.DummySocket;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

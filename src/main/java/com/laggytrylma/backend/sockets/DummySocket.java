@@ -2,7 +2,6 @@ package com.laggytrylma.backend.sockets;
 
 import com.laggytrylma.backend.ctx.AbstractSocket;
 import com.laggytrylma.utils.Logger;
-
 import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
