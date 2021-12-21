@@ -19,6 +19,8 @@ public class BoardWidgetStateSelected extends BoardWidgetState {
 
     @Override
     void clickedOn(SquareDisplayWrapper wrapper) {
+        if(wrapper == null)
+            return;
         if(visitable.contains(wrapper.getSquare())){
             board.game.move(selected.getSquare().getPiece(), wrapper.getSquare());
         }
