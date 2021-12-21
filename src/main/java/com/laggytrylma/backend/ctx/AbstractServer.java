@@ -53,7 +53,7 @@ public abstract class AbstractServer {
     clients.remove(uuid);
   }
 
-  public static void messageAll(String msg) throws IOException {
+  public static void messageAll(Object msg) throws IOException {
     for (UUID key : clients.keySet()) {
       clients.get(key).writeOutput(msg);
     }
