@@ -1,14 +1,12 @@
 package com.laggytrylma.frontend;
 
-import com.laggytrylma.common.Game;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class DisplayMouseHandler extends MouseAdapter {
-    protected final GameDisplay display;
+    protected final BoardWidget display;
 
-    DisplayMouseHandler(GameDisplay display){
+    DisplayMouseHandler(BoardWidget display){
         super();
         this.display = display;
     }
@@ -16,12 +14,15 @@ public class DisplayMouseHandler extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
         for(SquareDisplayWrapper element : display.elements){
-            if(element.containts(e.getPoint())){
-                element.select();
+            if(element.contains(e.getPoint())){
+                display.clickedOn(element);
                 display.repaint();
-                break;
+                return;
             }
         }
+        display.clickedOn(null);
+        display.repaint();
+
     }
 
 }

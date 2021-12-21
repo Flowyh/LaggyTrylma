@@ -13,4 +13,12 @@ public class Piece {
     public Color getColor(){
         return owner.color;
     }
+
+    public Square getSquare(){
+        return square;
+    }
+
+    public void setSquare(Square newSquare){
+        this.square = newSquare;
+    }
 }

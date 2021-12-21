@@ -45,4 +45,12 @@ public class Square {
     public List<Connection> getConnections(){
         return connections;
     }
+
+    public Piece getPiece() {
+        return piece;
+    }
+
+    public boolean occpuied() {
+        return piece != null;
+    }
 }

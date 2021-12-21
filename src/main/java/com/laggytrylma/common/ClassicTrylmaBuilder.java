@@ -132,7 +132,8 @@ public class ClassicTrylmaBuilder implements AbstractGameBuilder{
 
     @Override
     public void addRules() {
-
+        game.addRule(new NearMovement());
+        game.addRule(new FarMovement());
     }
 
     @Override
@@ -142,7 +143,10 @@ public class ClassicTrylmaBuilder implements AbstractGameBuilder{
                 Square square = squares[u][v];
                 if(square == null)
                     continue;
-                Piece piece = new Piece(square.getSpawn(), square);
+                Player owner = square.getSpawn();
+                if(owner == null)
+                    continue;
+                Piece piece = new Piece(owner, square);
                 square.setPiece(piece);
             }
         }

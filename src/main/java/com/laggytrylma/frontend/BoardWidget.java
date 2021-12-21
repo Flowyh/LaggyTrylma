@@ -11,12 +11,13 @@ import java.awt.RenderingHints;
 import java.util.LinkedList;
 import java.util.List;
 
-public class GameDisplay extends JPanel {
+public class BoardWidget extends JPanel {
     Game game;
     DisplayMouseHandler mouseHandler = new DisplayMouseHandler(this);
     public List<SquareDisplayWrapper> elements = new LinkedList<>();
+    BoardWidgetState state = new IdleBoardWidgetState(this);
 
-    public GameDisplay(){
+    public BoardWidget(){
         addMouseListener(mouseHandler);
     }
 
@@ -26,11 +27,11 @@ public class GameDisplay extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         super.paintComponent(g);
+
         if(game == null)
             return;
-        for(SquareDisplayWrapper element : elements){
-            element.draw(g2d);
-        }
+
+        state.draw(g2d);
     }
 
     public void attachGame(Game game){
@@ -38,5 +39,13 @@ public class GameDisplay extends JPanel {
         for(Square square : game.getSquares()){
             elements.add(new SquareDisplayWrapper(square));
         }
+    }
+
+    public void setState(BoardWidgetState state) {
+        this.state = state;
+    }
+
+    public void clickedOn(SquareDisplayWrapper wrapper){
+        state.clickedOn(wrapper);
     }
 }

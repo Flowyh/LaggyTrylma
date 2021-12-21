@@ -4,7 +4,6 @@ package com.laggytrylma.frontend;
 import com.laggytrylma.common.ClassicTrylmaBuilder;
 import com.laggytrylma.common.Game;
 import com.laggytrylma.common.GameBuilderDirector;
-import jdk.jshell.spi.ExecutionControl;
 
 import javax.swing.*;
 
@@ -17,7 +16,7 @@ public class TestUI {
         GameBuilderDirector director = new GameBuilderDirector(new ClassicTrylmaBuilder());
         Game game = director.build();
 
-        GameDisplay display = new GameDisplay();
+        BoardWidget display = new BoardWidget();
         display.attachGame(game);
         f.add(display);
 
