@@ -1,4 +1,4 @@
-package com.laggytrylma.backend;
+package com.laggytrylma.frontend;
 
 import com.laggytrylma.utils.Logger;
 
