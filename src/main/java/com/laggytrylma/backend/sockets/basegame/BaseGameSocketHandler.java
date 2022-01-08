@@ -1,7 +1,6 @@
 package com.laggytrylma.backend.sockets.basegame;
 
 import com.laggytrylma.backend.ctx.ISocketHandler;
-import com.laggytrylma.backend.servers.basegame.BaseGameServer;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commandwrappers.BaseCommandWrapper;
 
