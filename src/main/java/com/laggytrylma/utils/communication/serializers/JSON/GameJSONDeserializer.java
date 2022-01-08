@@ -56,12 +56,6 @@ public class GameJSONDeserializer extends StdDeserializer<Game> {
             }
             square.setSpawnAndTarget(spawn, target);
 
-//            Piece piece = null;
-//            if(squareNode.has("piece")){
-//                int pieceId = squareNode.get("piece").asInt();
-//                piece = game.getPieceById(pieceId);
-//            }
-
             game.addSquare(square);
         }
 
