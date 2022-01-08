@@ -1,9 +1,5 @@
 package com.laggytrylma.common;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.laggytrylma.utils.Logger;
-
 import java.awt.*;
 
 public class Player {

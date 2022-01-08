@@ -13,7 +13,7 @@ import com.laggytrylma.utils.communication.commands.models.IModelCommands;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
 import com.laggytrylma.utils.communication.serializers.JSON.ObjectJSONSerializer;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.*;
@@ -29,12 +29,12 @@ public class BaseGameServer extends AbstractServer {
   public static UUID next = null;
   private final Random R = new Random();
   private static final ArrayList<Player> availablePlayerList = new ArrayList<>(Arrays.asList(
-//    new Player("1", new Color(249, 65, 68)),
-//    new Player("2", new Color(248, 150, 30)),
-//    new Player("3", new Color(249, 199, 79)),
-//    new Player("4", new Color(144, 190, 109)),
-//    new Player("5", new Color(67, 170, 139)),
-//    new Player("6", new Color(87, 117, 144))
+    new Player(1, "1", new Color(249, 65, 68)),
+    new Player(2, "2", new Color(248, 150, 30)),
+    new Player(3, "3", new Color(249, 199, 79)),
+    new Player(4, "4", new Color(144, 190, 109)),
+    new Player(5, "5", new Color(67, 170, 139)),
+    new Player(6, "6", new Color(87, 117, 144))
   ));
   private static final ArrayList<UUID> currentClients = new ArrayList<>();
 
@@ -61,7 +61,6 @@ public class BaseGameServer extends AbstractServer {
   }
 
   public static void removeClient(UUID uuid) {
-    availablePlayerList.add(((BaseGameSocket) clients.get(uuid)).getPlayer());
     currentClients.remove(uuid);
     clients.remove(uuid);
   }
@@ -86,7 +85,7 @@ public class BaseGameServer extends AbstractServer {
   public static void sendGame(UUID uuid) {
     AbstractSocket client = clients.get(uuid);
     Map<String, String> args = new HashMap<>();
-    args.put("game", game.toJSON());
+    args.put("game", ObjectJSONSerializer.serialize(game));
     sendCommandToPlayer(uuid, args, GameCommands.START);
   }
 
@@ -105,13 +104,13 @@ public class BaseGameServer extends AbstractServer {
   @Override
   protected void setup() {
     setSocketBuilder(socketBuilder);
-    setGameBuilderDirector(new BaseGameBuilderDirector(new ClassicTrylmaBuilder()));
+    setGameBuilderDirector(new GameBuilderDirector(new ClassicTrylmaBuilder()));
   }
 
   @Override
   public void listen() {
     while (running) {
-      if (clients.size() == 6) {
+      if (clients.size() == 6) { // Block connections above 6
         continue;
       }
       try {
@@ -119,17 +118,20 @@ public class BaseGameServer extends AbstractServer {
         if (clients.size() == 0 && game != null) game = null; // Clear game, idk why
         if (!clientSocket.isClosed()) {
           AbstractSocket socket = createNewSocket(clientSocket);
+          if(!(socket instanceof BaseGameSocket)) { // Wrong socket built
+            socket.close();
+            continue;
+          }
 
-          int randomPlayer = R.nextInt(availablePlayerList.size());
-          ((BaseGameSocket) socket).setPlayer(availablePlayerList.get(randomPlayer));
-          availablePlayerList.remove(randomPlayer);
-
+          if(clients.size() == 0 && game == null) shuffle(availablePlayerList); // No game was created, shuffle player q, so we pick random players for new clients
+          ((BaseGameSocket) socket).setPlayer(availablePlayerList.get(clients.size()));
           currentClients.add(socket.getUUID());
+
           if (clients.size() == 5 && game == null) { // If this is the 6th connection
+            // Shuffle player queue
+            shuffle(availablePlayerList);
             // Set all players
-            ((BaseGameBuilderDirector) gameBuilderDirector).setPlayers((Player[]) availablePlayerList.toArray());
-            // Shuffle players queue
-            shuffle(currentClients);
+            gameBuilderDirector.setPlayers((Player[]) availablePlayerList.toArray());
             next = currentClients.get(0);
             Logger.debug("Current move: " + moves + " Player: " + next);
             // Build and start a new game

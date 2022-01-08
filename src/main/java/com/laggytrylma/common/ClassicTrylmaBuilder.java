@@ -85,14 +85,14 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
     @Override
     public void connectPlayers(Player[] players) {
         if(players == null || players.length != 6){
-            Logger.error("No proper players proviced, making smthing up");
+            Logger.error("No proper players provided, making something up");
             this.players = new Player[6];
-            this.players[0] = new Player(0xDEADBEAF, "1", new Color(0,0,0));
-            this.players[1] = new Player(0xDEADBEAE, "2", new Color(100,0,0));
-            this.players[2] = new Player(0xDEADBEAD, "3", new Color(0,100,0));
-            this.players[3] = new Player(0xDEADBEAC, "4", new Color(0,0,100));
-            this.players[4] = new Player(0xDEADBEAB, "5", new Color(0,100,100));
-            this.players[5] = new Player(0xDEADBEAA, "6", new Color(100,100,0));
+            this.players[0] = new Player(getNewId(), "1", new Color(249, 65, 68));
+            this.players[1] = new Player(getNewId(), "2", new Color(248, 150, 30));
+            this.players[2] = new Player(getNewId(), "3", new Color(249, 199, 79));
+            this.players[3] = new Player(getNewId(), "4", new Color(144, 190, 109));
+            this.players[4] = new Player(getNewId(), "5", new Color(67, 170, 139));
+            this.players[5] = new Player(getNewId(), "6", new Color(87, 117, 144));
         } else{
             this.players = players;
         }

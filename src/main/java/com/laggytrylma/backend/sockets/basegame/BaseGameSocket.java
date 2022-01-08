@@ -3,6 +3,7 @@ package com.laggytrylma.backend.sockets.basegame;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.laggytrylma.backend.ctx.AbstractSocket;
+import com.laggytrylma.backend.servers.basegame.BaseGameServer;
 import com.laggytrylma.common.Player;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
@@ -56,8 +57,13 @@ public class BaseGameSocket extends AbstractSocket {
         res = this.socketHandler.processInput(reqJSON, this.getUUID());
         if(res.equals(-1)) break;
       } catch(SocketTimeoutException ignored) {
-      } catch(EOFException e) {
-        break;
+      } catch(EOFException e) { // Socket closing
+        BaseGameServer.removeClient(this.getUUID());
+        try {
+          BaseGameServer.messageAll("Client " + this.getUUID() + " has left.");
+        } catch (IOException ioException) {
+          Logger.error(ioException.getMessage());
+        }
       } catch (IOException | ClassNotFoundException e) {
         Logger.error(e.getMessage());
         break;

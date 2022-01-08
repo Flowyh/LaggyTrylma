@@ -1,16 +1,8 @@
 package com.laggytrylma.common;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.laggytrylma.utils.Logger;
-
 import java.util.LinkedList;
 import java.util.List;
 
-//@JsonSerialize(using = SquareSerializer.class)
-//@JsonDeserialize(using = SquareDeserializer.class)
 public class Square {
     public Square(int id, float x, float y){
         connections = new LinkedList<>();
@@ -62,16 +54,6 @@ public class Square {
 
     public boolean occpuied() {
         return piece != null;
-    }
-
-    public String toJSON() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.writeValueAsString(this);
-        } catch(JsonProcessingException e) {
-            Logger.error(e.getMessage());
-        }
-        return null;
     }
 
     public int getId() {
