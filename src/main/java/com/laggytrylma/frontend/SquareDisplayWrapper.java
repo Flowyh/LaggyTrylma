@@ -15,7 +15,7 @@ import java.util.List;
 public class SquareDisplayWrapper {
     final private Square square;
     final private Shape body;
-    private Color empty_color = new Color(127, 120, 60);
+    private Color empty_color = new Color(83, 83, 83);
 
     final float radius = 12;
     final float scale = 30;

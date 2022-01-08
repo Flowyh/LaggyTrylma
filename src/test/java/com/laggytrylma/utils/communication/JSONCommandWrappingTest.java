@@ -9,9 +9,9 @@ import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 
-public class WrappingTest {
+public class JSONCommandWrappingTest {
   @Test
-  public void testSerialize() throws JsonProcessingException {
+  public void testSerialize() {
     HashMap<String, String> test = new HashMap<>();
     test.put("HELLO", "TESt");
     test.put("HELLO2", "TESt");

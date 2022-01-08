@@ -11,6 +11,7 @@ import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.models.GameCommands;
 import com.laggytrylma.utils.communication.commands.models.IModelCommands;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
+import com.laggytrylma.utils.communication.serializers.JSON.ObjectJSONSerializer;
 
 import java.awt.*;
 import java.io.IOException;
@@ -28,12 +29,12 @@ public class BaseGameServer extends AbstractServer {
   public static UUID next = null;
   private final Random R = new Random();
   private static final ArrayList<Player> availablePlayerList = new ArrayList<>(Arrays.asList(
-    new Player("1", new Color(0,0,0)),
-    new Player("2", new Color(100,0,0)),
-    new Player("3", new Color(0,100,0)),
-    new Player("4", new Color(0,0,100)),
-    new Player("5", new Color(0,100,100)),
-    new Player("6", new Color(100,100,0))
+//    new Player("1", new Color(249, 65, 68)),
+//    new Player("2", new Color(248, 150, 30)),
+//    new Player("3", new Color(249, 199, 79)),
+//    new Player("4", new Color(144, 190, 109)),
+//    new Player("5", new Color(67, 170, 139)),
+//    new Player("6", new Color(87, 117, 144))
   ));
   private static final ArrayList<UUID> currentClients = new ArrayList<>();
 
@@ -76,8 +77,9 @@ public class BaseGameServer extends AbstractServer {
 
   public static void sendPlayerInfo(UUID uuid) {
     AbstractSocket client = clients.get(uuid);
+    if(!(client instanceof BaseGameSocket)) return;
     Map<String, String> args = new HashMap<>();
-    args.put("player", ((BaseGameSocket) client).getPlayer().toJSON());
+    args.put("player", ObjectJSONSerializer.serialize(((BaseGameSocket) client).getPlayer()));
     sendCommandToPlayer(uuid, args, GameCommands.INFO);
   }
 

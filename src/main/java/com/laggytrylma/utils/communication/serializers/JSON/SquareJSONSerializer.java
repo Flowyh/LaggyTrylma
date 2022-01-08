@@ -1,17 +1,14 @@
-package com.laggytrylma.utils.communication.common;
+package com.laggytrylma.utils.communication.serializers.JSON;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.laggytrylma.common.Square;
 
-import java.io.IOException;
-import java.util.Map;
+public class SquareJSONSerializer extends StdSerializer<Square> {
 
-public class SquareSerializer extends StdSerializer<Square> {
-
-    protected SquareSerializer() { this(null); }
-    protected SquareSerializer(Class<Square> t) {
+    protected SquareJSONSerializer() { this(null); }
+    protected SquareJSONSerializer(Class<Square> t) {
       super(t);
     }
 

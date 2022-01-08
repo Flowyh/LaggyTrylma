@@ -12,18 +12,13 @@ public class Player {
         this.color = color;
         this.id = id;
     }
+    public Player() {}
     private int id;
     public String name;
     public Color color;
 
-    public String toJSON() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.writeValueAsString(this);
-        } catch(JsonProcessingException e) {
-            Logger.error(e.getMessage());
-        }
-        return null;
+    public String toString() {
+        return "Player: " + this.name + " Color: " + this.color.toString() + " Id: " + this.id;
     }
 
     public int getId() {

@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.laggytrylma.utils.Logger;
-import com.laggytrylma.utils.communication.common.SquareDeserializer;
-import com.laggytrylma.utils.communication.common.SquareSerializer;
 
 import java.util.LinkedList;
 import java.util.List;

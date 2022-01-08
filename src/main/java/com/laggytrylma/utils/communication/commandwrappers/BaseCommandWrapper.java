@@ -1,7 +1,6 @@
 package com.laggytrylma.utils.communication.commandwrappers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.laggytrylma.utils.communication.commands.models.IModelCommands;
 
 import java.util.HashMap;
@@ -16,7 +15,6 @@ public class BaseCommandWrapper<T extends IModelCommands> {
     this.args = new HashMap<>(args);
   }
 
-  // Override this
   public BaseCommandWrapper(String serialized) { }
 
   public T getCommand() {
@@ -32,8 +30,6 @@ public class BaseCommandWrapper<T extends IModelCommands> {
     return "Model: " + command.model() + " Command: " + command.command() + " " + args.toString();
   }
 
-  public String serialize() throws JsonProcessingException {
-    ObjectMapper mapper = new ObjectMapper();
-    return mapper.writeValueAsString(this);
-  }
+  // Override this
+  public String serialize() { return null; }
 }

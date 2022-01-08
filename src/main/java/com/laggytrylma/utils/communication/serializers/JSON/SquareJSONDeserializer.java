@@ -1,12 +1,12 @@
-package com.laggytrylma.utils.communication.common;
+package com.laggytrylma.utils.communication.serializers.JSON;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.laggytrylma.common.Square;
 
-public class SquareDeserializer extends StdDeserializer<Square> {
+public class SquareJSONDeserializer extends StdDeserializer<Square> {
 
-  protected SquareDeserializer(Class<?> vc) {
+  protected SquareJSONDeserializer(Class<?> vc) {
     super(vc);
   }
 
