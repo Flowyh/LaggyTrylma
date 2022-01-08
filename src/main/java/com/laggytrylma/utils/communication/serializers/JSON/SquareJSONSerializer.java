@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.laggytrylma.common.Square;
 
+import java.io.IOException;
+
 public class SquareJSONSerializer extends StdSerializer<Square> {
 
     protected SquareJSONSerializer() { this(null); }
@@ -13,18 +15,18 @@ public class SquareJSONSerializer extends StdSerializer<Square> {
     }
 
     @Override
-    public void serialize(Square commandWrapper, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) {
-//      jsonGenerator.writeStartObject();
-//      jsonGenerator.writeStringField("x", Float.toString(commandWrapper.getX()));
-//      jsonGenerator.writeStringField("y", Float.toString(commandWrapper.getY()));
-//      jsonGenerator.writeStringField("spawn", commandWrapper.getSpawn().toJSON());
-//      jsonGenerator.writeObjectFieldStart("target", commandWrapper.getTarget().toJSON());
-//      Map<String, String> args = commandWrapper.getArgs();
-//      for(String key : args.keySet()) {
-//        jsonGenerator.writeStringField(key, args.get(key));
-//      }
-//      jsonGenerator.writeEndObject();
-//      jsonGenerator.writeEndObject();
-//    }
-  }
+    public void serialize(Square square, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+      jsonGenerator.writeStartObject();
+      jsonGenerator.writeNumberField("id", square.getId());
+      jsonGenerator.writeNumberField("x", square.getX());
+      jsonGenerator.writeNumberField("y", square.getY());
+      if(square.getPiece() != null)
+        jsonGenerator.writeNumberField("piece", square.getPiece().getId());
+      if(square.getSpawn() != null)
+        jsonGenerator.writeNumberField("spawn", square.getSpawn().getId());
+      if(square.getTarget() != null)
+        jsonGenerator.writeNumberField("target", square.getTarget().getId());
+      jsonGenerator.writeObjectField("connections", square.getConnections());
+      jsonGenerator.writeEndObject();
+    }
 }

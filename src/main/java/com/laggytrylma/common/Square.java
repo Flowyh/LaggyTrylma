@@ -52,7 +52,7 @@ public class Square {
         return piece;
     }
 
-    public boolean occpuied() {
+    public boolean occupied() {
         return piece != null;
     }
 

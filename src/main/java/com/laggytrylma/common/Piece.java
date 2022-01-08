@@ -13,7 +13,7 @@ public class Piece {
     private Square square;
 
     public Color getColor(){
-        return owner.color;
+        return owner.getColor();
     }
 
     public Square getSquare(){
@@ -26,5 +26,9 @@ public class Piece {
 
     public int getId() {
         return id;
+    }
+
+    public Player getOwner() {
+        return owner;
     }
 }

@@ -1,16 +1,12 @@
 package com.laggytrylma.frontend;
 
-import com.laggytrylma.common.Connection;
 import com.laggytrylma.common.Piece;
 import com.laggytrylma.common.Square;
 
 import java.awt.*;
 
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-import java.util.LinkedList;
-import java.util.List;
 
 public class SquareDisplayWrapper {
     final private Square square;
@@ -55,6 +51,6 @@ public class SquareDisplayWrapper {
     }
 
     public boolean occupied(){
-        return square.occpuied();
+        return square.occupied();
     }
 }
