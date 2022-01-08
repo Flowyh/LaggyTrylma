@@ -60,18 +60,8 @@ public class Square {
         return piece;
     }
 
-    public boolean occpuied() {
+    public boolean occupied() {
         return piece != null;
-    }
-
-    public String toJSON() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.writeValueAsString(this);
-        } catch(JsonProcessingException e) {
-            Logger.error(e.getMessage());
-        }
-        return null;
     }
 
     public int getId() {

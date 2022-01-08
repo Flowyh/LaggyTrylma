@@ -84,4 +84,24 @@ public class Game {
         }
         return null;
     }
+
+    public List<MovementRulesInterface> getRules() {
+        return movementRules;
+    }
+
+    public List<Piece> getPieces() {
+        return pieces;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void addPlayer(Player player) {
+        players.add(player);
+    }
+
+    public void addPiece(Piece piece) {
+        pieces.add(piece);
+    }
 }

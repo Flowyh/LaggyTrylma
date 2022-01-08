@@ -16,7 +16,16 @@ public class JSONObjectSerializationTest {
   public void testGameToJSON() {
     GameBuilderDirector director = new GameBuilderDirector(new ClassicTrylmaBuilder());
     Game trylma = director.build();
-    System.out.println(trylma.toJSON());
+    String serialized = ObjectJSONSerializer.serialize(trylma);
+    System.out.println(serialized);
+  }
+
+  @Test
+  public void testGameDeserialization() {
+    GameBuilderDirector director = new GameBuilderDirector(new ClassicTrylmaBuilder());
+    Game trylma = director.build();
+    String serialized = ObjectJSONSerializer.serialize(trylma);
+    Game trylma2 = (Game)ObjectJSONSerializer.deserialize(serialized, Game.class);
   }
 
   @Test
@@ -33,5 +42,10 @@ public class JSONObjectSerializationTest {
     String serialized = ObjectJSONSerializer.serialize(c);
     assertEquals("{\"argb\":\"fff94144\"}", serialized);
     assertEquals(c, ObjectJSONSerializer.deserialize(serialized, Color.class));
+  }
+
+  @Test
+  public void testSquareSerialization(){
+
   }
 }

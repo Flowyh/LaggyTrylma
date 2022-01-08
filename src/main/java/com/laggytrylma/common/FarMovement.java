@@ -11,7 +11,7 @@ public class FarMovement implements MovementRulesInterface{
         for(Connection connection : startingSquare.getConnections()){
             Square near = connection.near;
             Square far = connection.far;
-            if(near != null && near.occpuied() && far != null && !far.occpuied()){
+            if(near != null && near.occupied() && far != null && !far.occupied()){
                 visitable.add(far);
             }
         }

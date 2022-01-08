@@ -25,9 +25,6 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
 
     /**
      * If cooridnates point to a Square inside the star, return it, otherwise return NULL;
-     * @param u
-     * @param v
-     * @return
      */
     private Square getSquareConstrained(int u, int v){
         if(onBoard(u, v))
@@ -96,6 +93,9 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
         } else{
             this.players = players;
         }
+        for(Player player : this.players){
+            game.addPlayer(player);
+        }
     }
 
     @Override
@@ -148,6 +148,7 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
                     continue;
                 Piece piece = new Piece(getNewId(), owner, square);
                 square.setPiece(piece);
+                game.addPiece(piece);
             }
         }
     }

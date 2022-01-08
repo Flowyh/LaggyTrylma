@@ -24,7 +24,7 @@ public class BaseGameSocket extends AbstractSocket {
   }
   public Player getPlayer() { return player; }
   public String getPlayerString() {
-    return "Player: " + this.player.name + " Color: " + this.player.color.toString();
+    return "Player: " + this.player.getName() + " Color: " + this.player.getColor().toString();
   }
 
   @Override

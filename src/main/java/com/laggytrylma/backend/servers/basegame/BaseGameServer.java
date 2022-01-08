@@ -105,7 +105,7 @@ public class BaseGameServer extends AbstractServer {
   @Override
   protected void setup() {
     setSocketBuilder(socketBuilder);
-    setGameBuilderDirector(new BaseGameBuilderDirector(new ClassicTrylmaBuilder()));
+//    setGameBuilderDirector(new BaseGameBuilderDirector(new ClassicTrylmaBuilder()));
   }
 
   @Override
@@ -127,7 +127,7 @@ public class BaseGameServer extends AbstractServer {
           currentClients.add(socket.getUUID());
           if (clients.size() == 5 && game == null) { // If this is the 6th connection
             // Set all players
-            ((BaseGameBuilderDirector) gameBuilderDirector).setPlayers((Player[]) availablePlayerList.toArray());
+//            ((BaseGameBuilderDirector) gameBuilderDirector).setPlayers((Player[]) availablePlayerList.toArray());
             // Shuffle players queue
             shuffle(currentClients);
             next = currentClients.get(0);

@@ -14,8 +14,8 @@ public class Player {
     }
     public Player() {}
     private int id;
-    public String name;
-    public Color color;
+    private String name;
+    private Color color;
 
     public String toString() {
         return "Player: " + this.name + " Color: " + this.color.toString() + " Id: " + this.id;
@@ -24,4 +24,7 @@ public class Player {
     public int getId() {
         return id;
     }
+    public Color getColor(){return color;}
+    public String getName(){return name;}
+
 }
