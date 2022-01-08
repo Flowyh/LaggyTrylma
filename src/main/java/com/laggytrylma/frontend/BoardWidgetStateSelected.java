@@ -1,6 +1,8 @@
 package com.laggytrylma.frontend;
 
 import com.laggytrylma.common.Square;
+import com.laggytrylma.utils.communication.commands.models.GameCommands;
+import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
 
 import java.awt.*;
 import java.util.Set;
@@ -23,6 +25,7 @@ public class BoardWidgetStateSelected extends BoardWidgetState {
             return;
         if(visitable.contains(wrapper.getSquare())){
             board.game.move(selected.getSquare().getPiece(), wrapper.getSquare());
+//            JSONCommandWrapper<GameCommands> request = new JSONCommandWrapper<>(GameCommands.UPDATE, )
         }
         board.setState(new IdleBoardWidgetState(board));
     }

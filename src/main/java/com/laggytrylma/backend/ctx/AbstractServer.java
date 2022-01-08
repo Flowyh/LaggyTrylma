@@ -19,6 +19,7 @@ public abstract class AbstractServer {
   protected ServerSocket serverSocket;
   protected static Map<UUID, AbstractSocket> clients;
   private AbstractSocketBuilder socketBuilder;
+  protected boolean running = true;
 
   protected AbstractServer(int port, String name) {
     this.port = port;
@@ -60,7 +61,7 @@ public abstract class AbstractServer {
   }
 
   protected abstract void setup();
-  public abstract void listen() throws IOException;
+  public abstract void listen();
   protected void close() {
     try {
       this.serverSocket.close();
@@ -72,4 +73,5 @@ public abstract class AbstractServer {
 
   protected String whoAreYou() { return this.name; }
   protected boolean isClosed() { return this.serverSocket.isClosed(); }
+  protected void flipRunFlag() { running = !running; }
 }

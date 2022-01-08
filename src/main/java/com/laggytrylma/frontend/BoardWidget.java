@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class BoardWidget extends JPanel {
     DisplayMouseHandler mouseHandler = new DisplayMouseHandler(this);
     public List<SquareDisplayWrapper> elements = new LinkedList<>();
     BoardWidgetState state = new IdleBoardWidgetState(this);
+    protected ObjectOutputStream serverOutput;
 
     public BoardWidget(){
         addMouseListener(mouseHandler);
@@ -32,6 +34,10 @@ public class BoardWidget extends JPanel {
             return;
 
         state.draw(g2d);
+    }
+
+    public void attachServerOutput(ObjectOutputStream sO) {
+        this.serverOutput = sO;
     }
 
     public void attachGame(Game game){

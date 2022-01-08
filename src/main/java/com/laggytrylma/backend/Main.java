@@ -1,7 +1,7 @@
 package com.laggytrylma.backend;
 
 import com.laggytrylma.backend.ctx.AbstractServer;
-import com.laggytrylma.backend.servers.DummyServer;
+import com.laggytrylma.backend.servers.dummy.DummyServer;
 import com.laggytrylma.utils.Logger;
 
 import java.io.IOException;

@@ -1,6 +1,6 @@
 package com.laggytrylma.utils.communication.commands.models;
 
-public enum Lobby implements IModelCommands {
+public enum LobbyCommands implements IModelCommands {
   CREATE("create"),
   UPDATE("update"),
   INFO("info"),
@@ -9,7 +9,7 @@ public enum Lobby implements IModelCommands {
 
   private final String name;
 
-  Lobby(String str) { name = str; }
+  LobbyCommands(String str) { name = str; }
 
   @Override
   public String command() {
@@ -21,8 +21,8 @@ public enum Lobby implements IModelCommands {
     return "lobby";
   }
 
-  public static Lobby fromString(String text) {
-    for (Lobby l : Lobby.values()) {
+  public static LobbyCommands fromString(String text) {
+    for (LobbyCommands l : LobbyCommands.values()) {
       if (l.name.equalsIgnoreCase(text)) {
         return l;
       }

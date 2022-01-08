@@ -1,16 +1,15 @@
-package com.laggytrylma.backend.servers;
+package com.laggytrylma.backend.servers.dummy;
 
 import com.laggytrylma.backend.ctx.AbstractServer;
 import com.laggytrylma.backend.ctx.AbstractSocket;
 import com.laggytrylma.backend.ctx.AbstractSocketBuilder;
-import com.laggytrylma.backend.sockets.DummySocketBuilder;
+import com.laggytrylma.backend.sockets.dummy.DummySocketBuilder;
 import com.laggytrylma.utils.Logger;
 
 import java.io.IOException;
 import java.net.Socket;
 
 public class DummyServer extends AbstractServer {
-  private boolean running = true;
   private static AbstractServer instance;
   static {
     try {

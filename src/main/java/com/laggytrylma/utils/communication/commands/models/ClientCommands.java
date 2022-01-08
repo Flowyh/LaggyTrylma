@@ -1,6 +1,6 @@
 package com.laggytrylma.utils.communication.commands.models;
 
-public enum Client implements IModelCommands {
+public enum ClientCommands implements IModelCommands {
   CREATE("create"),
   UPDATE("update"),
   INFO("info"),
@@ -8,7 +8,7 @@ public enum Client implements IModelCommands {
 
   private final String name;
 
-  Client(String str) { name = str; }
+  ClientCommands(String str) { name = str; }
 
   @Override
   public String command() {
@@ -20,8 +20,8 @@ public enum Client implements IModelCommands {
     return "client";
   }
 
-  public static Client fromString(String text) {
-    for (Client c : Client.values()) {
+  public static ClientCommands fromString(String text) {
+    for (ClientCommands c : ClientCommands.values()) {
       if (c.name.equalsIgnoreCase(text)) {
         return c;
       }

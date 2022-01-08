@@ -1,4 +1,4 @@
-package com.laggytrylma.backend.sockets;
+package com.laggytrylma.backend.sockets.dummy;
 
 import com.laggytrylma.backend.ctx.AbstractSocket;
 import com.laggytrylma.backend.ctx.AbstractSocketBuilder;

@@ -1,6 +1,6 @@
 package com.laggytrylma.utils.communication.commands.models;
 
-public enum Game implements IModelCommands {
+public enum GameCommands implements IModelCommands {
   SETUP("setup"),
   START("start"),
   UPDATE("update"),
@@ -9,7 +9,7 @@ public enum Game implements IModelCommands {
 
   private final String name;
 
-  Game(String str) { name = str; }
+  GameCommands(String str) { name = str; }
 
   @Override
   public String command() {
@@ -21,8 +21,8 @@ public enum Game implements IModelCommands {
     return "game";
   }
 
-  public static Game fromString(String text) {
-    for (Game g : Game.values()) {
+  public static GameCommands fromString(String text) {
+    for (GameCommands g : GameCommands.values()) {
       if (g.name.equalsIgnoreCase(text)) {
         return g;
       }
