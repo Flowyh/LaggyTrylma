@@ -7,10 +7,12 @@ import com.laggytrylma.utils.Logger;
 import java.awt.*;
 
 public class Player {
-    public Player(String name, Color color){
+    public Player(int id, String name, Color color){
         this.name = name;
         this.color = color;
+        this.id = id;
     }
+    private int id;
     public String name;
     public Color color;
 
@@ -22,5 +24,9 @@ public class Player {
             Logger.error(e.getMessage());
         }
         return null;
+    }
+
+    public int getId() {
+        return id;
     }
 }

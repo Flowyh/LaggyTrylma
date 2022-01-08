@@ -51,6 +51,30 @@ public class Game {
         return true;
     }
 
+    public Square getSquareById(int id){
+        for(Square square : squares){
+            if(square.getId() == id)
+                return square;
+        }
+        return null;
+    }
+
+    public Piece getPieceById(int id){
+        for(Piece piece : pieces){
+            if(piece.getId() == id)
+                return piece;
+        }
+        return null;
+    }
+
+    public Player getPlayerById(int id){
+        for(Player player : players){
+            if(player.getId() == id)
+                return player;
+        }
+        return null;
+    }
+
     public String toJSON() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {

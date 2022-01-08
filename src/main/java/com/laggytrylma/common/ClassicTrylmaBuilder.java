@@ -4,7 +4,7 @@ import com.laggytrylma.utils.Logger;
 
 import java.awt.*;
 
-public class ClassicTrylmaBuilder implements AbstractGameBuilder{
+public class ClassicTrylmaBuilder extends AbstractGameBuilder{
     private Game game = new Game();
     private Player[] players;
 
@@ -65,7 +65,7 @@ public class ClassicTrylmaBuilder implements AbstractGameBuilder{
             for(int v=0;v<17;v++){
                 if(onBoard(u, v)){
                     float[] xy = convertCoordinatesToXY(u, v);
-                    squares[u][v] = new Square(xy[0], xy[1]);
+                    squares[u][v] = new Square(getNewId(), xy[0], xy[1]);
                     game.addSquare(squares[u][v]);
                 }
             }
@@ -87,12 +87,12 @@ public class ClassicTrylmaBuilder implements AbstractGameBuilder{
         if(players == null || players.length != 6){
             Logger.error("No proper players proviced, making smthing up");
             this.players = new Player[6];
-            this.players[0] = new Player("1", new Color(0,0,0));
-            this.players[1] = new Player("2", new Color(100,0,0));
-            this.players[2] = new Player("3", new Color(0,100,0));
-            this.players[3] = new Player("4", new Color(0,0,100));
-            this.players[4] = new Player("5", new Color(0,100,100));
-            this.players[5] = new Player("6", new Color(100,100,0));
+            this.players[0] = new Player(0xDEADBEAF, "1", new Color(0,0,0));
+            this.players[1] = new Player(0xDEADBEAE, "2", new Color(100,0,0));
+            this.players[2] = new Player(0xDEADBEAD, "3", new Color(0,100,0));
+            this.players[3] = new Player(0xDEADBEAC, "4", new Color(0,0,100));
+            this.players[4] = new Player(0xDEADBEAB, "5", new Color(0,100,100));
+            this.players[5] = new Player(0xDEADBEAA, "6", new Color(100,100,0));
         } else{
             this.players = players;
         }
@@ -146,7 +146,7 @@ public class ClassicTrylmaBuilder implements AbstractGameBuilder{
                 Player owner = square.getSpawn();
                 if(owner == null)
                     continue;
-                Piece piece = new Piece(owner, square);
+                Piece piece = new Piece(getNewId(), owner, square);
                 square.setPiece(piece);
             }
         }

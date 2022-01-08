@@ -14,15 +14,16 @@ import java.util.List;
 //@JsonSerialize(using = SquareSerializer.class)
 //@JsonDeserialize(using = SquareDeserializer.class)
 public class Square {
-    public Square(float x, float y){
+    public Square(int id, float x, float y){
         connections = new LinkedList<>();
         this.x = x;
         this.y = y;
-
+        this.id = id;
     }
     private List<Connection> connections;
     private Player spawn, target;
     private Piece piece;
+    private int id;
 
     // display position
     private float x, y;
@@ -73,5 +74,9 @@ public class Square {
             Logger.error(e.getMessage());
         }
         return null;
+    }
+
+    public int getId() {
+        return id;
     }
 }
