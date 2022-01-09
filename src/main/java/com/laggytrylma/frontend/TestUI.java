@@ -11,7 +11,6 @@ public class TestUI extends JFrame{
         super("Trylma");
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 
         Context ctx = new Context();
