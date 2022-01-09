@@ -1,4 +1,4 @@
-package com.laggytrylma.frontend;
+package com.laggytrylma.frontend.board;
 
 import com.laggytrylma.common.Connection;
 import com.laggytrylma.common.Piece;
@@ -15,7 +15,7 @@ import java.util.List;
 public class SquareDisplayWrapper {
     final private Square square;
     final private Shape body;
-    private Color empty_color = new Color(127, 120, 60);
+    final private Color empty_color = new Color(127, 120, 60);
 
     final float radius = 12;
     final float scale = 30;

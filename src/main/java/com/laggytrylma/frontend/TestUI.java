@@ -1,26 +1,40 @@
 package com.laggytrylma.frontend;
 
-
-import com.laggytrylma.common.ClassicTrylmaBuilder;
-import com.laggytrylma.common.Game;
-import com.laggytrylma.common.GameBuilderDirector;
+import com.laggytrylma.frontend.pages.PageManager;
+import com.laggytrylma.frontend.states.Context;
 
 import javax.swing.*;
 
-public class TestUI {
+public class TestUI extends JFrame{
+
+    public TestUI(){
+        super("Trylma");
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+
+        Context ctx = new Context();
+        PageManager pm = new PageManager(this, ctx);
+        ctx.setPageManager(pm);
+        pm.push("MENU");
+//        pm.push("GAME");
+//        pm.pop();
+//        pm.push("GAME");
+
+
+        setSize(400, 400);
+    }
+
     public static void main(String[] args) {
-        JFrame f=new JFrame();//creating instance of JFrame
+        // antialiasing of fonts
+        System.setProperty("awt.useSystemAAFontSettings","on");
+        System.setProperty("swing.aatext", "true");
 
-        f.setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
+        SwingUtilities.invokeLater(() -> {
+            TestUI ui = new TestUI();
+        });
 
-        GameBuilderDirector director = new GameBuilderDirector(new ClassicTrylmaBuilder());
-        Game game = director.build();
-
-        BoardWidget display = new BoardWidget();
-        display.attachGame(game);
-        f.add(display);
-
-        f.setSize(400,500);//400 width and 500 height
-        f.setVisible(true);//making the frame visible
+        while(true);
     }
 }
