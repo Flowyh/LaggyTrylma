@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.laggytrylma.backend.ctx.AbstractSocket;
 import com.laggytrylma.backend.servers.basegame.BaseGameServer;
-import com.laggytrylma.common.Player;
+import com.laggytrylma.backend.servers.basegame.BaseGameServerCommandsReciever;
+import com.laggytrylma.backend.servers.basegame.commands.MessageAll;
+import com.laggytrylma.common.models.Player;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
 
@@ -16,9 +18,15 @@ import java.util.UUID;
 
 public class BaseGameSocket extends AbstractSocket {
   protected Player player = null;
+  public BaseGameServer serv;
 
   public BaseGameSocket(Socket socket) {
     super(socket);
+  }
+
+  public void bindServer(BaseGameServer serv) {
+    this.serv = serv;
+    ((BaseGameSocketHandler) this.socketHandler).bindServer(serv);
   }
 
   public void setPlayer(Player p) {
@@ -67,23 +75,18 @@ public class BaseGameSocket extends AbstractSocket {
         if(res.equals(-1)) break;
       } catch(SocketTimeoutException ignored) {
       } catch(EOFException e) { // Socket closing
-        quit(this.getUUID());
         break;
       } catch (IOException | ClassNotFoundException e) {
         Logger.error(e.getMessage());
         break;
       }
-      if(reqJSON != null) Logger.info("Incoming command: " + reqJSON.toString());
+      if(reqJSON != null) Logger.debug("Incoming command: " + reqJSON.toString());
     }
-    quit(this.getUUID()); // just in case
+    quit(this.getUUID());
   }
 
   protected void quit(UUID client) {
-    BaseGameServer.removeClient(client);
-    try {
-      BaseGameServer.messageAll("Client " + client + " has left.");
-    } catch (IOException ioException) {
-      Logger.error(ioException.getMessage());
-    }
+    serv.removeClient(client);
+    serv.cmdExecutor.executeCommand(new MessageAll(new BaseGameServerCommandsReciever(serv.getClients(), "Client " + client + " has left.")));
   }
 }

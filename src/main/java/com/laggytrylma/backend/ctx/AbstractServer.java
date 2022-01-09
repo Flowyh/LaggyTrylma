@@ -50,14 +50,8 @@ public abstract class AbstractServer {
     return socketBuilder.setSocket(socket).setupSocket().build();
   }
 
-  public static void removeClient(UUID uuid) {
+  public void removeClient(UUID uuid) {
     clients.remove(uuid);
-  }
-
-  public static void messageAll(Object msg) throws IOException {
-    for (UUID key : clients.keySet()) {
-      clients.get(key).writeOutput(msg);
-    }
   }
 
   protected abstract void setup();

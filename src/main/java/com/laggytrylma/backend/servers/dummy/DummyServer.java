@@ -8,6 +8,7 @@ import com.laggytrylma.utils.Logger;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.UUID;
 
 public class DummyServer extends AbstractServer {
   private static AbstractServer instance;
@@ -38,6 +39,16 @@ public class DummyServer extends AbstractServer {
   }
 
   private final AbstractSocketBuilder socketBuilder = new DummySocketBuilder();
+
+  public static void rmvClient(UUID uuid) {
+    clients.remove(uuid);
+  }
+
+  public static void messageAll(Object msg) throws IOException {
+    for (UUID key : clients.keySet()) {
+      clients.get(key).writeOutput(msg);
+    }
+  }
 
   @Override
   protected void setup() {

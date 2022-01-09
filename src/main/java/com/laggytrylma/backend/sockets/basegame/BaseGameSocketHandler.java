@@ -1,6 +1,8 @@
 package com.laggytrylma.backend.sockets.basegame;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.laggytrylma.backend.servers.basegame.BaseGameServerCommandsReciever;
+import com.laggytrylma.backend.servers.basegame.commands.MessageAllExcluding;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.AbstractCommandHandler;
 import com.laggytrylma.backend.servers.basegame.BaseGameServer;
@@ -11,6 +13,11 @@ import java.util.Map;
 import java.util.UUID;
 
 public class BaseGameSocketHandler extends AbstractCommandHandler {
+  protected static BaseGameServer serv;
+
+  public void bindServer(BaseGameServer s) {
+    serv = s;
+  }
 
   @Override
   public Object handleCommand(IModelCommands cmd, Map<String, String> args, Object o, UUID client) {
@@ -31,26 +38,23 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
     static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client, Object o) {
       int result;
       switch (cmd.command()) {
-        case "leave" -> {
+        case "setup" -> {
           return -1;
         }
-        case "start" -> {
+        case "player_info" -> {
           return 1;
         }
-        case "setup" -> {
+        case "start" -> {
           return 3;
         }
         case "move" -> {
           return moveHandler(args.get("piece"), args.get("destination"), client, o);
         }
-        case "player_info" -> {
+        case "leave" -> {
           return 5;
         }
-        case "game_info" -> {
-          return 6;
-        }
         case "delete" -> {
-          return 7;
+          return 6;
         }
         default -> {
           return 0;
@@ -64,10 +68,11 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
       if(piece == null || dest == null) return 0;
       int pieceId = Integer.parseInt(piece.get("id").toString());
       int destId = Integer.parseInt(dest.get("id").toString());
-      if(BaseGameServer.movePiece(pieceId, destId)) {
-        BaseGameServer.moveEvent();
-        if(BaseGameServer.comparePieceOwnerAndClient(pieceId, client)) {
-          BaseGameServer.messageAllExcluding(o, client);
+      if(serv.gameState.movePiece(pieceId, destId)) {
+        serv.gameState.moveEvent();
+        if(serv.gameState.comparePieceOwnerAndClient(pieceId, client)) {
+          //BaseGameServer.messageAllExcluding(o, client);
+          serv.cmdExecutor.executeCommand(new MessageAllExcluding(new BaseGameServerCommandsReciever(serv.getClients(), o, client)));
         }
         return 1;
       }

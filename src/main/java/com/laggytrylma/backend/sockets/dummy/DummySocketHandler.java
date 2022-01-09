@@ -14,7 +14,7 @@ public class DummySocketHandler extends AbstractCommandHandler {
   @Override
   public Object processInput(Object o, UUID client) {
     if(o.equals("!quit")) {
-      DummyServer.removeClient(client);
+      DummyServer.rmvClient(client);
       try {
         DummyServer.messageAll("Client " + client + " has left.");
       } catch (IOException ioException) {
