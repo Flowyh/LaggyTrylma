@@ -1,4 +1,4 @@
-package com.laggytrylma.frontend;
+package com.laggytrylma.frontend.board;
 
 import com.laggytrylma.common.Square;
 import com.laggytrylma.utils.communication.commands.models.GameCommands;

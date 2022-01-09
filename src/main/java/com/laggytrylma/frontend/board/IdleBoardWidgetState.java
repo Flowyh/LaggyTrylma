@@ -1,4 +1,4 @@
-package com.laggytrylma.frontend;
+package com.laggytrylma.frontend.board;
 
 import java.awt.*;
 
