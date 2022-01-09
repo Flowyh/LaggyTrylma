@@ -1,10 +1,19 @@
 package com.laggytrylma.utils.communication;
 
 import com.laggytrylma.common.*;
+import com.laggytrylma.common.builders.ClassicTrylmaBuilder;
+import com.laggytrylma.common.builders.GameBuilderDirector;
+import com.laggytrylma.common.models.Connection;
+import com.laggytrylma.common.models.Player;
+import com.laggytrylma.common.models.Square;
+import com.laggytrylma.common.movementrules.FarMovement;
+import com.laggytrylma.common.movementrules.MovementRulesInterface;
 import com.laggytrylma.utils.communication.serializers.JSON.ObjectJSONSerializer;
 import org.junit.Test;
 
 import java.awt.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
 
@@ -88,7 +97,10 @@ public class JSONObjectSerializationTest {
   }
 
   @Test
-  public void testSquareSerialization(){
-
+  public void testRuleToJSON(){
+    MovementRulesInterface rule = new FarMovement();
+    String serialized = ObjectJSONSerializer.serialize(rule);
+    assertEquals("{\"name\":\"com.laggytrylma.common.movementrules.FarMovement\"}", serialized);
+    assertTrue(ObjectJSONSerializer.deserialize(serialized, MovementRulesInterface.class) instanceof MovementRulesInterface);
   }
 }

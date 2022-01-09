@@ -1,4 +1,4 @@
-package com.laggytrylma.common;
+package com.laggytrylma.common.models;
 
 public class Connection {
     public Connection(Square near, Square far){

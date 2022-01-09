@@ -2,13 +2,12 @@ package com.laggytrylma.frontend;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.laggytrylma.backend.sockets.basegame.BaseGameSocket;
 import com.laggytrylma.common.Game;
-import com.laggytrylma.common.Player;
+import com.laggytrylma.common.models.Player;
+import com.laggytrylma.frontend.board.BoardWidget;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.models.GameCommands;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
-import com.laggytrylma.utils.communication.serializers.JSON.ObjectJSONSerializer;
 
 import javax.swing.*;
 import java.io.IOException;

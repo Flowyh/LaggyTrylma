@@ -1,4 +1,7 @@
-package com.laggytrylma.common;
+package com.laggytrylma.common.builders;
+
+import com.laggytrylma.common.Game;
+import com.laggytrylma.common.models.Player;
 
 public class GameBuilderDirector {
     AbstractGameBuilder builder;

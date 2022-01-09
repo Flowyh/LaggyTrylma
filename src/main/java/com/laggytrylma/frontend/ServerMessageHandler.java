@@ -2,9 +2,9 @@ package com.laggytrylma.frontend;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.laggytrylma.common.Game;
-import com.laggytrylma.common.Piece;
-import com.laggytrylma.common.Player;
-import com.laggytrylma.common.Square;
+import com.laggytrylma.common.models.Piece;
+import com.laggytrylma.common.models.Player;
+import com.laggytrylma.common.models.Square;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.AbstractCommandHandler;
 import com.laggytrylma.utils.communication.commands.models.IModelCommands;

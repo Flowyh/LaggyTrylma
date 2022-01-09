@@ -1,5 +1,7 @@
 package com.laggytrylma.frontend.board;
 
+import com.laggytrylma.frontend.SquareDisplayWrapper;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 

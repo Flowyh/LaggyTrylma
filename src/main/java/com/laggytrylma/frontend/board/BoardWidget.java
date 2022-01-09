@@ -1,7 +1,8 @@
 package com.laggytrylma.frontend.board;
 
 import com.laggytrylma.common.Game;
-import com.laggytrylma.common.Square;
+import com.laggytrylma.common.models.Square;
+import com.laggytrylma.frontend.SquareDisplayWrapper;
 
 import javax.swing.*;
 

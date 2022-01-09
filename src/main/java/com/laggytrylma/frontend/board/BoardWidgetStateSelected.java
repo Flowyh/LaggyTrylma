@@ -1,8 +1,7 @@
 package com.laggytrylma.frontend.board;
 
-import com.laggytrylma.common.Square;
-import com.laggytrylma.utils.communication.commands.models.GameCommands;
-import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
+import com.laggytrylma.common.models.Square;
+import com.laggytrylma.frontend.SquareDisplayWrapper;
 
 import java.awt.*;
 import java.util.Set;

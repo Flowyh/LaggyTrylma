@@ -1,4 +1,4 @@
-package com.laggytrylma.common;
+package com.laggytrylma.common.models;
 
 import java.util.LinkedList;
 import java.util.List;

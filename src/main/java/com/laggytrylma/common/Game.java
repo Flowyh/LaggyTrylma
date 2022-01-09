@@ -1,5 +1,10 @@
 package com.laggytrylma.common;
 
+import com.laggytrylma.common.models.Piece;
+import com.laggytrylma.common.models.Player;
+import com.laggytrylma.common.models.Square;
+import com.laggytrylma.common.movementrules.MovementRulesInterface;
+
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;

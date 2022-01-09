@@ -1,5 +1,11 @@
-package com.laggytrylma.common;
+package com.laggytrylma.common.builders;
 
+import com.laggytrylma.common.Game;
+import com.laggytrylma.common.models.Piece;
+import com.laggytrylma.common.models.Player;
+import com.laggytrylma.common.models.Square;
+import com.laggytrylma.common.movementrules.FarMovement;
+import com.laggytrylma.common.movementrules.NearMovement;
 import com.laggytrylma.utils.Logger;
 
 import java.awt.*;

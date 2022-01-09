@@ -4,14 +4,15 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.laggytrylma.common.FarMovement;
-import com.laggytrylma.common.Game;
-import com.laggytrylma.common.MovementRulesInterface;
-import com.laggytrylma.common.NearMovement;
-import com.laggytrylma.utils.communication.commandwrappers.BaseCommandWrapper;
+import com.laggytrylma.common.movementrules.FarMovement;
+import com.laggytrylma.common.movementrules.MovementRulesInterface;
+import com.laggytrylma.common.movementrules.NearMovement;
 
 import java.io.IOException;
-import java.util.Iterator;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RulesJSONDeserializer extends StdDeserializer<MovementRulesInterface> {
 
@@ -24,13 +25,14 @@ public class RulesJSONDeserializer extends StdDeserializer<MovementRulesInterfac
     public MovementRulesInterface deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         JsonNode root = jsonParser.readValueAsTree();
         String name = root.get("name").asText();
-
-        // TODO: automate this
-        if(name.equals(NearMovement.class.getName()))
-            return new NearMovement();
-        if(name.equals(FarMovement.class.getName()))
-            return new FarMovement();
-
-        return null;
+        Pattern pattern = Pattern.compile("^com.laggytrylma.common.movementrules.[a-zA-Z]*$");
+        Matcher matcher = pattern.matcher(name);
+        if(!matcher.find()) return null;
+        try {
+            Class<?> ruleClass = Class.forName(name);
+            return (MovementRulesInterface) ruleClass.getDeclaredConstructor().newInstance();
+        } catch(ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            return null;
+        }
     }
 }

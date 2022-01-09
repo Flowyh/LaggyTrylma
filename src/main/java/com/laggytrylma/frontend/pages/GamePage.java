@@ -1,8 +1,8 @@
 package com.laggytrylma.frontend.pages;
 
-import com.laggytrylma.common.ClassicTrylmaBuilder;
+import com.laggytrylma.common.builders.ClassicTrylmaBuilder;
 import com.laggytrylma.common.Game;
-import com.laggytrylma.common.GameBuilderDirector;
+import com.laggytrylma.common.builders.GameBuilderDirector;
 import com.laggytrylma.frontend.board.BoardWidget;
 import com.laggytrylma.frontend.states.Context;
 import net.miginfocom.swing.MigLayout;

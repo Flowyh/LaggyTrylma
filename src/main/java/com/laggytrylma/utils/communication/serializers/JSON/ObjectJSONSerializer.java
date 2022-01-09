@@ -1,12 +1,15 @@
 package com.laggytrylma.utils.communication.serializers.JSON;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.laggytrylma.backend.servers.dummy.DummyServer;
 import com.laggytrylma.common.*;
+import com.laggytrylma.common.models.Connection;
+import com.laggytrylma.common.models.Piece;
+import com.laggytrylma.common.models.Square;
+import com.laggytrylma.common.movementrules.MovementRulesInterface;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.serializers.AbstractObjectSerializer;
 

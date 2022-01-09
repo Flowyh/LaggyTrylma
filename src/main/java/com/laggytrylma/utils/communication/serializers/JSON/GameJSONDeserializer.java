@@ -5,6 +5,10 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.laggytrylma.common.*;
+import com.laggytrylma.common.models.Piece;
+import com.laggytrylma.common.models.Player;
+import com.laggytrylma.common.models.Square;
+import com.laggytrylma.common.movementrules.MovementRulesInterface;
 
 
 import java.io.IOException;

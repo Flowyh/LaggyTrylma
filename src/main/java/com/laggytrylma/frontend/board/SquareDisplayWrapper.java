@@ -1,7 +1,7 @@
 package com.laggytrylma.frontend;
 
-import com.laggytrylma.common.Piece;
-import com.laggytrylma.common.Square;
+import com.laggytrylma.common.models.Piece;
+import com.laggytrylma.common.models.Square;
 
 import java.awt.*;
 
