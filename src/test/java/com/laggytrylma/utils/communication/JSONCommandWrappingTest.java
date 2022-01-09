@@ -17,7 +17,7 @@ public class JSONCommandWrappingTest {
     test.put("HELLO2", "TESt");
     test.put("HELLO3", "TESt");
     test.put("HELLO4", "TESt");
-    JSONCommandWrapper<GameCommands> cmdWrap = new JSONCommandWrapper<>(GameCommands.UPDATE, test);
+    JSONCommandWrapper<GameCommands> cmdWrap = new JSONCommandWrapper<>(GameCommands.MOVE, test);
     String serialized = cmdWrap.serialize();
     assertEquals(
             "{\"model\":\"game\",\"command\":\"update\",\"args\":{\"HELLO2\":\"TESt\",\"HELLO\":\"TESt\",\"HELLO3\":\"TESt\",\"HELLO4\":\"TESt\"}}",
@@ -32,7 +32,7 @@ public class JSONCommandWrappingTest {
     test.put("HELLO2", "TESt");
     test.put("HELLO3", "TESt");
     test.put("HELLO4", "TESt");
-    JSONCommandWrapper<GameCommands> cmdWrap = new JSONCommandWrapper<>(GameCommands.UPDATE, test);
+    JSONCommandWrapper<GameCommands> cmdWrap = new JSONCommandWrapper<>(GameCommands.MOVE, test);
     String serialized = cmdWrap.serialize();
     JSONCommandWrapper<?> deserialized = new JSONCommandWrapper<>(serialized);
     assertEquals(

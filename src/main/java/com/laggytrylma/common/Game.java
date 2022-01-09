@@ -1,9 +1,5 @@
 package com.laggytrylma.common;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.laggytrylma.utils.Logger;
-
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +14,15 @@ public class Game {
     List<Square> squares = new LinkedList<>();
     List<Player> players = new LinkedList<>();
     List<MovementRulesInterface> movementRules = new LinkedList<>();
+    int currentPlayer = -1;
+
+    public void setCurrentPlayer(int id) {
+        currentPlayer = id;
+    }
+
+    public int getCurrentPlayer() {
+        return currentPlayer;
+    }
 
     public void addSquare(Square square) {
         squares.add(square);
@@ -71,16 +76,6 @@ public class Game {
         for(Player player : players){
             if(player.getId() == id)
                 return player;
-        }
-        return null;
-    }
-
-    public String toJSON() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.writeValueAsString(this);
-        } catch(JsonProcessingException e) {
-            Logger.error(e.getMessage());
         }
         return null;
     }

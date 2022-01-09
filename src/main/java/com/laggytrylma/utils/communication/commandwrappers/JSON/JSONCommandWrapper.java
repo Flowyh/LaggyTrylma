@@ -18,12 +18,18 @@ public class JSONCommandWrapper<T extends IModelCommands> extends BaseCommandWra
     super(cmd, args);
   }
 
-  public JSONCommandWrapper(String serialized) throws JsonProcessingException {
+  public JSONCommandWrapper(String serialized) {
     super(serialized);
-    ObjectMapper mapper = new ObjectMapper();
-    JSONCommandWrapper<T> deserialized = mapper.readValue(serialized, new TypeReference<>() {});
-    this.setCommand(deserialized.getCommand());
-    this.setArgs(deserialized.getArgs());
+    try {
+      ObjectMapper mapper = new ObjectMapper();
+      JSONCommandWrapper<T> deserialized = mapper.readValue(serialized, new TypeReference<>() {});
+      this.setCommand(deserialized.getCommand());
+      this.setArgs(deserialized.getArgs());
+    } catch(JsonProcessingException e) {
+      Logger.error(e.getMessage());
+      this.setCommand(null);
+      this.setArgs(null);
+    }
   }
 
   @Override

@@ -16,7 +16,6 @@ public class SquareJSONDeserializer extends StdDeserializer<Square> {
   @Override
   public Square deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
     JsonNode root = jsonParser.readValueAsTree();
-
-return null;
+    return null;
   }
 }

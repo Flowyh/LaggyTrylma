@@ -1,11 +1,11 @@
 package com.laggytrylma.backend.ctx;
 
 import com.laggytrylma.helpers.AbstractSystemOutCatch;
+import com.laggytrylma.utils.communication.commands.AbstractCommandHandler;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.UUID;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -17,7 +17,7 @@ public class TestAbstractSocket extends AbstractSystemOutCatch {
     Socket mockSocket = mock(Socket.class);
     // Spy class, so we can actually call constructor of Abstract class
     AbstractSocket testSocket = spy(createSocket(mockSocket));
-    ISocketHandler socketHandler = mock(ISocketHandler.class);
+    AbstractCommandHandler socketHandler = mock(AbstractCommandHandler.class);
     testSocket.setSocketHandler(socketHandler);
 
     doNothing().when(testSocket).setup();
@@ -38,7 +38,7 @@ public class TestAbstractSocket extends AbstractSystemOutCatch {
     Socket mockSocket = mock(Socket.class);
     // Spy class, so we can actually call constructor of Abstract class
     AbstractSocket testSocket = spy(createSocket(mockSocket));
-    ISocketHandler socketHandler = mock(ISocketHandler.class);
+    AbstractCommandHandler socketHandler = mock(AbstractCommandHandler.class);
     testSocket.setSocketHandler(socketHandler);
 
     doThrow(IOException.class).when(testSocket).close();

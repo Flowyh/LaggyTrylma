@@ -1,6 +1,7 @@
 package com.laggytrylma.backend.ctx;
 
 import com.laggytrylma.utils.Logger;
+import com.laggytrylma.utils.communication.commands.AbstractCommandHandler;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,7 +14,7 @@ public abstract class AbstractSocket implements Runnable {
   private ObjectInputStream input;
   private ObjectOutputStream output;
   private Socket socket;
-  protected ISocketHandler socketHandler;
+  public AbstractCommandHandler socketHandler;
 
   protected AbstractSocket(Socket socket) {
     this.socket = socket;
@@ -24,7 +25,7 @@ public abstract class AbstractSocket implements Runnable {
     return this.uuid;
   }
 
-  public void setSocketHandler(ISocketHandler handler) {
+  public void setSocketHandler(AbstractCommandHandler handler) {
     this.socketHandler = handler;
   }
 

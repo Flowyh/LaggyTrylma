@@ -1,12 +1,15 @@
 package com.laggytrylma.backend.sockets.dummy;
 
-import com.laggytrylma.backend.ctx.ISocketHandler;
+import com.laggytrylma.utils.communication.commands.AbstractCommandHandler;
 import com.laggytrylma.backend.servers.dummy.DummyServer;
 import com.laggytrylma.utils.Logger;
+import com.laggytrylma.utils.communication.commands.models.IModelCommands;
+
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
-public class DummySocketHandler implements ISocketHandler {
+public class DummySocketHandler extends AbstractCommandHandler {
 
   @Override
   public Object processInput(Object o, UUID client) {
@@ -26,5 +29,10 @@ public class DummySocketHandler implements ISocketHandler {
       }
       return 0;
     }
+  }
+
+  @Override
+  public Object handleCommand(IModelCommands cmd, Map<String, String> args, Object o, UUID client) {
+    return null;
   }
 }

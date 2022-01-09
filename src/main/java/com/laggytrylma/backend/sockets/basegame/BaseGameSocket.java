@@ -12,6 +12,7 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.UUID;
 
 public class BaseGameSocket extends AbstractSocket {
   protected Player player = null;
@@ -31,6 +32,14 @@ public class BaseGameSocket extends AbstractSocket {
   @Override
   public void setup() {
     Logger.info(Logger.logTime() + this.getUUID() + " joined!");
+  }
+
+  public int getPlayerId() {
+    return player.getId();
+  }
+
+  public String getPlayerName() {
+    return player.getName();
   }
 
   private boolean isJSONValid(String json) {
@@ -58,17 +67,23 @@ public class BaseGameSocket extends AbstractSocket {
         if(res.equals(-1)) break;
       } catch(SocketTimeoutException ignored) {
       } catch(EOFException e) { // Socket closing
-        BaseGameServer.removeClient(this.getUUID());
-        try {
-          BaseGameServer.messageAll("Client " + this.getUUID() + " has left.");
-        } catch (IOException ioException) {
-          Logger.error(ioException.getMessage());
-        }
+        quit(this.getUUID());
+        break;
       } catch (IOException | ClassNotFoundException e) {
         Logger.error(e.getMessage());
         break;
       }
       if(reqJSON != null) Logger.info("Incoming command: " + reqJSON.toString());
+    }
+    quit(this.getUUID()); // just in case
+  }
+
+  protected void quit(UUID client) {
+    BaseGameServer.removeClient(client);
+    try {
+      BaseGameServer.messageAll("Client " + client + " has left.");
+    } catch (IOException ioException) {
+      Logger.error(ioException.getMessage());
     }
   }
 }
