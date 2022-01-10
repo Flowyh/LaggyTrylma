@@ -1,7 +1,4 @@
 package com.laggytrylma.frontend.states;
-
-import com.laggytrylma.common.models.Game;
-import com.laggytrylma.common.models.Player;
 import com.laggytrylma.frontend.ClientSocket;
 import com.laggytrylma.frontend.GameManager;
 import com.laggytrylma.frontend.pages.PageManager;
@@ -25,6 +22,8 @@ public class Context {
         state.join(game_id);
     }
 
+    public void leave() {state.leave();};
+
     public PageManager getPageManager() {
         return pm;
     }
@@ -34,5 +33,6 @@ public class Context {
     public void setPageManager(PageManager pm){
         this.pm = pm;
     }
+
 
 }

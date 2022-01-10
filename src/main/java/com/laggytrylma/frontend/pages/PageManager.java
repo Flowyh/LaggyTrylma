@@ -16,6 +16,8 @@ public class PageManager {
         this.parent = parent;
         pages.add(new MenuPage(ctx));
         pages.add(new GamePage(ctx));
+        pages.add(new LobbyPage(ctx));
+        pages.add(new NewGamePage(ctx));
     }
 
     public void push(String name){
@@ -45,6 +47,20 @@ public class PageManager {
             parent.setVisible(true);
         }
 
+    }
+
+    public void set(String name){
+        Page entering = find(name);
+        if(entering == null)
+            return;
+        if(!stack.empty()){
+            Page leaving = stack.pop();
+            leaving.onClose();
+        }
+        stack.clear();
+        stack.push(entering);
+        parent.setContentPane(entering);
+        parent.setVisible(true);
     }
 
     Page find(String name){

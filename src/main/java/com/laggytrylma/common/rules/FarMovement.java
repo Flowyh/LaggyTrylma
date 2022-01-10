@@ -1,4 +1,4 @@
-package com.laggytrylma.common.movementrules;
+package com.laggytrylma.common.rules;
 
 import com.laggytrylma.common.models.Connection;
 import com.laggytrylma.common.models.Piece;
@@ -12,6 +12,11 @@ public class FarMovement implements MovementRulesInterface {
     public Set<Square> getAllowedMoves(Piece piece) {
         Square startingSquare = piece.getSquare();
         return recursivePossibilities(startingSquare, new HashSet<>());
+    }
+
+    @Override
+    public Set<Square> filterBannedMoves(Piece piece, Set<Square> targets) {
+        return targets;
     }
 
     private Set<Square> recursivePossibilities(Square startingSquare, Set<Square> visited){

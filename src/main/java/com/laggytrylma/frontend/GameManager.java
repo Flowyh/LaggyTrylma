@@ -86,8 +86,10 @@ public class GameManager implements LocalGameInput, RemoteGameInput {
         game.setCurrentPlayer(player);
 
         if(player == me){
-            Logger.info("My turn!");
+            Logger.debug("My turn!");
         }
+
+        updateDisplays();
     }
 
     private void updateDisplays(){

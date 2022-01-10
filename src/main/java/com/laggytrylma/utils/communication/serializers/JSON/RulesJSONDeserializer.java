@@ -4,12 +4,9 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.laggytrylma.common.movementrules.FarMovement;
-import com.laggytrylma.common.movementrules.MovementRulesInterface;
-import com.laggytrylma.common.movementrules.NearMovement;
+import com.laggytrylma.common.rules.MovementRulesInterface;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

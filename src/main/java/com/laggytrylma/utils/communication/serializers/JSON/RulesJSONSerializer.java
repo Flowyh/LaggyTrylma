@@ -3,7 +3,7 @@ package com.laggytrylma.utils.communication.serializers.JSON;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import com.laggytrylma.common.movementrules.MovementRulesInterface;
+import com.laggytrylma.common.rules.MovementRulesInterface;
 
 import java.io.IOException;
 
