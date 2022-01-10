@@ -6,39 +6,17 @@ import com.laggytrylma.common.models.Connection;
 import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Player;
 import com.laggytrylma.common.models.Square;
-import com.laggytrylma.common.movementrules.FarMovement;
-import com.laggytrylma.common.movementrules.MovementRulesInterface;
-import com.laggytrylma.utils.communication.serializers.AbstractObjectSerializer;
+import com.laggytrylma.common.rules.FarMovement;
+import com.laggytrylma.common.rules.MovementRulesInterface;
+import com.laggytrylma.common.rules.RuleInterface;
 import com.laggytrylma.utils.communication.serializers.JSON.ObjectJSONSerializer;
 import org.junit.Test;
 
 import java.awt.*;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import static org.junit.Assert.*;
 
 public class JSONObjectSerializationTest {
-
-  @Test
-  public void testObjectJSONSerializerInstance() throws NoSuchFieldException, IllegalAccessException {
-    ObjectJSONSerializer test = ObjectJSONSerializer.getInstance();
-    assertNotNull(test);
-    // Singleton double checked-locking
-    Field instance = ObjectJSONSerializer.class.getDeclaredField("instance");
-    instance.setAccessible(true);
-    instance.set(null, null);
-    test = ObjectJSONSerializer.getInstance();
-    assertNotNull(test);
-  }
-
-  @Test
-  public void testObjectDeserializationFail() {
-    String test = "1asda{asda{asd{23";
-    assertNull(ObjectJSONSerializer.deserialize(test, Integer.class));
-  }
-
   @Test
   public void testGameToJSON() {
     GameBuilderDirector director = new GameBuilderDirector(new ClassicTrylmaBuilder());
@@ -52,8 +30,8 @@ public class JSONObjectSerializationTest {
     assertEquals(trylma.getPlayers().size(), trylma_deserialized.getPlayers().size());
 
     for(int i=0; i<trylma.getRules().size();i++){
-      MovementRulesInterface r1 = trylma.getRules().get(i);
-      MovementRulesInterface r2 = trylma_deserialized.getRules().get(i);
+      RuleInterface r1 = trylma.getRules().get(i);
+      RuleInterface r2 = trylma_deserialized.getRules().get(i);
       assertEquals(r1.getClass(), r2.getClass());
     }
 
@@ -94,7 +72,11 @@ public class JSONObjectSerializationTest {
       else{
         assertNull(square_des.getTarget());
       }
+
+
     }
+
+
   }
 
   @Test
@@ -119,21 +101,5 @@ public class JSONObjectSerializationTest {
     String serialized = ObjectJSONSerializer.serialize(rule);
     assertEquals("{\"name\":\"com.laggytrylma.common.movementrules.FarMovement\"}", serialized);
     assertTrue(ObjectJSONSerializer.deserialize(serialized, MovementRulesInterface.class) instanceof MovementRulesInterface);
-  }
-
-  @Test
-  public void testRuleToJSONFail(){
-    String ruleSerializationFail = "{\"name\":\"com.bitcoin.miner\"}";
-    assertNull(ObjectJSONSerializer.deserialize(ruleSerializationFail, MovementRulesInterface.class));
-  }
-
-  @Test
-  public void testAbstractObjectSerializerStatics() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-    Method instance = AbstractObjectSerializer.class.getDeclaredMethod("serialize", Object.class);
-    instance.setAccessible(true);
-    assertNull(instance.invoke(null, "123"));
-    instance = AbstractObjectSerializer.class.getDeclaredMethod("deserialize", String.class, Class.class);
-    instance.setAccessible(true);
-    assertNull(instance.invoke(null, "123", String.class));
   }
 }
