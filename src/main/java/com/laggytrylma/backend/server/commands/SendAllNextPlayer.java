@@ -1,11 +1,11 @@
 package com.laggytrylma.backend.server.commands;
 
-import com.laggytrylma.backend.server.BaseGameServerCommandsReciever;
+import com.laggytrylma.backend.server.BaseGameServerCommandsReceiver;
 
 public class SendAllNextPlayer implements BaseServerCommand {
-  private final BaseGameServerCommandsReciever emitter;
+  private final BaseGameServerCommandsReceiver emitter;
 
-  public SendAllNextPlayer(BaseGameServerCommandsReciever em) {
+  public SendAllNextPlayer(BaseGameServerCommandsReceiver em) {
     this.emitter = em;
   }
 

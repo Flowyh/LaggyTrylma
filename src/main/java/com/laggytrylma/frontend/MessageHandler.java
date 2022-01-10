@@ -16,21 +16,21 @@ public class MessageHandler extends AbstractCommandHandler {
   static private GameManager gm;
   static private Game game;
 
-  public MessageHandler(GameManager gm){
-    this.gm = gm;
+  public MessageHandler(GameManager g){
+    gm = g;
   }
 
   @Override
-  public Object handleCommand(IModelCommands cmd, Map<String, String> args, Object o, UUID client) {
+  public Object handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
     switch (cmd.model()) {
       case "game" -> {
-        return GameCommandHandler.handleCommand(cmd, args, client, o);
+        return GameCommandHandler.handleCommand(cmd, args, client);
       }
       case "client" -> {
-        return  ClientCommandHandler.handleCommand(cmd, args, client, o);
+        return  ClientCommandHandler.handleCommand(cmd, args, client);
       }
       case "lobby" -> {
-        return  LobbyCommandHandler.handleCommand(cmd, args, client, o);
+        return  LobbyCommandHandler.handleCommand(cmd, args, client);
       }
       default ->  {
         Logger.error("Unexpected command model provided");
@@ -40,7 +40,7 @@ public class MessageHandler extends AbstractCommandHandler {
   }
 
   static class GameCommandHandler {
-   static Object handleCommand(IModelCommands cmd, Map<String, String> args, UUID client, Object o) {
+   static Object handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
      Logger.debug("Handle command " + cmd);
       switch (cmd.command()) {
         case "start" -> {
@@ -106,14 +106,14 @@ public class MessageHandler extends AbstractCommandHandler {
 
   // Placeholder
   static class ClientCommandHandler {
-    static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client, Object o) {
+    static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
       return 0;
     }
   }
 
   // Placeholder
   static class LobbyCommandHandler {
-    static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client, Object o) {
+    static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
       return 0;
     }
   }

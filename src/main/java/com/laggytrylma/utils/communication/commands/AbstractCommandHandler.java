@@ -15,8 +15,8 @@ public abstract class AbstractCommandHandler {
     Logger.debug("Process input cmd " + cmd);
     Map<String, String> args = ((BaseCommandWrapper<?>) o).getArgs();
     if(cmd == null || args == null) return 0;
-    return handleCommand(cmd, args, o, client);
+    return handleCommand(cmd, args, client);
   }
 
-  public abstract Object handleCommand(IModelCommands cmd, Map<String, String> args, Object o, UUID client);
+  public abstract Object handleCommand(IModelCommands cmd, Map<String, String> args, UUID client);
 }

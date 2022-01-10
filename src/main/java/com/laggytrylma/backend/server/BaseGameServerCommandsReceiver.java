@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class BaseGameServerCommandsReciever {
+public class BaseGameServerCommandsReceiver {
   private final Map<UUID, AbstractSocket> clients;
   private UUID uuid;
   private Object msg;
@@ -22,45 +22,45 @@ public class BaseGameServerCommandsReciever {
   private IModelCommands cmd;
   private Game game;
 
-  public BaseGameServerCommandsReciever(Map<UUID, AbstractSocket> clients) {
+  public BaseGameServerCommandsReceiver(Map<UUID, AbstractSocket> clients) {
     this.clients = clients;
   }
 
-  public BaseGameServerCommandsReciever(Map<UUID, AbstractSocket> clients, Object msg) {
+  public BaseGameServerCommandsReceiver(Map<UUID, AbstractSocket> clients, Object msg) {
     this.clients = clients;
     this.msg = msg;
   }
 
-  public BaseGameServerCommandsReciever(Map<UUID, AbstractSocket> clients, UUID uuid) {
+  public BaseGameServerCommandsReceiver(Map<UUID, AbstractSocket> clients, UUID uuid) {
     this.clients = clients;
     this.uuid = uuid;
   }
 
-  public BaseGameServerCommandsReciever(Map<UUID, AbstractSocket> clients, Game game) {
+  public BaseGameServerCommandsReceiver(Map<UUID, AbstractSocket> clients, Game game) {
     this.clients = clients;
     this.game = game;
   }
 
-  public BaseGameServerCommandsReciever(Map<UUID, AbstractSocket> clients, Object msg, UUID uuid) {
+  public BaseGameServerCommandsReceiver(Map<UUID, AbstractSocket> clients, Object msg, UUID uuid) {
     this.clients = clients;
     this.msg = msg;
     this.uuid = uuid;
   }
 
-  public BaseGameServerCommandsReciever(Map<UUID, AbstractSocket> clients, UUID uuid, Game game) {
+  public BaseGameServerCommandsReceiver(Map<UUID, AbstractSocket> clients, UUID uuid, Game game) {
     this.clients = clients;
     this.uuid = uuid;
     this.game = game;
   }
 
-  public BaseGameServerCommandsReciever(Map<UUID, AbstractSocket> clients, Object msg, UUID uuid, Map<String, String> args) {
+  public BaseGameServerCommandsReceiver(Map<UUID, AbstractSocket> clients, Object msg, UUID uuid, Map<String, String> args) {
     this.clients = clients;
     this.msg = msg;
     this.uuid = uuid;
     this.args = args;
   }
 
-  public BaseGameServerCommandsReciever(Map<UUID, AbstractSocket> clients, Object msg, UUID uuid, Map<String, String> args, IModelCommands cmd, Game game) {
+  public BaseGameServerCommandsReceiver(Map<UUID, AbstractSocket> clients, Object msg, UUID uuid, Map<String, String> args, IModelCommands cmd, Game game) {
     this.clients = clients;
     this.msg = msg;
     this.uuid = uuid;

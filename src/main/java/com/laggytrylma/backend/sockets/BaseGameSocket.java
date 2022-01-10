@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.laggytrylma.utils.communication.AbstractSocket;
 import com.laggytrylma.backend.server.BaseGameServer;
-import com.laggytrylma.backend.server.BaseGameServerCommandsReciever;
+import com.laggytrylma.backend.server.BaseGameServerCommandsReceiver;
 import com.laggytrylma.backend.server.commands.MessageAll;
 import com.laggytrylma.common.models.Player;
 import com.laggytrylma.utils.Logger;
@@ -85,6 +85,6 @@ public class BaseGameSocket extends AbstractSocket {
 
   protected void quit(UUID client) {
     serv.removeClient(client);
-    serv.cmdExecutor.executeCommand(new MessageAll(new BaseGameServerCommandsReciever(serv.getClients(), "Client " + client + " has left.")));
+    serv.cmdExecutor.executeCommand(new MessageAll(new BaseGameServerCommandsReceiver(serv.getClients(), "Client " + client + " has left.")));
   }
 }

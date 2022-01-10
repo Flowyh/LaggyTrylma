@@ -78,8 +78,9 @@ public class BaseGameState {
     moves++;
     UUID next_uuid = currentClients.get(moves % currentClients.size());
     next = getClientPlayerIdByUUID(next_uuid);
+    game.setCurrentPlayer(next);
     Logger.debug("Current move: " + moves + " Player: " + getClientPlayerNameByUUID(next_uuid));
-    serv.cmdExecutor.executeCommand(new SendAllNextPlayer(new BaseGameServerCommandsReciever(serv.getClients(), game)));
+    serv.cmdExecutor.executeCommand(new SendAllNextPlayer(new BaseGameServerCommandsReceiver(serv.getClients(), game)));
   }
 
   public void removeClient(UUID uuid) {
@@ -119,8 +120,8 @@ public class BaseGameState {
     game = gameBuilderDirector.build();
     game.setCurrentPlayer(next);
     // Send game/player info to clients
-    serv.cmdExecutor.executeCommand(new SendAllPlayerInfo(new BaseGameServerCommandsReciever(serv.getClients())));
-    serv.cmdExecutor.executeCommand(new SendAllGame(new BaseGameServerCommandsReciever(serv.getClients(), game)));
-    serv.cmdExecutor.executeCommand(new SendAllNextPlayer(new BaseGameServerCommandsReciever(serv.getClients(), game)));
+    serv.cmdExecutor.executeCommand(new SendAllPlayerInfo(new BaseGameServerCommandsReceiver(serv.getClients())));
+    serv.cmdExecutor.executeCommand(new SendAllGame(new BaseGameServerCommandsReceiver(serv.getClients(), game)));
+    serv.cmdExecutor.executeCommand(new SendAllNextPlayer(new BaseGameServerCommandsReceiver(serv.getClients(), game)));
   }
 }

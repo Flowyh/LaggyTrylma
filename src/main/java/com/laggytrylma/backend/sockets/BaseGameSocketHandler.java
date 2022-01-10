@@ -1,15 +1,13 @@
 package com.laggytrylma.backend.sockets;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.laggytrylma.backend.server.BaseGameServerCommandsReciever;
+import com.laggytrylma.backend.server.BaseGameServerCommandsReceiver;
 import com.laggytrylma.backend.server.commands.MessageAllExcluding;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.AbstractCommandHandler;
 import com.laggytrylma.backend.server.BaseGameServer;
 import com.laggytrylma.utils.communication.commands.models.IModelCommands;
-import com.laggytrylma.utils.communication.serializers.JSON.ObjectJSONSerializer;
+import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
 
-import javax.security.auth.login.LoginException;
 import java.util.Map;
 import java.util.UUID;
 
@@ -21,13 +19,13 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
   }
 
   @Override
-  public Object handleCommand(IModelCommands cmd, Map<String, String> args, Object o, UUID client) {
+  public Object handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
     Object result;
     switch (cmd.model()) {
-      case "game" -> result = GameCommandHandler.handleCommand(cmd, args, client, o);
-      case "client" -> result = ClientCommandHandler.handleCommand(cmd, args, client, o);
-      case "lobby" -> result = LobbyCommandHandler.handleCommand(cmd, args, client, o);
-      default ->  {
+      case "game" -> result = GameCommandHandler.handleCommand(cmd, args, client);
+      case "client" -> result = ClientCommandHandler.handleCommand(cmd, args, client);
+      case "lobby" -> result = LobbyCommandHandler.handleCommand(cmd, args, client);
+      default -> {
         Logger.error("Unexpected command model provided");
         result = 0;
       }
@@ -36,7 +34,8 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
   }
 
   static class GameCommandHandler {
-    static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client, Object o) {
+    static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
+      JSONCommandWrapper<?> cmdWrap = new JSONCommandWrapper<>(cmd, args);
       switch (cmd.command()) {
         case "setup" -> {
           return -1;
@@ -48,7 +47,7 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
           return 3;
         }
         case "move" -> {
-          return moveHandler(args.get("piece"), args.get("destination"), client, o);
+          return moveHandler(args.get("piece"), args.get("destination"), client, cmdWrap.serialize());
         }
         case "leave" -> {
           return 5;
@@ -62,14 +61,13 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
       }
     }
 
-    static int moveHandler(String pieceJSON, String destJSON, UUID client, Object o) {
+    static int moveHandler(String pieceJSON, String destJSON, UUID client, String res) {
       int pieceId = Integer.parseInt(pieceJSON);
       int destId = Integer.parseInt(destJSON);
       if(serv.gameState.movePiece(pieceId, destId)) {
         serv.gameState.moveEvent();
-        if(serv.gameState.comparePieceOwnerAndClient(pieceId, client) || true) {
-          //BaseGameServer.messageAllExcluding(o, client);
-          serv.cmdExecutor.executeCommand(new MessageAllExcluding(new BaseGameServerCommandsReciever(serv.getClients(), o, client)));
+        if(serv.gameState.comparePieceOwnerAndClient(pieceId, client)) {
+          serv.cmdExecutor.executeCommand(new MessageAllExcluding(new BaseGameServerCommandsReceiver(serv.getClients(), res, client)));
         }
         return 1;
       }
@@ -79,14 +77,14 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
 
   // Placeholder
   static class ClientCommandHandler {
-    static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client, Object o) {
+    static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
       return 0;
     }
   }
 
   // Placeholder
   static class LobbyCommandHandler {
-    static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client, Object o) {
+    static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
       return 0;
     }
   }
