@@ -8,7 +8,7 @@ import com.laggytrylma.common.models.Connection;
 import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Piece;
 import com.laggytrylma.common.models.Square;
-import com.laggytrylma.common.movementrules.MovementRulesInterface;
+import com.laggytrylma.common.rules.MovementRulesInterface;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.serializers.AbstractObjectSerializer;
 

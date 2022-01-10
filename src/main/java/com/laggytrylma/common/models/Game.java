@@ -1,9 +1,9 @@
 package com.laggytrylma.common.models;
 
-import com.laggytrylma.common.models.Piece;
-import com.laggytrylma.common.models.Player;
-import com.laggytrylma.common.models.Square;
-import com.laggytrylma.common.movementrules.MovementRulesInterface;
+import com.laggytrylma.common.rules.MovementRulesInterface;
+import com.laggytrylma.common.rules.RuleInterface;
+import com.laggytrylma.common.rules.WinRulesInterface;
+import com.laggytrylma.utils.Logger;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -11,15 +11,12 @@ import java.util.List;
 import java.util.Set;
 
 public class Game {
-    public Game(){
-
-    }
-
-    List<Piece> pieces = new LinkedList<>();
-    List<Square> squares = new LinkedList<>();
-    List<Player> players = new LinkedList<>();
-    List<MovementRulesInterface> movementRules = new LinkedList<>();
-    Player currentPlayer;
+    private final List<Piece> pieces = new LinkedList<>();
+    private final List<Square> squares = new LinkedList<>();
+    private final List<Player> players = new LinkedList<>();
+    private final List<MovementRulesInterface> movementRules = new LinkedList<>();
+    private final List<WinRulesInterface> winRules = new LinkedList<>();
+    private Player currentPlayer;
 
     public void setCurrentPlayer(Player player) {
         currentPlayer = player;
@@ -37,8 +34,15 @@ public class Game {
         return squares;
     }
 
-    public void addRule(MovementRulesInterface movementRule){
-        movementRules.add(movementRule);
+    public void addRule(RuleInterface rule)
+    {
+        if(rule instanceof MovementRulesInterface) {
+            movementRules.add((MovementRulesInterface) rule);
+        } else if(rule instanceof WinRulesInterface){
+            winRules.add((WinRulesInterface) rule);
+        } else{
+            Logger.error("Unknown rule type");
+        }
     }
 
     public Set<Square> getAllowedMoves(Piece piece){
@@ -46,7 +50,20 @@ public class Game {
         for(MovementRulesInterface rule: movementRules){
             visitable.addAll(rule.getAllowedMoves(piece));
         }
+        for(MovementRulesInterface rule: movementRules){
+            rule.filterBannedMoves(piece, visitable);
+        }
         return visitable;
+    }
+
+    public Player getWinner(){
+        for(WinRulesInterface rule : winRules){
+            Player winner = rule.getWinner(this);
+            if(winner != null){
+                return winner;
+            }
+        }
+        return null;
     }
 
     public boolean move(Piece piece, Square finalPosition) {
@@ -85,8 +102,11 @@ public class Game {
         return null;
     }
 
-    public List<MovementRulesInterface> getRules() {
-        return movementRules;
+    public List<RuleInterface> getRules() {
+        List<RuleInterface> output = new LinkedList<>();
+        output.addAll(movementRules);
+        output.addAll(winRules);
+        return output;
     }
 
     public List<Piece> getPieces() {

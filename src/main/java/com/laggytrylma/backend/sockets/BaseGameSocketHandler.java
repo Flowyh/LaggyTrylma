@@ -66,7 +66,7 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
       int destId = Integer.parseInt(destJSON);
       if(serv.gameState.movePiece(pieceId, destId)) {
         serv.gameState.moveEvent();
-        if(serv.gameState.comparePieceOwnerAndClient(pieceId, client) || true) {
+        if(serv.gameState.comparePieceOwnerAndClient(pieceId, client)) {
           serv.cmdExecutor.executeCommand(new MessageAllExcluding(new BaseGameServerCommandsReceiver(serv.getClients(), res, client)));
         }
         return 1;
