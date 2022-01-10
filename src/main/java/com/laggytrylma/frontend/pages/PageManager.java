@@ -47,6 +47,20 @@ public class PageManager {
 
     }
 
+    public void set(String name){
+        Page entering = find(name);
+        if(entering == null)
+            return;
+        if(!stack.empty()){
+            Page leaving = stack.pop();
+            leaving.onClose();
+        }
+        stack.clear();
+        stack.push(entering);
+        parent.setContentPane(entering);
+        parent.setVisible(true);
+    }
+
     Page find(String name){
         for(Page page : pages){
             if(page.getPageName().equals(name))

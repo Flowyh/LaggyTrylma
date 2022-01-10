@@ -12,6 +12,7 @@ public class Main extends JFrame{
         super("Trylma");
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Logger.setMessageBoxRoot(this);
 
         Context ctx = new Context();
         PageManager pm = new PageManager(this, ctx);
