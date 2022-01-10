@@ -1,14 +1,15 @@
-package com.laggytrylma.backend.sockets.basegame;
+package com.laggytrylma.backend.sockets;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.laggytrylma.backend.servers.basegame.BaseGameServerCommandsReciever;
-import com.laggytrylma.backend.servers.basegame.commands.MessageAllExcluding;
+import com.laggytrylma.backend.server.BaseGameServerCommandsReciever;
+import com.laggytrylma.backend.server.commands.MessageAllExcluding;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.AbstractCommandHandler;
-import com.laggytrylma.backend.servers.basegame.BaseGameServer;
+import com.laggytrylma.backend.server.BaseGameServer;
 import com.laggytrylma.utils.communication.commands.models.IModelCommands;
 import com.laggytrylma.utils.communication.serializers.JSON.ObjectJSONSerializer;
 
+import javax.security.auth.login.LoginException;
 import java.util.Map;
 import java.util.UUID;
 
@@ -36,7 +37,6 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
 
   static class GameCommandHandler {
     static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client, Object o) {
-      int result;
       switch (cmd.command()) {
         case "setup" -> {
           return -1;
@@ -63,14 +63,11 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
     }
 
     static int moveHandler(String pieceJSON, String destJSON, UUID client, Object o) {
-      JsonNode piece = (JsonNode) ObjectJSONSerializer.deserialize(pieceJSON, JsonNode.class);
-      JsonNode dest = (JsonNode) ObjectJSONSerializer.deserialize(destJSON, JsonNode.class);
-      if(piece == null || dest == null) return 0;
-      int pieceId = Integer.parseInt(piece.get("id").toString());
-      int destId = Integer.parseInt(dest.get("id").toString());
+      int pieceId = Integer.parseInt(pieceJSON);
+      int destId = Integer.parseInt(destJSON);
       if(serv.gameState.movePiece(pieceId, destId)) {
         serv.gameState.moveEvent();
-        if(serv.gameState.comparePieceOwnerAndClient(pieceId, client)) {
+        if(serv.gameState.comparePieceOwnerAndClient(pieceId, client) || true) {
           //BaseGameServer.messageAllExcluding(o, client);
           serv.cmdExecutor.executeCommand(new MessageAllExcluding(new BaseGameServerCommandsReciever(serv.getClients(), o, client)));
         }

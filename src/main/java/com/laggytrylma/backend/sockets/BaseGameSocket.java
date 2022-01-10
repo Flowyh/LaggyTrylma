@@ -1,11 +1,11 @@
-package com.laggytrylma.backend.sockets.basegame;
+package com.laggytrylma.backend.sockets;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.laggytrylma.backend.ctx.AbstractSocket;
-import com.laggytrylma.backend.servers.basegame.BaseGameServer;
-import com.laggytrylma.backend.servers.basegame.BaseGameServerCommandsReciever;
-import com.laggytrylma.backend.servers.basegame.commands.MessageAll;
+import com.laggytrylma.utils.communication.AbstractSocket;
+import com.laggytrylma.backend.server.BaseGameServer;
+import com.laggytrylma.backend.server.BaseGameServerCommandsReciever;
+import com.laggytrylma.backend.server.commands.MessageAll;
 import com.laggytrylma.common.models.Player;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
@@ -62,16 +62,14 @@ public class BaseGameSocket extends AbstractSocket {
 
   @Override
   public void listen() {
-    Object o;
-    Object res;
     JSONCommandWrapper<?> reqJSON = null;
     while (true) {
       try {
-        o = readInput();
+        Object o = readInput();
         if(!(o instanceof String)) continue;
         if(!isJSONValid((String) o)) continue; // Skip if invalid json was sent
         reqJSON = new JSONCommandWrapper<>((String) o);
-        res = this.socketHandler.processInput(reqJSON, this.getUUID());
+        Object res = this.socketHandler.processInput(reqJSON, this.getUUID());
         if(res.equals(-1)) break;
       } catch(SocketTimeoutException ignored) {
       } catch(EOFException e) { // Socket closing
@@ -80,7 +78,7 @@ public class BaseGameSocket extends AbstractSocket {
         Logger.error(e.getMessage());
         break;
       }
-      if(reqJSON != null) Logger.debug("Incoming command: " + reqJSON.toString());
+      if(reqJSON != null) Logger.debug("Incoming command: " + reqJSON);
     }
     quit(this.getUUID());
   }

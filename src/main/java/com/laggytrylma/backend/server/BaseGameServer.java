@@ -1,11 +1,10 @@
-package com.laggytrylma.backend.servers.basegame;
+package com.laggytrylma.backend.server;
 
 import com.laggytrylma.backend.ctx.AbstractServer;
-import com.laggytrylma.backend.ctx.AbstractSocket;
-import com.laggytrylma.backend.ctx.AbstractSocketBuilder;
-import com.laggytrylma.backend.servers.dummy.DummyServer;
-import com.laggytrylma.backend.sockets.basegame.BaseGameSocket;
-import com.laggytrylma.backend.sockets.basegame.BaseGameSocketBuilder;
+import com.laggytrylma.utils.communication.AbstractSocket;
+import com.laggytrylma.utils.communication.AbstractSocketBuilder;
+import com.laggytrylma.backend.sockets.BaseGameSocket;
+import com.laggytrylma.backend.sockets.BaseGameSocketBuilder;
 import com.laggytrylma.common.builders.ClassicTrylmaBuilder;
 import com.laggytrylma.common.builders.GameBuilderDirector;
 import com.laggytrylma.utils.Logger;
@@ -28,7 +27,7 @@ public class BaseGameServer extends AbstractServer {
   public static AbstractServer getInstance() {
     AbstractServer localRef = instance;
     if (localRef == null) {
-      synchronized (DummyServer.class) {
+      synchronized (BaseGameServer.class) {
         localRef = instance;
         if (localRef == null) {
           instance = localRef = new BaseGameServer(21375, "BaseGame");
@@ -79,6 +78,7 @@ public class BaseGameServer extends AbstractServer {
           gameState.addNewClient(socket.getUUID());
 
           if (clients.size() == 2 && !gameState.doesGameExist()) gameState.startGame();
+
           Logger.debug("New player: " + ((BaseGameSocket) socket).getPlayerString());
           threadPool.execute(socket);
         }

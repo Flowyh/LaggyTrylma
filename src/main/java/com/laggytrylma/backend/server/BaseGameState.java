@@ -1,10 +1,10 @@
-package com.laggytrylma.backend.servers.basegame;
+package com.laggytrylma.backend.server;
 
-import com.laggytrylma.backend.servers.basegame.commands.SendAllGame;
-import com.laggytrylma.backend.servers.basegame.commands.SendAllNextPlayer;
-import com.laggytrylma.backend.servers.basegame.commands.SendAllPlayerInfo;
-import com.laggytrylma.backend.sockets.basegame.BaseGameSocket;
-import com.laggytrylma.common.Game;
+import com.laggytrylma.backend.server.commands.SendAllGame;
+import com.laggytrylma.backend.server.commands.SendAllNextPlayer;
+import com.laggytrylma.backend.server.commands.SendAllPlayerInfo;
+import com.laggytrylma.backend.sockets.BaseGameSocket;
+import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.builders.GameBuilderDirector;
 import com.laggytrylma.common.models.Piece;
 import com.laggytrylma.common.models.Player;

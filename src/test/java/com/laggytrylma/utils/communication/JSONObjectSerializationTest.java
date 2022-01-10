@@ -1,9 +1,9 @@
 package com.laggytrylma.utils.communication;
 
-import com.laggytrylma.common.*;
 import com.laggytrylma.common.builders.ClassicTrylmaBuilder;
 import com.laggytrylma.common.builders.GameBuilderDirector;
 import com.laggytrylma.common.models.Connection;
+import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Player;
 import com.laggytrylma.common.models.Square;
 import com.laggytrylma.common.movementrules.FarMovement;
@@ -12,8 +12,6 @@ import com.laggytrylma.utils.communication.serializers.JSON.ObjectJSONSerializer
 import org.junit.Test;
 
 import java.awt.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
 

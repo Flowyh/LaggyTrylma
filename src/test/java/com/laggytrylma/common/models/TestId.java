@@ -1,10 +1,7 @@
-package com.laggytrylma.common;
+package com.laggytrylma.common.models;
 
 import com.laggytrylma.common.builders.ClassicTrylmaBuilder;
 import com.laggytrylma.common.builders.GameBuilderDirector;
-import com.laggytrylma.common.models.Piece;
-import com.laggytrylma.common.models.Player;
-import com.laggytrylma.common.models.Square;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 

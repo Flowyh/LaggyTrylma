@@ -1,6 +1,7 @@
 package com.laggytrylma.backend.ctx;
 
 import com.laggytrylma.helpers.AbstractSystemOutCatch;
+import com.laggytrylma.utils.communication.AbstractSocket;
 import com.laggytrylma.utils.communication.commands.AbstractCommandHandler;
 import org.junit.Test;
 

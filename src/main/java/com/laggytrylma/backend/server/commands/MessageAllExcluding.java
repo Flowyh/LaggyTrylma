@@ -1,6 +1,6 @@
-package com.laggytrylma.backend.servers.basegame.commands;
+package com.laggytrylma.backend.server.commands;
 
-import com.laggytrylma.backend.servers.basegame.BaseGameServerCommandsReciever;
+import com.laggytrylma.backend.server.BaseGameServerCommandsReciever;
 
 public class MessageAllExcluding implements BaseServerCommand {
   private final BaseGameServerCommandsReciever emitter;

@@ -1,6 +1,6 @@
-package com.laggytrylma.backend.servers.basegame;
+package com.laggytrylma.backend.server;
 
-import com.laggytrylma.backend.servers.basegame.commands.BaseServerCommand;
+import com.laggytrylma.backend.server.commands.BaseServerCommand;
 
 import java.util.ArrayList;
 import java.util.List;

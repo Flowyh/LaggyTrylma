@@ -1,8 +1,8 @@
-package com.laggytrylma.backend.servers.basegame;
+package com.laggytrylma.backend.server;
 
-import com.laggytrylma.backend.ctx.AbstractSocket;
-import com.laggytrylma.backend.sockets.basegame.BaseGameSocket;
-import com.laggytrylma.common.Game;
+import com.laggytrylma.utils.communication.AbstractSocket;
+import com.laggytrylma.backend.sockets.BaseGameSocket;
+import com.laggytrylma.common.models.Game;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.models.GameCommands;
 import com.laggytrylma.utils.communication.commands.models.IModelCommands;
