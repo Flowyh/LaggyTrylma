@@ -78,7 +78,7 @@ public class BaseGameState {
     moves++;
     UUID next_uuid = currentClients.get(moves % currentClients.size());
     next = getClientPlayerIdByUUID(next_uuid);
-    game.setCurrentPlayer(next);
+    game.setCurrentPlayer(game.getPlayerById(next));
     Logger.debug("Current move: " + moves + " Player: " + getClientPlayerNameByUUID(next_uuid));
     serv.cmdExecutor.executeCommand(new SendAllNextPlayer(new BaseGameServerCommandsReceiver(serv.getClients(), game)));
   }
@@ -118,10 +118,10 @@ public class BaseGameState {
     Logger.debug("Current move no.: " + moves + " Player: " + getClientPlayerNameByUUID(currentClients.get(0)));
     // Build and start a new game
     game = gameBuilderDirector.build();
-    game.setCurrentPlayer(next);
+    game.setCurrentPlayer(game.getPlayerById(next));
     // Send game/player info to clients
-    serv.cmdExecutor.executeCommand(new SendAllPlayerInfo(new BaseGameServerCommandsReceiver(serv.getClients())));
     serv.cmdExecutor.executeCommand(new SendAllGame(new BaseGameServerCommandsReceiver(serv.getClients(), game)));
+    serv.cmdExecutor.executeCommand(new SendAllPlayerInfo(new BaseGameServerCommandsReceiver(serv.getClients())));
     serv.cmdExecutor.executeCommand(new SendAllNextPlayer(new BaseGameServerCommandsReceiver(serv.getClients(), game)));
   }
 }

@@ -59,9 +59,11 @@ public class BaseGameServer extends AbstractServer {
       if (clients.size() == 6) { // Block connections above 6
         continue;
       }
+
+      if (clients.size() == 0 && gameState.doesGameExist()) gameState.clearGame(); // Clear game on empty players, idk why
+
       try {
         Socket clientSocket = serverSocket.accept();
-        if (clients.size() == 0 && gameState.doesGameExist()) gameState.clearGame(); // Clear game on empty players, idk why
         if (!clientSocket.isClosed()) {
           AbstractSocket socket = createNewSocket(clientSocket);
           if(!(socket instanceof BaseGameSocket)) { // Wrong socket built

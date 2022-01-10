@@ -12,12 +12,14 @@ public class IdleBoardWidgetState extends BoardWidgetState {
 
     @Override
     void clickedOn(SquareDisplayWrapper wrapper) {
-        if(wrapper != null && wrapper.occupied()){
-            BoardWidgetStateSelected state = new BoardWidgetStateSelected(board);
-            state.setSelected(wrapper);
-            board.setState(state);
+        boolean myTurn = board.me == board.game.getCurrentPlayer();
+        if(wrapper != null && wrapper.occupied() && myTurn){
+            if(wrapper.getSquare().getPiece().getOwner() == board.me){
+                BoardWidgetStateSelected state = new BoardWidgetStateSelected(board);
+                state.setSelected(wrapper);
+                board.setState(state);
+            }
         }
-
     }
 
     @Override

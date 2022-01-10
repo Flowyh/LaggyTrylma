@@ -41,7 +41,6 @@ public class MessageHandler extends AbstractCommandHandler {
 
   static class GameCommandHandler {
    static Object handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
-     Logger.debug("Handle command " + cmd);
       switch (cmd.command()) {
         case "start" -> {
           return start(args.get("game"));
@@ -66,11 +65,9 @@ public class MessageHandler extends AbstractCommandHandler {
 
     // Message from server
     static int move(String pieceJSON, String destJSON) {
-      JsonNode piece = (JsonNode) ObjectJSONSerializer.deserialize(pieceJSON, JsonNode.class);
-      JsonNode dest = (JsonNode) ObjectJSONSerializer.deserialize(destJSON, JsonNode.class);
-      if(piece == null || dest == null) return -1;
-      int pieceId = piece.get("id").asInt();
-      int destId = dest.get("id").asInt();
+      if(pieceJSON == null || destJSON == null) return -1;
+      int pieceId = Integer.parseInt(pieceJSON);
+      int destId = Integer.parseInt(destJSON);
 
       gm.remoteMove(pieceId, destId);
       return 1;
@@ -88,18 +85,20 @@ public class MessageHandler extends AbstractCommandHandler {
     }
 
     static int player(String playerJSON) {
-      Player deserialized = (Player) ObjectJSONSerializer.deserialize(playerJSON, Player.class);
-      if(deserialized != null) {
-//        UI.setPlayer(deserialized);
-        return 1;
-      }
-      return -1;
+     if(playerJSON == null){
+       return -1;
+     }
+     int playerId = Integer.parseInt(playerJSON);
+
+     // TODO: error handling
+     gm.assignPlayer(playerId);
+     return 1;
     }
 
     static int next(String playerJSON) {
       if(playerJSON == null) return -1;
       int nextPlayer = Integer.parseInt(playerJSON);
-//      UI.game.setCurrentPlayer(nextPlayer);
+      gm.setCurrentPlayer(nextPlayer);
       return 1;
     }
   }

@@ -53,4 +53,5 @@ public class SquareDisplayWrapper {
     public boolean occupied(){
         return square.occupied();
     }
+
 }

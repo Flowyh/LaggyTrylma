@@ -2,6 +2,7 @@ package com.laggytrylma.frontend.board;
 
 import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Piece;
+import com.laggytrylma.common.models.Player;
 import com.laggytrylma.common.models.Square;
 import com.laggytrylma.frontend.GameDisplayInterface;
 import com.laggytrylma.frontend.LocalGameInput;
@@ -22,6 +23,7 @@ public class BoardWidget extends JPanel implements GameDisplayInterface {
     LocalGameInput control;
     DisplayMouseHandler mouseHandler = new DisplayMouseHandler(this);
     BoardWidgetState state = new IdleBoardWidgetState(this);
+    Player me = null;
 
     public List<SquareDisplayWrapper> elements = new LinkedList<>();
 
@@ -73,5 +75,10 @@ public class BoardWidget extends JPanel implements GameDisplayInterface {
             elements.add(new SquareDisplayWrapper(square));
         }
         repaint();
+    }
+
+    @Override
+    public void setWhoAmI(Player player) {
+        me = player;
     }
 }

@@ -8,4 +8,8 @@ public interface RemoteGameInput {
     void remoteMove(int pieceId, int destId);
 
     void startGame(Game game);
+
+    void assignPlayer(int playerId);
+
+    void setCurrentPlayer(int nextPlayer);
 }

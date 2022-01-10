@@ -111,7 +111,7 @@ public class BaseGameServerCommandsReceiver {
     AbstractSocket client = clients.get(uuid);
     if(!(client instanceof BaseGameSocket)) return -1;
     Map<String, String> args = new HashMap<>();
-    args.put("player", ObjectJSONSerializer.serialize(((BaseGameSocket) client).getPlayer()));
+    args.put("player", Integer.toString(((BaseGameSocket) client).getPlayer().getId()));
     this.args = args;
     this.cmd = GameCommands.PLAYER_INFO;
     return sendCommandToPlayer();
@@ -147,7 +147,7 @@ public class BaseGameServerCommandsReceiver {
   // clients, game
   public int sendAllNextPlayer() {
     Map<String, String> args = new HashMap<>();
-    args.put("player", Integer.toString(this.game.getCurrentPlayer()));
+    args.put("player", Integer.toString(this.game.getCurrentPlayer().getId()));
     JSONCommandWrapper<?> msg = new JSONCommandWrapper<>(GameCommands.NEXT, args);
     this.msg = msg.serialize();
     messageAll();
