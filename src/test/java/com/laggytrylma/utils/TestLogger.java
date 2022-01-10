@@ -107,4 +107,10 @@ public class TestLogger extends AbstractSystemOutCatch {
     // Reset depth to info
     Logger.setDepth(2);
   }
+
+  @Test
+  public void testDoLogTime() {
+    Logger.setDoLogTime(false);
+    assertEquals("", Logger.logTime());
+  }
 }

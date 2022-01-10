@@ -3,16 +3,14 @@ package com.laggytrylma.utils.communication;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.AbstractCommandHandler;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.UUID;
 
 public abstract class AbstractSocket implements Runnable {
   private final UUID uuid;
-  private ObjectInputStream input;
-  private ObjectOutputStream output;
+  private ObjectInput input;
+  private ObjectOutput output;
   private final Socket socket;
   public AbstractCommandHandler socketHandler;
 
