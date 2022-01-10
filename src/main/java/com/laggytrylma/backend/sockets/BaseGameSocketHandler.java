@@ -61,7 +61,7 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
 
     private static int playerInfoHandler(UUID client) {
       Map<UUID, BaseGameSocket> lobbyClients = lobbyManager.getClientsFromGameState(client);
-      if(lobbyClients == null) return -1;
+      if (lobbyClients == null) return -1;
       cmdExecutor.executeCommand(new SendPlayerInfo(new BaseGameServerCommandsReceiver(lobbyClients, client)));
       return 1;
     }
@@ -76,12 +76,11 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
       int destId = Integer.parseInt(destJSON);
       BaseGameState gameState = lobbyManager.getGameStateByClient(client);
       Map<UUID, BaseGameSocket> lobbyClients = lobbyManager.getClientsFromGameState(client);
-      if(gameState.movePiece(pieceId, destId)) {
-        gameState.moveEvent();
-        if(gameState.comparePieceOwnerAndClient(pieceId, client) || true) {
+      if (gameState.comparePieceOwnerAndClient(pieceId, client)) {
+        if (gameState.movePiece(pieceId, destId)) {
           cmdExecutor.executeCommand(new MessageAllExcluding(new BaseGameServerCommandsReceiver(lobbyClients, res, client)));
+          return 1;
         }
-        return 1;
       }
       return 0;
     }
@@ -107,7 +106,6 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
 
   private static class LobbyCommandHandler {
     static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
-      JSONCommandWrapper<?> cmdWrap = new JSONCommandWrapper<>(cmd, args);
       switch (cmd.command()) {
         case "create" -> {
           return createHandler(client);

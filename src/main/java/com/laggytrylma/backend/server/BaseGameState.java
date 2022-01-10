@@ -100,16 +100,17 @@ public class BaseGameState {
     Piece piece = getPieceById(pieceId);
     Square dest = getSquareById(destId);
     if(piece == null || dest == null) return false;
-    return game.move(piece, dest);
-  }
-
-  public void moveEvent() {
-    moves++;
-    UUID next_uuid = currentClients.get(moves % currentClients.size());
-    next = getClientPlayerIdByUUID(next_uuid);
-    game.setCurrentPlayer(game.getPlayerById(next));
-    Logger.debug("Current move: " + moves + " Player: " + getClientPlayerNameByUUID(next_uuid));
-    serv.cmdExecutor.executeCommand(new SendAllNextPlayer(new BaseGameServerCommandsReceiver(serv.getClients(), game)));
+    if(game.move(piece, dest)) {
+      moves++;
+      UUID next_uuid = currentClients.get(moves % currentClients.size());
+      next = getClientPlayerIdByUUID(next_uuid);
+      game.setCurrentPlayer(game.getPlayerById(next));
+      Logger.debug("Current move: " + moves + " Player: " + getClientPlayerNameByUUID(next_uuid));
+      serv.cmdExecutor.executeCommand(new SendAllNextPlayer(new BaseGameServerCommandsReceiver(serv.getClients(), game)));
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public void removeClient(UUID uuid) {
