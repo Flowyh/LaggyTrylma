@@ -1,4 +1,4 @@
-package com.laggytrylma.common;
+package com.laggytrylma.common.models;
 
 import com.laggytrylma.common.models.Piece;
 import com.laggytrylma.common.models.Player;

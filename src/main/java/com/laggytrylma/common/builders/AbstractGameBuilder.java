@@ -1,6 +1,6 @@
 package com.laggytrylma.common.builders;
 
-import com.laggytrylma.common.Game;
+import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Player;
 
 public abstract class AbstractGameBuilder {

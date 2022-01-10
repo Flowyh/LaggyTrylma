@@ -4,9 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.laggytrylma.backend.servers.dummy.DummyServer;
-import com.laggytrylma.common.*;
 import com.laggytrylma.common.models.Connection;
+import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Piece;
 import com.laggytrylma.common.models.Square;
 import com.laggytrylma.common.movementrules.MovementRulesInterface;
@@ -16,7 +15,7 @@ import com.laggytrylma.utils.communication.serializers.AbstractObjectSerializer;
 import java.awt.*;
 
 public class ObjectJSONSerializer extends AbstractObjectSerializer {
-  private static ObjectMapper objectMapper = new ObjectMapper();
+  private static final ObjectMapper objectMapper = new ObjectMapper();
 
   // SINGLETON
   private static ObjectJSONSerializer instance = new ObjectJSONSerializer();
@@ -24,7 +23,7 @@ public class ObjectJSONSerializer extends AbstractObjectSerializer {
   public static ObjectJSONSerializer getInstance() {
     ObjectJSONSerializer localRef = instance;
     if (localRef == null) {
-      synchronized (DummyServer.class) {
+      synchronized (ObjectJSONSerializer.class) {
         localRef = instance;
         if (localRef == null) {
           instance = localRef = new ObjectJSONSerializer();

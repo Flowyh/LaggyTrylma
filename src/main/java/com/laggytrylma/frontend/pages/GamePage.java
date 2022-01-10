@@ -1,8 +1,5 @@
 package com.laggytrylma.frontend.pages;
 
-import com.laggytrylma.common.builders.ClassicTrylmaBuilder;
-import com.laggytrylma.common.Game;
-import com.laggytrylma.common.builders.GameBuilderDirector;
 import com.laggytrylma.frontend.board.BoardWidget;
 import com.laggytrylma.frontend.states.Context;
 import net.miginfocom.swing.MigLayout;
@@ -11,13 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePage extends Page{
-    Game game;
     public GamePage(Context ctx){
         super(ctx);
-
-        GameBuilderDirector director = new GameBuilderDirector(new ClassicTrylmaBuilder());
-        game = director.build();
-
         buildUI();
     }
 
@@ -30,8 +22,9 @@ public class GamePage extends Page{
         this.add(title, "center, gapbottom 30, wrap");
 
         BoardWidget display = new BoardWidget();
-        display.attachGame(game);
         this.add(display, "center, height 500::, width 500::");
+        ctx.getGameManager().attachGameDisplay(display);
+        display.attachControl(ctx.getGameManager());
     }
 
     @Override

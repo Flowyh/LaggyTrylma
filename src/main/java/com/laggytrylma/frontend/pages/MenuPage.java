@@ -2,12 +2,10 @@ package com.laggytrylma.frontend.pages;
 
 import javax.swing.*;
 
-import com.laggytrylma.frontend.TestUI;
 import com.laggytrylma.frontend.states.Context;
 import net.miginfocom.swing.MigLayout;
 
 import java.awt.*;
-import java.util.Arrays;
 
 public class MenuPage extends Page{
     public MenuPage(Context ctx){

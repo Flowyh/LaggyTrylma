@@ -23,8 +23,7 @@ public class BoardWidgetStateSelected extends BoardWidgetState {
         if(wrapper == null)
             return;
         if(visitable.contains(wrapper.getSquare())){
-            board.game.move(selected.getSquare().getPiece(), wrapper.getSquare());
-//            JSONCommandWrapper<GameCommands> request = new JSONCommandWrapper<>(GameCommands.UPDATE, )
+            board.movePiece(selected.getSquare().getPiece(), wrapper.getSquare());
         }
         board.setState(new IdleBoardWidgetState(board));
     }

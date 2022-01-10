@@ -1,4 +1,4 @@
-package com.laggytrylma.backend.ctx;
+package com.laggytrylma.utils.communication;
 
 
 import java.io.IOException;
