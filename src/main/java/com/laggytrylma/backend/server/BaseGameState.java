@@ -104,6 +104,8 @@ public class BaseGameState {
   }
 
   public void moveEvent() {
+
+
     moves++;
     UUID next_uuid = currentClients.get(moves % currentClients.size());
     next = getClientPlayerIdByUUID(next_uuid);

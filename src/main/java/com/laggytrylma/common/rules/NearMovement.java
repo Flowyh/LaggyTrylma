@@ -1,4 +1,4 @@
-package com.laggytrylma.common.movementrules;
+package com.laggytrylma.common.rules;
 
 import com.laggytrylma.common.models.Connection;
 import com.laggytrylma.common.models.Piece;
@@ -20,5 +20,10 @@ public class NearMovement implements MovementRulesInterface {
         }
 
         return visitable;
+    }
+
+    @Override
+    public Set<Square> filterBannedMoves(Piece piece, Set<Square> targets) {
+        return targets;
     }
 }
