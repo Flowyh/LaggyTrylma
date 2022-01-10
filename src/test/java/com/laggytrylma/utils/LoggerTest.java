@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 
 import static org.junit.Assert.assertEquals;
 
-public class TestLogger extends AbstractSystemOutCatch {
+public class LoggerTest extends AbstractSystemOutCatch {
 
   @Test
   public void testTime() {

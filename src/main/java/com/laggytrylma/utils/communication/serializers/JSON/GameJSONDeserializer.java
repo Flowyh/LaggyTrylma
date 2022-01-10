@@ -9,6 +9,7 @@ import com.laggytrylma.common.models.Piece;
 import com.laggytrylma.common.models.Player;
 import com.laggytrylma.common.models.Square;
 import com.laggytrylma.common.rules.MovementRulesInterface;
+import com.laggytrylma.common.rules.RuleInterface;
 
 
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class GameJSONDeserializer extends StdDeserializer<Game> {
         Game game = new Game();
 
         for (Iterator<JsonNode> it = rulesNode.elements(); it.hasNext(); ) {
-            MovementRulesInterface rule = (MovementRulesInterface) ObjectJSONSerializer.deserialize(it.next(), MovementRulesInterface.class);
+            RuleInterface rule = (RuleInterface) ObjectJSONSerializer.deserialize(it.next(), RuleInterface.class);
             game.addRule(rule);
         }
 

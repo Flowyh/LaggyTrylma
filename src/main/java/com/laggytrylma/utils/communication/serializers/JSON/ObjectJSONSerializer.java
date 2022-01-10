@@ -9,6 +9,7 @@ import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Piece;
 import com.laggytrylma.common.models.Square;
 import com.laggytrylma.common.rules.MovementRulesInterface;
+import com.laggytrylma.common.rules.RuleInterface;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.serializers.AbstractObjectSerializer;
 
@@ -43,12 +44,12 @@ public class ObjectJSONSerializer extends AbstractObjectSerializer {
     module.addSerializer(Color.class, new ColorJSONSerializer());
     module.addSerializer(Square.class, new SquareJSONSerializer());
     module.addSerializer(Connection.class, new ConnectionJSONSerializer());
-    module.addSerializer(MovementRulesInterface.class, new RulesJSONSerializer());
+    module.addSerializer(RuleInterface.class, new RulesJSONSerializer());
     module.addSerializer(Piece.class, new PieceJSONSerializer());
 
     module.addDeserializer(Game.class, new GameJSONDeserializer());
     module.addDeserializer(Color.class, new ColorJSONDeserializer());
-    module.addDeserializer(MovementRulesInterface.class, new RulesJSONDeserializer());
+    module.addDeserializer(RuleInterface.class, new RulesJSONDeserializer());
     objectMapper.registerModule(module);
 
     objectMapper.readerFor(Color.class);

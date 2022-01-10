@@ -5,7 +5,7 @@ import com.laggytrylma.common.builders.GameBuilderDirector;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-public class TestId {
+public class IdTest {
     @Test
     public void testIdRetrieval(){
         GameBuilderDirector director = new GameBuilderDirector(new ClassicTrylmaBuilder());

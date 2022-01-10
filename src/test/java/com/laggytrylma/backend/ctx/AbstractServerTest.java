@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class TestAbstractServer extends AbstractSystemOutCatch {
+public class AbstractServerTest extends AbstractSystemOutCatch {
 
   @Test
   public void testStartServer() throws IOException {
