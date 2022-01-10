@@ -1,10 +1,7 @@
 package com.laggytrylma.utils.communication.commands.models;
 
 public enum ClientCommands implements IModelCommands {
-  CREATE("create"),
-  UPDATE("update"),
-  INFO("info"),
-  DELETE("delete");
+  NICKNAME("nickname");
 
   private final String name;
 

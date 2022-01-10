@@ -93,7 +93,7 @@ public class BaseGameSocket extends AbstractSocket {
       Logger.error(e.getMessage());
     }
 
+    serv.lobbyManager.removeClient(getUUID());
     serv.removeClient(getUUID());
-    serv.cmdExecutor.executeCommand(new MessageAll(new BaseGameServerCommandsReceiver(serv.getClients(), "Client " + getUUID() + " has left.")));
-  };
+  }
 }
