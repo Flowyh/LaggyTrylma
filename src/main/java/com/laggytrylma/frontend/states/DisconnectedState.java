@@ -51,7 +51,7 @@ public class DisconnectedState extends AbstractState{
         Thread thread = new Thread(ctx.client, "ClientSocket");
         thread.start();
 
-        getPageManager().push("GAME");
+        getPageManager().push("LOBBY");
 
         ctx.state = new ConnectedState(ctx);
     }

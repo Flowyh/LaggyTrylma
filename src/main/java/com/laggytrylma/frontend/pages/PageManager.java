@@ -16,6 +16,8 @@ public class PageManager {
         this.parent = parent;
         pages.add(new MenuPage(ctx));
         pages.add(new GamePage(ctx));
+        pages.add(new LobbyPage(ctx));
+        pages.add(new NewGamePage(ctx));
     }
 
     public void push(String name){

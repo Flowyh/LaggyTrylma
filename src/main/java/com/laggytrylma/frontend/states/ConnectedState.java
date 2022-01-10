@@ -26,5 +26,6 @@ public class ConnectedState extends AbstractState {
     @Override
     public void join(int game_id){
         ctx.state = new InGameState(ctx);
+        getPageManager().push("GAME");
     }
 }

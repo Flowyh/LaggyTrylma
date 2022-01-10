@@ -1,6 +1,6 @@
 package com.laggytrylma.frontend.pages;
 
-import com.laggytrylma.frontend.TurnIndicator;
+import com.laggytrylma.frontend.widgets.TurnIndicator;
 import com.laggytrylma.frontend.board.BoardWidget;
 import com.laggytrylma.frontend.states.Context;
 import net.miginfocom.swing.MigLayout;

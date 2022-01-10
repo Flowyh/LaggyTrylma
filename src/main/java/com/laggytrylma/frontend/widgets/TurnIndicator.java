@@ -1,12 +1,13 @@
-package com.laggytrylma.frontend;
+package com.laggytrylma.frontend.widgets;
 
 import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Player;
+import com.laggytrylma.frontend.GameDisplayInterface;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class TurnIndicator extends JLabel implements GameDisplayInterface{
+public class TurnIndicator extends JLabel implements GameDisplayInterface {
     Game game;
     Player me = null;
 
