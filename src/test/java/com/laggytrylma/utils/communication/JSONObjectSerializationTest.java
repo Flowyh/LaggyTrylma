@@ -8,6 +8,7 @@ import com.laggytrylma.common.models.Player;
 import com.laggytrylma.common.models.Square;
 import com.laggytrylma.common.rules.FarMovement;
 import com.laggytrylma.common.rules.MovementRulesInterface;
+import com.laggytrylma.common.rules.RuleInterface;
 import com.laggytrylma.utils.communication.serializers.JSON.ObjectJSONSerializer;
 import org.junit.Test;
 
@@ -29,8 +30,8 @@ public class JSONObjectSerializationTest {
     assertEquals(trylma.getPlayers().size(), trylma_deserialized.getPlayers().size());
 
     for(int i=0; i<trylma.getRules().size();i++){
-      MovementRulesInterface r1 = trylma.getRules().get(i);
-      MovementRulesInterface r2 = trylma_deserialized.getRules().get(i);
+      RuleInterface r1 = trylma.getRules().get(i);
+      RuleInterface r2 = trylma_deserialized.getRules().get(i);
       assertEquals(r1.getClass(), r2.getClass());
     }
 
