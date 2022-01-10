@@ -1,7 +1,8 @@
 package com.laggytrylma.frontend.board;
 
 import com.laggytrylma.common.models.Square;
-import com.laggytrylma.frontend.SquareDisplayWrapper;
+import com.laggytrylma.frontend.board.SquareDisplayWrapper;
+import com.laggytrylma.utils.Logger;
 
 import java.awt.*;
 import java.util.Set;
@@ -33,6 +34,7 @@ public class BoardWidgetStateSelected extends BoardWidgetState {
         for(SquareDisplayWrapper element : board.elements){
             element.draw(g2d);
             if(element == selected || visitable.contains(element.getSquare())){
+                Logger.debug("Selected");
                 element.drawHighlighted(g2d);
             }
         }

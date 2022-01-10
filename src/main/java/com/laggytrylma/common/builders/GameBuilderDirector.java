@@ -12,6 +12,7 @@ public class GameBuilderDirector {
     public void setPlayers(Player[] players) { this.players = players; }
 
     public Game build(){
+        builder.makeInstance();
         builder.instantiateBoard();
         builder.makeConnections();
         builder.connectPlayers(players);

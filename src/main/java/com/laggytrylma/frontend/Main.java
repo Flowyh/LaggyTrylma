@@ -13,7 +13,6 @@ public class Main extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
         Context ctx = new Context();
         PageManager pm = new PageManager(this, ctx);
         ctx.setPageManager(pm);
@@ -26,13 +25,8 @@ public class Main extends JFrame{
         // antialiasing of fonts
         System.setProperty("awt.useSystemAAFontSettings","on");
         System.setProperty("swing.aatext", "true");
-
         Logger.setDepth(4);
 
-
         Main ui = new Main();
-
-
-        while(true);
     }
 }

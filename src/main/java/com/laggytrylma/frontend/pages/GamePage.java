@@ -15,14 +15,14 @@ public class GamePage extends Page{
 
     @Override
     void buildUI() {
-        this.setLayout(new MigLayout("fillx"));
+        this.setLayout(new MigLayout("fill"));
 
         JLabel title = new JLabel("GamePanel");
         title.setFont(new Font("Open Sans Light", Font.BOLD, 30));
-        this.add(title, "center, gapbottom 30, wrap");
+        this.add(title, "center, gapbottom 30, wrap, height 10%");
 
         BoardWidget display = new BoardWidget();
-        this.add(display, "center, height 500::, width 500::");
+        this.add(display, "grow, height 90%");
         ctx.getGameManager().attachGameDisplay(display);
         display.attachControl(ctx.getGameManager());
     }

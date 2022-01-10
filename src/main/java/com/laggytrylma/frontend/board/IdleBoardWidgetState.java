@@ -1,8 +1,10 @@
 package com.laggytrylma.frontend.board;
 
-import com.laggytrylma.frontend.SquareDisplayWrapper;
+import com.laggytrylma.common.models.Player;
+import com.laggytrylma.frontend.board.SquareDisplayWrapper;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 public class IdleBoardWidgetState extends BoardWidgetState {
 
@@ -14,7 +16,8 @@ public class IdleBoardWidgetState extends BoardWidgetState {
     void clickedOn(SquareDisplayWrapper wrapper) {
         boolean myTurn = board.me == board.game.getCurrentPlayer();
         if(wrapper != null && wrapper.occupied() && myTurn){
-            if(wrapper.getSquare().getPiece().getOwner() == board.me){
+            Player owner = wrapper.getSquare().getPiece().getOwner();
+            if(owner == board.me){
                 BoardWidgetStateSelected state = new BoardWidgetStateSelected(board);
                 state.setSelected(wrapper);
                 board.setState(state);

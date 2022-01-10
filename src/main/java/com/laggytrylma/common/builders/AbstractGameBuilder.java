@@ -4,6 +4,7 @@ import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Player;
 
 public abstract class AbstractGameBuilder {
+    abstract void makeInstance();
     abstract void instantiateBoard();
     abstract void makeConnections();
     abstract void connectPlayers(Player[] players);
