@@ -6,8 +6,8 @@ import com.laggytrylma.common.models.Connection;
 import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Player;
 import com.laggytrylma.common.models.Square;
-import com.laggytrylma.common.movementrules.FarMovement;
-import com.laggytrylma.common.movementrules.MovementRulesInterface;
+import com.laggytrylma.common.rules.FarMovement;
+import com.laggytrylma.common.rules.MovementRulesInterface;
 import com.laggytrylma.utils.communication.serializers.JSON.ObjectJSONSerializer;
 import org.junit.Test;
 

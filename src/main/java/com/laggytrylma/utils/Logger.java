@@ -1,5 +1,7 @@
 package com.laggytrylma.utils;
 
+import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -13,6 +15,7 @@ public class Logger {
    */
   private static boolean doLogTime = true;
   private static int depth = 2;
+  private static Component messageBoxRoot = null;
   public static final String ERROR_TAG = "[[31mERROR[0m] ";
   public static final String INFO_TAG = "[[32mINFO[0m] ";
   public static final String DEBUG_TAG = "[[34mDEBUG[0m] ";
@@ -30,6 +33,9 @@ public class Logger {
   }
   public static void setDepth(int d) { depth = d; }
   public static void setDoLogTime(boolean d) { doLogTime = d; }
+  public static void setMessageBoxRoot(Component root){
+    messageBoxRoot = root;
+  }
 
   public static String logTime() {
     LocalDateTime current = LocalDateTime.now();
@@ -39,6 +45,10 @@ public class Logger {
     else return "";
   }
   public static void error(String msg) {
+    if(messageBoxRoot != null){
+      JOptionPane.showMessageDialog(messageBoxRoot, msg, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
     if(depth < 1) return;
     System.out.println(logTime() + ERROR_TAG + msg);
   }

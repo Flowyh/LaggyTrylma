@@ -11,17 +11,17 @@ public class TestId {
         GameBuilderDirector director = new GameBuilderDirector(new ClassicTrylmaBuilder());
         Game game = director.build();
 
-        for(Piece piece : game.pieces){
+        for(Piece piece : game.getPieces()){
             Piece pieceById = game.getPieceById(piece.getId());
             assertEquals(piece, pieceById);
         }
 
-        for(Square square : game.squares){
+        for(Square square : game.getSquares()){
             Square squareById = game.getSquareById(square.getId());
             assertEquals(square, squareById);
         }
 
-        for(Player player : game.players){
+        for(Player player : game.getPlayers()){
             Player playerById = game.getPlayerById(player.getId());
             assertEquals(player, playerById);
         }

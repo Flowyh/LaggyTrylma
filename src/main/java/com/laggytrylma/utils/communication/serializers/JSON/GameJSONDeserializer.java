@@ -8,7 +8,7 @@ import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Piece;
 import com.laggytrylma.common.models.Player;
 import com.laggytrylma.common.models.Square;
-import com.laggytrylma.common.movementrules.MovementRulesInterface;
+import com.laggytrylma.common.rules.MovementRulesInterface;
 
 
 import java.io.IOException;

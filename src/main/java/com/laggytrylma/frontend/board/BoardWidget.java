@@ -16,7 +16,6 @@ import java.awt.geom.AffineTransform;
 import java.util.LinkedList;
 import java.util.List;
 
-import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class BoardWidget extends JPanel implements GameDisplayInterface {
@@ -31,6 +30,7 @@ public class BoardWidget extends JPanel implements GameDisplayInterface {
 
 
     public BoardWidget(){
+        super();
         addMouseListener(mouseHandler);
     }
 
@@ -96,7 +96,6 @@ public class BoardWidget extends JPanel implements GameDisplayInterface {
 
         float tx = (width - shorterEdge) / 2f;
         float ty = (height - shorterEdge) / 2f;
-        Logger.debug("Translate " + tx + " " + ty);
         af.translate(tx, ty);
         af.scale(scale, scale);
         this.af = af;
