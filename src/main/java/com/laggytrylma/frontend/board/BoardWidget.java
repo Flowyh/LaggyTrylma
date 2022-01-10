@@ -11,9 +11,7 @@ import com.laggytrylma.utils.Logger;
 
 import javax.swing.*;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.LinkedList;
 import java.util.List;
@@ -101,7 +99,6 @@ public class BoardWidget extends JPanel implements GameDisplayInterface {
         Logger.debug("Translate " + tx + " " + ty);
         af.translate(tx, ty);
         af.scale(scale, scale);
-//        af.translate(0.15, 0);
         this.af = af;
     }
 
