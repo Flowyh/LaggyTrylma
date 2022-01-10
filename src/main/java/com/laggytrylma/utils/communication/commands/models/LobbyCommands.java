@@ -2,10 +2,14 @@ package com.laggytrylma.utils.communication.commands.models;
 
 public enum LobbyCommands implements IModelCommands {
   CREATE("create"),
-  UPDATE("update"),
+  RULES("rules"),
+  SETUP("setup"), // nicknames, colors, player limit, game name etc
   INFO("info"),
   DELETE("delete"),
-  JOIN("join");
+  JOIN("join"),
+  LEAVE("leave"),
+  PLAYER_LIMIT("player_limit"),
+  LIST_ALL("list_all");
 
   private final String name;
 

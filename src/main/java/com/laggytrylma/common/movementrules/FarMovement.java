@@ -10,16 +10,21 @@ import java.util.Set;
 public class FarMovement implements MovementRulesInterface {
     @Override
     public Set<Square> getAllowedMoves(Piece piece) {
-        Set<Square> visitable = new HashSet<>();
         Square startingSquare = piece.getSquare();
+        return recursivePossibilities(startingSquare, new HashSet<>());
+    }
+
+    private Set<Square> recursivePossibilities(Square startingSquare, Set<Square> visited){
         for(Connection connection : startingSquare.getConnections()){
             Square near = connection.near;
             Square far = connection.far;
-            if(near != null && near.occupied() && far != null && !far.occupied()){
-                visitable.add(far);
+            if(near != null && near.occupied() && far != null && !far.occupied() && !visited.contains(far)){
+                visited.add(far);
+                recursivePossibilities(far, visited);
             }
         }
 
-        return visitable;
+        return visited;
     }
+
 }

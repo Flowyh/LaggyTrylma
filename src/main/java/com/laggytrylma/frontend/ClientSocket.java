@@ -6,7 +6,6 @@ import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.AbstractSocket;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
 
-import javax.security.auth.login.LoginException;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;

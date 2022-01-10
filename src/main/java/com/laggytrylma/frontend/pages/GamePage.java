@@ -1,5 +1,6 @@
 package com.laggytrylma.frontend.pages;
 
+import com.laggytrylma.frontend.TurnIndicator;
 import com.laggytrylma.frontend.board.BoardWidget;
 import com.laggytrylma.frontend.states.Context;
 import net.miginfocom.swing.MigLayout;
@@ -15,14 +16,17 @@ public class GamePage extends Page{
 
     @Override
     void buildUI() {
-        this.setLayout(new MigLayout("fillx"));
+        this.setLayout(new MigLayout("fill"));
 
         JLabel title = new JLabel("GamePanel");
         title.setFont(new Font("Open Sans Light", Font.BOLD, 30));
-        this.add(title, "center, gapbottom 30, wrap");
+        this.add(title, "center, wrap, height 10%");
+
+//        TurnIndicator turnIndicator = new TurnIndicator();
+//        this.add(turnIndicator, "wrap");
 
         BoardWidget display = new BoardWidget();
-        this.add(display, "center, height 500::, width 500::");
+        this.add(display, "grow, height 90%");
         ctx.getGameManager().attachGameDisplay(display);
         display.attachControl(ctx.getGameManager());
     }

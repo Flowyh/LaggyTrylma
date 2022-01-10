@@ -11,14 +11,15 @@ import com.laggytrylma.utils.Logger;
 import java.awt.*;
 
 public class ClassicTrylmaBuilder extends AbstractGameBuilder{
-    private Game game = new Game();
+    private Game game = null;
     private Player[] players;
 
     // diagonal coordinate system (u,v) ranging from 0 to 16 (inclusive), refer to drawings
     Square[][] squares = new Square[17][17];
 
     private float[] convertCoordinatesToXY(int u, int v){
-        return new float[] {v - u / 2f + 2, u};
+        float scale = 1/17f;
+        return new float[] {scale * (v - u / 2f + 4), scale*u};
     }
 
     private boolean onBoard(int u, int v){
@@ -59,6 +60,11 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
                 referenceSquare.addConnection(near, far);
             }
         }
+    }
+
+    @Override
+    void makeInstance() {
+        game = new Game();
     }
 
     @Override

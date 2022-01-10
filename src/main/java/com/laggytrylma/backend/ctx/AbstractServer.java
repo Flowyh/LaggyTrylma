@@ -8,9 +8,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -19,14 +16,12 @@ public abstract class AbstractServer {
   private String name;
   protected ThreadPoolExecutor threadPool;
   protected ServerSocket serverSocket;
-  protected static Map<UUID, AbstractSocket> clients;
   private AbstractSocketBuilder socketBuilder;
   protected boolean running = true;
 
   protected AbstractServer(int port, String name) {
     this.port = port;
     this.name = name;
-    clients = new HashMap<>();
   }
 
   public int getPort() {
@@ -50,10 +45,6 @@ public abstract class AbstractServer {
 
   public AbstractSocket createNewSocket(Socket socket) throws IOException {
     return socketBuilder.setSocket(socket).setupSocket().build();
-  }
-
-  public void removeClient(UUID uuid) {
-    clients.remove(uuid);
   }
 
   protected abstract void setup();

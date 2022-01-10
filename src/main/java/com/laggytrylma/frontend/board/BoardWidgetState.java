@@ -1,6 +1,6 @@
 package com.laggytrylma.frontend.board;
 
-import com.laggytrylma.frontend.SquareDisplayWrapper;
+import com.laggytrylma.frontend.board.SquareDisplayWrapper;
 
 import java.awt.*;
 

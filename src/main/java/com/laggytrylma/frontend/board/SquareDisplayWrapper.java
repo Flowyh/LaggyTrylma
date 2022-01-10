@@ -1,4 +1,4 @@
-package com.laggytrylma.frontend;
+package com.laggytrylma.frontend.board;
 
 import com.laggytrylma.common.models.Piece;
 import com.laggytrylma.common.models.Square;
@@ -13,12 +13,11 @@ public class SquareDisplayWrapper {
     final private Shape body;
     private Color empty_color = new Color(83, 83, 83);
 
-    final float radius = 12;
-    final float scale = 30;
+    final float radius = 0.025f;
 
     public SquareDisplayWrapper(Square square){
         this.square = square;
-        body = new Ellipse2D.Float(scale*square.getX(),scale*square.getY(), 2*radius, 2*radius);
+        body = new Ellipse2D.Float(square.getX(),square.getY(), 2*radius, 2*radius);
     }
 
     private Color getColor(){
@@ -38,7 +37,7 @@ public class SquareDisplayWrapper {
 
     public void drawHighlighted(Graphics2D g2d){
         g2d.setColor(getColor().brighter());
-        g2d.setStroke(new BasicStroke(5));
+        g2d.setStroke(new BasicStroke(0.007f));
         g2d.draw(body);
     }
 
@@ -53,4 +52,5 @@ public class SquareDisplayWrapper {
     public boolean occupied(){
         return square.occupied();
     }
+
 }

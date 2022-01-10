@@ -80,11 +80,20 @@ public class BaseGameSocket extends AbstractSocket {
       }
       if(reqJSON != null) Logger.debug("Incoming command: " + reqJSON);
     }
-    quit(this.getUUID());
+    close();
   }
 
-  protected void quit(UUID client) {
-    serv.removeClient(client);
-    serv.cmdExecutor.executeCommand(new MessageAll(new BaseGameServerCommandsReceiver(serv.getClients(), "Client " + client + " has left.")));
+
+  @Override
+  public void close() {
+    Logger.debug("My close");
+    try{
+      super.close();
+    } catch (IOException e) {
+      Logger.error(e.getMessage());
+    }
+
+    serv.lobbyManager.removeClient(getUUID());
+    serv.removeClient(getUUID());
   }
 }

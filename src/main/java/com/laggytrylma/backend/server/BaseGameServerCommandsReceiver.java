@@ -1,6 +1,5 @@
 package com.laggytrylma.backend.server;
 
-import com.laggytrylma.utils.communication.AbstractSocket;
 import com.laggytrylma.backend.sockets.BaseGameSocket;
 import com.laggytrylma.common.models.Game;
 import com.laggytrylma.utils.Logger;
@@ -15,58 +14,56 @@ import java.util.Map;
 import java.util.UUID;
 
 public class BaseGameServerCommandsReceiver {
-  private final Map<UUID, AbstractSocket> clients;
+  private final Map<UUID, BaseGameSocket> clients;
   private UUID uuid;
   private Object msg;
   private Map<String, String> args;
   private IModelCommands cmd;
   private Game game;
 
-  public BaseGameServerCommandsReceiver(Map<UUID, AbstractSocket> clients) {
+  public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients) {
     this.clients = clients;
   }
 
-  public BaseGameServerCommandsReceiver(Map<UUID, AbstractSocket> clients, Object msg) {
+  public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, Object msg) {
     this.clients = clients;
     this.msg = msg;
   }
 
-  public BaseGameServerCommandsReceiver(Map<UUID, AbstractSocket> clients, UUID uuid) {
+  public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, UUID uuid) {
     this.clients = clients;
     this.uuid = uuid;
   }
 
-  public BaseGameServerCommandsReceiver(Map<UUID, AbstractSocket> clients, Game game) {
+  public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, Game game) {
     this.clients = clients;
     this.game = game;
   }
 
-  public BaseGameServerCommandsReceiver(Map<UUID, AbstractSocket> clients, Object msg, UUID uuid) {
+  public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, Object msg, UUID uuid) {
     this.clients = clients;
     this.msg = msg;
     this.uuid = uuid;
   }
 
-  public BaseGameServerCommandsReceiver(Map<UUID, AbstractSocket> clients, UUID uuid, Game game) {
+  public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, UUID uuid, Game game) {
     this.clients = clients;
     this.uuid = uuid;
     this.game = game;
   }
 
-  public BaseGameServerCommandsReceiver(Map<UUID, AbstractSocket> clients, Object msg, UUID uuid, Map<String, String> args) {
+  public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, UUID uuid, IModelCommands cmd, Map<String, String> args) {
     this.clients = clients;
-    this.msg = msg;
     this.uuid = uuid;
-    this.args = args;
-  }
-
-  public BaseGameServerCommandsReceiver(Map<UUID, AbstractSocket> clients, Object msg, UUID uuid, Map<String, String> args, IModelCommands cmd, Game game) {
-    this.clients = clients;
-    this.msg = msg;
-    this.uuid = uuid;
-    this.args = args;
     this.cmd = cmd;
-    this.game = game;
+    this.args = args;
+  }
+
+  public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, Object msg, UUID uuid, Map<String, String> args) {
+    this.clients = clients;
+    this.msg = msg;
+    this.uuid = uuid;
+    this.args = args;
   }
 
   // clients, msg
@@ -108,10 +105,10 @@ public class BaseGameServerCommandsReceiver {
 
   //clients, uuid
   public int sendPlayerInfo() {
-    AbstractSocket client = clients.get(uuid);
-    if(!(client instanceof BaseGameSocket)) return -1;
+    BaseGameSocket client = clients.get(uuid);
+    if(client == null) return -1;
     Map<String, String> args = new HashMap<>();
-    args.put("player", ObjectJSONSerializer.serialize(((BaseGameSocket) client).getPlayer()));
+    args.put("player", Integer.toString(client.getPlayer().getId()));
     this.args = args;
     this.cmd = GameCommands.PLAYER_INFO;
     return sendCommandToPlayer();
@@ -147,7 +144,7 @@ public class BaseGameServerCommandsReceiver {
   // clients, game
   public int sendAllNextPlayer() {
     Map<String, String> args = new HashMap<>();
-    args.put("player", Integer.toString(this.game.getCurrentPlayer()));
+    args.put("player", Integer.toString(this.game.getCurrentPlayer().getId()));
     JSONCommandWrapper<?> msg = new JSONCommandWrapper<>(GameCommands.NEXT, args);
     this.msg = msg.serialize();
     messageAll();

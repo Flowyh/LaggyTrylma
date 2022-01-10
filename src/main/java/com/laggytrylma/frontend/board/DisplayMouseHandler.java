@@ -1,29 +1,39 @@
 package com.laggytrylma.frontend.board;
 
-import com.laggytrylma.frontend.SquareDisplayWrapper;
+import com.laggytrylma.utils.Logger;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Point2D;
 
 public class DisplayMouseHandler extends MouseAdapter {
-    protected final BoardWidget display;
+    protected final BoardWidget board;
 
-    DisplayMouseHandler(BoardWidget display){
+    DisplayMouseHandler(BoardWidget board){
         super();
-        this.display = display;
+        this.board = board;
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        for(SquareDisplayWrapper element : display.elements){
-            if(element.contains(e.getPoint())){
-                display.clickedOn(element);
-                display.repaint();
+        for(SquareDisplayWrapper element : board.elements){
+            Point2D transformed = new Point2D.Float();
+            try {
+                board.getAffineTransform().inverseTransform(e.getPoint(), transformed);
+            } catch (NoninvertibleTransformException ex) {
+                Logger.error(ex.getMessage());
+                return;
+            }
+
+            if(element.contains(transformed)){
+                board.clickedOn(element);
+                board.repaint();
                 return;
             }
         }
-        display.clickedOn(null);
-        display.repaint();
+        board.clickedOn(null);
+        board.repaint();
 
     }
 

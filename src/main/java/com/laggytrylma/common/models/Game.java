@@ -19,13 +19,13 @@ public class Game {
     List<Square> squares = new LinkedList<>();
     List<Player> players = new LinkedList<>();
     List<MovementRulesInterface> movementRules = new LinkedList<>();
-    int currentPlayer = -1;
+    Player currentPlayer;
 
-    public void setCurrentPlayer(int id) {
-        currentPlayer = id;
+    public void setCurrentPlayer(Player player) {
+        currentPlayer = player;
     }
 
-    public int getCurrentPlayer() {
+    public Player getCurrentPlayer() {
         return currentPlayer;
     }
 

@@ -2,26 +2,30 @@ package com.laggytrylma.frontend.board;
 
 import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Piece;
+import com.laggytrylma.common.models.Player;
 import com.laggytrylma.common.models.Square;
 import com.laggytrylma.frontend.GameDisplayInterface;
 import com.laggytrylma.frontend.LocalGameInput;
-import com.laggytrylma.frontend.SquareDisplayWrapper;
 import com.laggytrylma.utils.Logger;
 
 
 import javax.swing.*;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.LinkedList;
 import java.util.List;
+
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 public class BoardWidget extends JPanel implements GameDisplayInterface {
     Game game;
     LocalGameInput control;
     DisplayMouseHandler mouseHandler = new DisplayMouseHandler(this);
     BoardWidgetState state = new IdleBoardWidgetState(this);
+    Player me = null;
+    AffineTransform af = new AffineTransform();
 
     public List<SquareDisplayWrapper> elements = new LinkedList<>();
 
@@ -40,6 +44,8 @@ public class BoardWidget extends JPanel implements GameDisplayInterface {
         if(game == null)
             return;
 
+        computeAffineTransform();
+        g2d.transform(af);
         state.draw(g2d);
     }
 
@@ -73,5 +79,30 @@ public class BoardWidget extends JPanel implements GameDisplayInterface {
             elements.add(new SquareDisplayWrapper(square));
         }
         repaint();
+    }
+
+    @Override
+    public void setWhoAmI(Player player) {
+        me = player;
+    }
+
+    protected void computeAffineTransform() {
+        int height = getHeight();
+        int width = getWidth();
+
+        int shorterEdge = min(height, width);
+        AffineTransform af = new AffineTransform();
+        float scale = (float)shorterEdge;
+
+        float tx = (width - shorterEdge) / 2f;
+        float ty = (height - shorterEdge) / 2f;
+        Logger.debug("Translate " + tx + " " + ty);
+        af.translate(tx, ty);
+        af.scale(scale, scale);
+        this.af = af;
+    }
+
+    protected AffineTransform getAffineTransform(){
+        return af;
     }
 }

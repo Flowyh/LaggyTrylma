@@ -2,6 +2,7 @@ package com.laggytrylma.frontend;
 
 import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Piece;
+import com.laggytrylma.common.models.Player;
 import com.laggytrylma.common.models.Square;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.models.GameCommands;
@@ -17,6 +18,7 @@ public class GameManager implements LocalGameInput, RemoteGameInput {
     Game game;
     ClientSocket clientSocket;
     List<GameDisplayInterface> gameDisplays = new LinkedList<>();
+    Player me = null;
 
     public void attachClientSocket(ClientSocket clientSocket){
         this.clientSocket = clientSocket;
@@ -63,11 +65,29 @@ public class GameManager implements LocalGameInput, RemoteGameInput {
     @Override
     public void startGame(Game game) {
         this.game = game;
-        Logger.debug("Starting game");
+        Logger.debug("Loading a new game");
         for(GameDisplayInterface gameDisplay : gameDisplays){
             gameDisplay.startGame(game);
         }
         updateDisplays();
+    }
+
+    @Override
+    public void assignPlayer(int playerId) {
+        me = game.getPlayerById(playerId);
+        for(GameDisplayInterface gameDisplay : gameDisplays){
+            gameDisplay.setWhoAmI(me);
+        }
+    }
+
+    @Override
+    public void setCurrentPlayer(int nextPlayer) {
+        Player player = game.getPlayerById(nextPlayer);
+        game.setCurrentPlayer(player);
+
+        if(player == me){
+            Logger.info("My turn!");
+        }
     }
 
     private void updateDisplays(){
