@@ -20,6 +20,7 @@ public class LoggerTest extends AbstractSystemOutCatch {
 
   @Test
   public void testDepth() {
+    Logger.setDoLogTime(true);
     // Test depth info
     assertEquals("INFO", Logger.getLoggerDepth());
     Logger.setDepth(0);
@@ -31,6 +32,7 @@ public class LoggerTest extends AbstractSystemOutCatch {
 
   @Test
   public void testNone() {
+    Logger.setDoLogTime(true);
     assertEquals("INFO", Logger.getLoggerDepth());
     Logger.setDepth(0);
     Logger.info("TEST");
@@ -42,6 +44,7 @@ public class LoggerTest extends AbstractSystemOutCatch {
 
   @Test
   public void testError() {
+    Logger.setDoLogTime(true);
     Logger.setDepth(1);
     // Check if depth is 1 (error)
     assertEquals("ERROR", Logger.getLoggerDepth());
@@ -61,6 +64,7 @@ public class LoggerTest extends AbstractSystemOutCatch {
 
   @Test
   public void testInfo() {
+    Logger.setDoLogTime(true);
     // Check if depth is 2 (info)
     assertEquals("INFO", Logger.getLoggerDepth());
     Logger.info("TEST");
@@ -77,6 +81,7 @@ public class LoggerTest extends AbstractSystemOutCatch {
 
   @Test
   public void testDebug() {
+    Logger.setDoLogTime(true);
     Logger.setDepth(3);
     // Check if depth is now 3 (debug)
     assertEquals("DEBUG", Logger.getLoggerDepth());
@@ -96,6 +101,7 @@ public class LoggerTest extends AbstractSystemOutCatch {
 
   @Test
   public void testTest() {
+    Logger.setDoLogTime(true);
     Logger.setDepth(4);
     // Check if depth is now 4 (test)
     assertEquals("TEST", Logger.getLoggerDepth());

@@ -46,7 +46,7 @@ public class CommandsModelsTest {
     assertNotNull(test);
     test = ModelCommandsEnumBuilder.buildEnum("client", "1");
     assertNull(test);
-    test = ModelCommandsEnumBuilder.buildEnum("client", "create");
+    test = ModelCommandsEnumBuilder.buildEnum("client", "nickname");
     assertNotNull(test);
   }
 
@@ -60,9 +60,9 @@ public class CommandsModelsTest {
     assertNotNull(test);
     assertEquals(test.model(), "lobby");
     assertEquals(test.command(), "create");
-    test = ModelCommandsEnumBuilder.buildEnum("client", "create");
+    test = ModelCommandsEnumBuilder.buildEnum("client", "nickname");
     assertNotNull(test);
     assertEquals(test.model(), "client");
-    assertEquals(test.command(), "create");
+    assertEquals(test.command(), "nickname");
   }
 }

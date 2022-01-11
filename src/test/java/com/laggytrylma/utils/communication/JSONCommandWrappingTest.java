@@ -1,6 +1,5 @@
 package com.laggytrylma.utils.communication;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.laggytrylma.utils.communication.commands.models.GameCommands;
 import com.laggytrylma.utils.communication.commandwrappers.BaseCommandWrapper;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;

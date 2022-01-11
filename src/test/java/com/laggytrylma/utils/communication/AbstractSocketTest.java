@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import java.io.*;
 import java.net.Socket;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
@@ -21,14 +22,24 @@ public class AbstractSocketTest extends AbstractSystemOutCatch {
   }
 
   @Test
+  public void testReadInput() throws IOException, ClassNotFoundException {
+    AbstractSocket test = mock(AbstractSocket.class);
+    ObjectInput input = mock(ObjectInput.class);
+    test.setInput(input);
+    doReturn(1).when(input).readObject();
+    test.readInput();
+    verify(test).readInput();
+  }
+
+  @Test
   public void testSetters() {
     AbstractSocket test = mock(AbstractSocket.class);
     doCallRealMethod().when(test).setSocketHandler(any());
     doCallRealMethod().when(test).setInput(any());
     doCallRealMethod().when(test).setOutput(any());
     AbstractCommandHandler mockHandler = mock(AbstractCommandHandler.class);
-    ObjectOutputStream mockOOS = mock(ObjectOutputStream.class);
-    ObjectInputStream mockOIS = mock(ObjectInputStream.class);
+    ObjectOutput mockOOS = mock(ObjectOutput.class);
+    ObjectInput mockOIS = mock(ObjectInput.class);
     test.setSocketHandler(mockHandler);
     test.setOutput(mockOOS);
     test.setInput(mockOIS);

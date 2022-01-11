@@ -14,26 +14,6 @@ import static org.junit.Assert.assertNotNull;
 
 public class ClassicTrylmaBuilderTest {
   @Test
-  public void testClassicTrylmaBuilderNoPlayers() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-    ClassicTrylmaBuilder test = new ClassicTrylmaBuilder();
-    Method makeInstance = ClassicTrylmaBuilder.class.getDeclaredMethod("makeInstance");
-    makeInstance.setAccessible(true);
-    makeInstance.invoke(test);
-    test.instantiateBoard();
-    test.makeConnections();
-    test.connectPlayers(null);
-    test.setSquareOwnership();
-    test.createPieces();
-    test.addRules();
-    Game result = test.getResult();
-    assertNotNull(result);
-    assertEquals(result.getRules().size(), 4);
-    assertEquals(result.getPieces().size(), 60);
-    assertEquals(result.getSquares().size(), 121);
-    assertEquals(result.getPlayers().size(), 6);
-  }
-
-  @Test
   public void testClassicTrylmaBuilderWithPlayers() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
     ArrayList<Player> players = new ArrayList<>();
     for(int i = 0; i < 6; i ++) {

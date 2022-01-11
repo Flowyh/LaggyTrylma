@@ -27,11 +27,11 @@ public abstract class AbstractSocket implements Runnable {
     this.socketHandler = handler;
   }
 
-  public void setInput(ObjectInputStream input) {
+  public void setInput(ObjectInput input) {
     this.input = input;
   }
 
-  public void setOutput(ObjectOutputStream output) {
+  public void setOutput(ObjectOutput output) {
     this.output = output;
   }
 

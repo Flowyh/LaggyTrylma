@@ -43,6 +43,10 @@ public class JSONObjectSerializationTest {
   @Test
   public void testGameToJSON() {
     GameBuilderDirector director = new GameBuilderDirector(new ClassicTrylmaBuilder());
+    Player[] pl = new Player[2];
+    pl[0] = new Player(1, "1", new Color(1, 1, 1));
+    pl[1] = new Player(1, "1", new Color(1, 1, 1));
+    director.setPlayers(pl);
     Game trylma = director.build();
     String serialized = ObjectJSONSerializer.serialize(trylma);
     Game trylma_deserialized = (Game)ObjectJSONSerializer.deserialize(serialized, Game.class);

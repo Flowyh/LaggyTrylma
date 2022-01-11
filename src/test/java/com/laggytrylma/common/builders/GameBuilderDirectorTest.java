@@ -11,12 +11,6 @@ import static org.junit.Assert.assertThrows;
 
 public class GameBuilderDirectorTest {
   @Test
-  public void testGameBuilderDirectorClassicTrylmaNoPlayers() {
-    GameBuilderDirector test = new GameBuilderDirector(new ClassicTrylmaBuilder());
-    assertNotNull(test.build());
-  }
-
-  @Test
   public void testGameBuilderDirectorClassicTrylmaWithPlayers() {
     GameBuilderDirector test = new GameBuilderDirector(new ClassicTrylmaBuilder());
     ArrayList<Player> players = new ArrayList<>();
@@ -27,9 +21,9 @@ public class GameBuilderDirectorTest {
     assertNotNull(test.build());
   }
 
-  @Test
-  public void testGameBuilderDirectorNullBuilderFail() {
+  @Test(expected = NullPointerException.class)
+  public void testGameBuilderDirectorNullBuilderFail() throws NullPointerException {
     GameBuilderDirector test = new GameBuilderDirector(null);
-    assertThrows(NullPointerException.class, test::build);
+    test.build();
   }
 }
