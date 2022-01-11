@@ -113,7 +113,6 @@ public class BaseGameLobbyManager {
   }
 
   public void removeLobby(int id, UUID client) {
-    if(client != getGameOwnerById(id)) return;
     Map<UUID, BaseGameSocket> clients = getClientsFromGameState(client);
     if(clients != null) {
       for (UUID key : clients.keySet()) {
