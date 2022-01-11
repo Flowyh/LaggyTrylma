@@ -94,18 +94,11 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
 
     @Override
     public void connectPlayers(Player[] players) {
-        if(players == null || players.length != 6){
-            Logger.error("No proper players provided, making something up");
-            this.players = new Player[6];
-            this.players[0] = new Player(getNewId(), "1", new Color(249, 65, 68));
-            this.players[1] = new Player(getNewId(), "2", new Color(248, 150, 30));
-            this.players[2] = new Player(getNewId(), "3", new Color(249, 199, 79));
-            this.players[3] = new Player(getNewId(), "4", new Color(144, 190, 109));
-            this.players[4] = new Player(getNewId(), "5", new Color(67, 170, 139));
-            this.players[5] = new Player(getNewId(), "6", new Color(87, 117, 144));
-        } else{
-            this.players = players;
+        if(players.length != 6 && players.length != 4 && players.length != 3 && players.length != 2){
+            Logger.error("No proper players provided");
         }
+        this.players = players;
+
         for(Player player : this.players){
             game.addPlayer(player);
         }
@@ -118,26 +111,73 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
                 Square square = squares[u][v];
                 if(square == null)
                     continue;
-                if(u < 4){
-                    square.setSpawnAndTarget(players[0], players[3]);
-                }
-                else if(u - v < -4){
-                    square.setSpawnAndTarget(players[1], players[4]);
-                }
-                else if(v > 12){
-                    square.setSpawnAndTarget(players[2], players[5]);
-                }
-                else if(u > 12){
-                    square.setSpawnAndTarget(players[3], players[0]);
-                }
-                else if(u - v > 4){
-                    square.setSpawnAndTarget(players[4], players[1]);
-                }
-                else if(v < 4){
-                    square.setSpawnAndTarget(players[5], players[2]);
-                }
-                else{
-                    square.setSpawnAndTarget(null, null);
+                switch(players.length){
+                    case 2 -> {
+                        if(u < 4){
+                            square.setSpawnAndTarget(players[0], players[1]);
+                        }
+                        else if(u > 12){
+                            square.setSpawnAndTarget(players[1], players[0]);
+                        }
+                        else {
+                            square.setSpawnAndTarget(null, null);
+                        }
+                    }
+                    case 3 -> {
+                        if(u < 4){
+                            square.setSpawnAndTarget(players[0], players[2]);
+                        }
+                        else if(v > 12){
+                            square.setSpawnAndTarget(players[1], players[0]);
+                        }
+                        else if(u - v > 4){
+                            square.setSpawnAndTarget(players[2], players[1]);
+                        }
+                        else{
+                            square.setSpawnAndTarget(null, null);
+                        }
+                    }
+                    case 4 -> {
+                        if(u < 4){
+                            square.setSpawnAndTarget(players[0], players[2]);
+                        }
+                        else if(u - v < -4){
+                            square.setSpawnAndTarget(players[1], players[3]);
+                        }
+                        else if(u > 12){
+                            square.setSpawnAndTarget(players[2], players[0]);
+                        }
+                        else if(u - v > 4){
+                            square.setSpawnAndTarget(players[3], players[1]);
+                        }
+                        else{
+                            square.setSpawnAndTarget(null, null);
+                        }
+                    }
+                    case 6 ->{
+                        if(u < 4){
+                            square.setSpawnAndTarget(players[0], players[3]);
+                        }
+                        else if(u - v < -4){
+                            square.setSpawnAndTarget(players[1], players[4]);
+                        }
+                        else if(v > 12){
+                            square.setSpawnAndTarget(players[2], players[5]);
+                        }
+                        else if(u > 12){
+                            square.setSpawnAndTarget(players[3], players[0]);
+                        }
+                        else if(u - v > 4){
+                            square.setSpawnAndTarget(players[4], players[1]);
+                        }
+                        else if(v < 4){
+                            square.setSpawnAndTarget(players[5], players[2]);
+                        }
+                        else{
+                            square.setSpawnAndTarget(null, null);
+                        }
+                    }
+                    default -> square.setSpawnAndTarget(null, null);
                 }
             }
         }

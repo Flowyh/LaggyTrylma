@@ -51,7 +51,7 @@ public class DisconnectedState extends AbstractState{
             return;
         }
 
-        MessageHandler messageHandler = new MessageHandler(ctx.getGameManager(), ctx.getLobbyManager());
+        MessageHandler messageHandler = new MessageHandler(ctx, ctx.getGameManager(), ctx.getLobbyManager());
         ctx.client.setSocketHandler(messageHandler);
         ctx.getGameManager().attachClientSocket(ctx.client);
         ctx.getLobbyManager().attachClientSocket(ctx.client);

@@ -8,6 +8,7 @@ import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.models.GameCommands;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -88,9 +89,24 @@ public class GameManager implements LocalGameInput, RemoteGameInput {
         updateDisplays();
     }
 
-    private void updateDisplays(){
+    public void updateDisplays(){
         for(GameDisplayInterface gameDisplay : gameDisplays){
             gameDisplay.updateGame();
         }
+    }
+
+    public void removeGame() {
+        game=null;
+        for(GameDisplayInterface gameDisplay : gameDisplays){
+            gameDisplay.removeGame();
+        }
+    }
+
+    public void win(int playerId) {
+        Player winner = game.getPlayerById(playerId);
+        for(GameDisplayInterface gameDisplay : gameDisplays){
+            gameDisplay.win(winner);
+        }
+
     }
 }

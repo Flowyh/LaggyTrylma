@@ -35,6 +35,8 @@ public class InGameState extends AbstractState{
         Map<String, String> args = new HashMap<>();
         JSONCommandWrapper<?> msg = new JSONCommandWrapper<>(LobbyCommands.LEAVE, args);
         ctx.client.sendMessage(msg);
+        ctx.getGameManager().removeGame();
+        ctx.getGameManager().updateDisplays();
 
         ctx.state = new ConnectedState(ctx);
         getPageManager().pop();

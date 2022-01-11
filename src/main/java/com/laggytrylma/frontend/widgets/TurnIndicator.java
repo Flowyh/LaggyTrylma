@@ -18,6 +18,9 @@ public class TurnIndicator extends JLabel implements GameDisplayInterface {
 
     @Override
     public void updateGame() {
+        if(game == null)
+            return;
+
         Player activePlayer = game.getCurrentPlayer();
         if(activePlayer != null){
             if(activePlayer == me){
@@ -44,5 +47,16 @@ public class TurnIndicator extends JLabel implements GameDisplayInterface {
     public void setWhoAmI(Player player) {
         me = player;
         updateGame();
+    }
+
+    @Override
+    public void removeGame() {
+        setText(" ");
+        repaint();
+    }
+
+    @Override
+    public void win(Player winner) {
+
     }
 }

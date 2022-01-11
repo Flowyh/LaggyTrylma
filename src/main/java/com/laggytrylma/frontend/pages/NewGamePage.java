@@ -26,6 +26,7 @@ public class NewGamePage extends Page{
         JButton createButton = new JButton("Create");
         add(createButton, "wrap, center, sg label");
         createButton.addActionListener((e) ->{
+            ctx.getPageManager().pop();
             int playerCount = Integer.parseInt((String) spinner.getValue());
             ctx.createLobby(playerCount);
         });

@@ -41,6 +41,9 @@ public class BoardWidget extends JPanel implements GameDisplayInterface {
 
         super.paintComponent(g);
 
+        g2d.setColor(getBackground());
+        g2d.fillRect(0,0, getWidth(), getHeight());
+
         if(game == null)
             return;
 
@@ -84,6 +87,18 @@ public class BoardWidget extends JPanel implements GameDisplayInterface {
     @Override
     public void setWhoAmI(Player player) {
         me = player;
+    }
+
+    @Override
+    public void removeGame() {
+        game = null;
+        updateGame();
+    }
+
+    @Override
+    public void win(Player winner) {
+        String message = winner.getName() + " has won.";
+        JOptionPane.showMessageDialog(this, message, "End of game", JOptionPane.INFORMATION_MESSAGE);
     }
 
     protected void computeAffineTransform() {

@@ -7,4 +7,7 @@ public interface GameDisplayInterface {
     void updateGame();
     void startGame(Game game);
     void setWhoAmI(Player player);
+    void removeGame();
+
+    void win(Player winner);
 }

@@ -99,13 +99,13 @@ public class BaseGameLobbyManager {
     BaseGameState lobby = getGameStateByClient(client);
     if(lobby != null){
       if(lobby.isOwner(client)){
-        serv.lobbyManager.removeLobby(getLobbyIdByClient(client), client);
+        removeLobby(getLobbyIdByClient(client), client);
         return;
       }
       lobby.removeClient(client);
     }
 
-    Map<UUID, BaseGameSocket> clients = serv.lobbyManager.getClientsFromGameState(client);
+    Map<UUID, BaseGameSocket> clients = getClientsFromGameState(client);
     if(clients == null){
       return;
     }
@@ -115,8 +115,10 @@ public class BaseGameLobbyManager {
   public void removeLobby(int id, UUID client) {
     if(client != getGameOwnerById(id)) return;
     Map<UUID, BaseGameSocket> clients = getClientsFromGameState(client);
-    for(UUID key: clients.keySet()) {
-      serv.cmdExecutor.executeCommand(new SendCommandToPlayer(new BaseGameServerCommandsReceiver(clients, key, LobbyCommands.DELETE, null)));
+    if(clients != null) {
+      for (UUID key : clients.keySet()) {
+        serv.cmdExecutor.executeCommand(new SendCommandToPlayer(new BaseGameServerCommandsReceiver(clients, key, LobbyCommands.DELETE, new HashMap<>())));
+      }
     }
     games.remove(id);
   }
@@ -126,7 +128,7 @@ public class BaseGameLobbyManager {
     lobby.startGame();
     Game game = lobby.getGame();
 
-    Map<UUID, BaseGameSocket> clients = serv.lobbyManager.getClientsFromGameState(client);
+    Map<UUID, BaseGameSocket> clients = getClientsFromGameState(client);
     // Send game/player info to clients
     serv.cmdExecutor.executeCommand(new SendAllGame(new BaseGameServerCommandsReceiver(clients, game)));
     serv.cmdExecutor.executeCommand(new SendAllPlayerInfo(new BaseGameServerCommandsReceiver(clients)));

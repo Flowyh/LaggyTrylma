@@ -2,7 +2,6 @@ package com.laggytrylma.frontend;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.laggytrylma.common.models.Game;
-import com.laggytrylma.common.models.Player;
 import com.laggytrylma.frontend.states.Context;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.AbstractCommandHandler;
@@ -10,7 +9,6 @@ import com.laggytrylma.utils.communication.commands.models.IModelCommands;
 import com.laggytrylma.utils.communication.commands.models.LobbyDescriptor;
 import com.laggytrylma.utils.communication.serializers.JSON.ObjectJSONSerializer;
 
-import javax.security.auth.login.LoginException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +18,10 @@ public class MessageHandler extends AbstractCommandHandler {
   static private GameManager gm;
   static private Game game;
   static private LobbyManager lm;
+  static private Context ctx;
 
-  public MessageHandler(GameManager g, LobbyManager l){
+  public MessageHandler(Context ct, GameManager g, LobbyManager l){
+    ctx = ct;
     gm = g;
     lm = l;
   }
@@ -63,10 +63,20 @@ public class MessageHandler extends AbstractCommandHandler {
         case "game_info" -> {
           return 6;
         }
+        case "win" -> {
+          return win(args.get("player"));
+        }
         default -> {
           return 0;
         }
       }
+    }
+
+    private static int win(String player) {
+      int playerId = Integer.parseInt(player);
+      gm.win(playerId);
+      ctx.leave();
+      return 0;
     }
 
     // Message from server
@@ -109,22 +119,29 @@ public class MessageHandler extends AbstractCommandHandler {
     }
   }
 
-  // Placeholder
   static class ClientCommandHandler {
     static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
       return 0;
     }
   }
 
-  // Placeholder
+
   static class LobbyCommandHandler {
     static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
       switch (cmd.command()) {
         case "list_all" -> {
           return list_all(args);
         }
+        case "delete" -> {
+          return delete();
+        }
         default -> {return 0;}
       }
+    }
+
+    private static int delete() {
+      ctx.leave();
+      return 0;
     }
 
     private static int list_all(Map<String, String> args) {
