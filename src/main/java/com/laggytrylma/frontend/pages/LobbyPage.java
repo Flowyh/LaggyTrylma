@@ -1,18 +1,39 @@
 package com.laggytrylma.frontend.pages;
 
+import com.laggytrylma.frontend.LobbyDisplayInterface;
 import com.laggytrylma.frontend.states.Context;
+import com.laggytrylma.utils.Logger;
+import com.laggytrylma.utils.communication.commands.models.LobbyDescriptor;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Font;
+import java.util.LinkedList;
+import java.util.List;
 
-public class LobbyPage extends Page{
+
+public class LobbyPage extends Page implements LobbyDisplayInterface {
     private JPanel gamesList;
+    private Timer timer;
 
 
     public LobbyPage(Context ctx) {
         super(ctx);
         buildUI();
+        ctx.getLobbyManager().attachLobbyDisplay(this);
+    }
+
+    @Override
+    public void onOpen(){
+        requestUpdate();
+        timer = new Timer(3000, (e)->requestUpdate());
+        timer.start();
+    }
+
+    @Override
+    public void onClose(){
+        timer.stop();
+
     }
 
     @Override
@@ -31,7 +52,7 @@ public class LobbyPage extends Page{
         gamesList = new JPanel();
         this.add(gamesList, "grow, wrap, height 90%");
         gamesList.setLayout(new MigLayout("fillx", "[l][c][r]", ""));
-        updateGames();
+        updateGames(new LinkedList<>());
 
         JButton disconnectButton = new JButton("Disconnect");
         add(disconnectButton, "");
@@ -43,20 +64,32 @@ public class LobbyPage extends Page{
         return "LOBBY";
     }
 
-    private void updateGames(){
+    private void updateGames(List<LobbyDescriptor> lobbies){
         gamesList.removeAll();
-        for(int i =0 ; i<5; i++){
-            JLabel ownerLabel = new JLabel("Owner");
+        for(LobbyDescriptor lobby : lobbies){
+            JLabel ownerLabel = new JLabel("Host: " + lobby.getOwner());
             ownerLabel.setBackground(getBackground().darker());
             gamesList.add(ownerLabel, "height 50::");
 
-            JLabel usersLabel = new JLabel("Users");
+            JLabel usersLabel = new JLabel("Players: " + lobby.getPlayersCount());
             usersLabel.setBackground(getBackground().darker());
             gamesList.add(usersLabel, "");
 
             JButton joinButton = new JButton("Join");
             gamesList.add(joinButton, "wrap");
-            joinButton.addActionListener((e) -> ctx.join(0));
+            joinButton.addActionListener((e) -> ctx.join(lobby.getId()));
         }
+        updateUI();
+        repaint();
+    }
+
+    private void requestUpdate(){
+        ctx.getLobbyManager().requestUpdate();
+        Logger.info("Request update");
+    }
+
+    @Override
+    public void updateListAllLobbies(List<LobbyDescriptor> lobbies) {
+        updateGames(lobbies);
     }
 }

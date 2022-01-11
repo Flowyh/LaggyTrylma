@@ -4,9 +4,15 @@ import com.laggytrylma.frontend.ClientSocket;
 
 import com.laggytrylma.frontend.MessageHandler;
 import com.laggytrylma.utils.Logger;
+import com.laggytrylma.utils.communication.commands.models.ClientCommands;
+import com.laggytrylma.utils.communication.commands.models.GameCommands;
+import com.laggytrylma.utils.communication.commands.models.LobbyCommands;
+import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DisconnectedState extends AbstractState{
     public DisconnectedState(Context ctx){
@@ -14,7 +20,7 @@ public class DisconnectedState extends AbstractState{
     }
 
     @Override
-    public void connect(String address){
+    public void connect(String address, String nick){
         Logger.debug("Connecting to: " + address);
 
         String[] parts = address.split(":");
@@ -45,14 +51,23 @@ public class DisconnectedState extends AbstractState{
             return;
         }
 
-        MessageHandler messageHandler = new MessageHandler(ctx.getGameManager());
+        MessageHandler messageHandler = new MessageHandler(ctx.getGameManager(), ctx.getLobbyManager());
         ctx.client.setSocketHandler(messageHandler);
         ctx.getGameManager().attachClientSocket(ctx.client);
+        ctx.getLobbyManager().attachClientSocket(ctx.client);
+        sendNickname(nick);
         Thread thread = new Thread(ctx.client, "ClientSocket");
         thread.start();
 
         getPageManager().push("LOBBY");
 
         ctx.state = new ConnectedState(ctx);
+    }
+
+    void sendNickname(String nickname){
+        Map<String, String> args = new HashMap<>();
+        args.put("nickname", nickname);
+        JSONCommandWrapper<?> msg = new JSONCommandWrapper<>(ClientCommands.NICKNAME, args);
+        ctx.client.sendMessage(msg);
     }
 }

@@ -84,6 +84,10 @@ public class BaseGameState {
     return client == gameOwner;
   }
 
+  public boolean isLobbyReady() {
+    return currentClients.size() == playerLimit;
+  }
+
   public void passOwnership(UUID client) {
     int ownerIndex = currentClients.indexOf(client);
     UUID nextOwner = client == null ? currentClients.get(ownerIndex + 1) : client;

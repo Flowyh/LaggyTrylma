@@ -9,7 +9,7 @@ public abstract class AbstractState {
     public AbstractState(Context ctx){
         this.ctx = ctx;
     }
-    public void connect(String address){
+    public void connect(String address, String nick){
         Logger.error("This state can't connect");
     };
     public void disconnect(){
@@ -27,4 +27,5 @@ public abstract class AbstractState {
         return ctx.getPageManager();
     }
 
+    public void createLobby(int playerCount){Logger.error("This state can't create a lobby");};
 }

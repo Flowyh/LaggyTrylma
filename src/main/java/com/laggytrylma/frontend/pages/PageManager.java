@@ -25,7 +25,7 @@ public class PageManager {
         if(entering == null)
             return;
         if(!stack.empty()){
-            Page leaving = stack.pop();
+            Page leaving = stack.peek();
             leaving.onClose();
         }
 
@@ -39,6 +39,7 @@ public class PageManager {
         if(!stack.empty()){
             Page leaving = stack.pop();
             leaving.onClose();
+            parent.setVisible(true);
         }
         if(!stack.empty()){
             Page entering = stack.peek();
@@ -46,7 +47,6 @@ public class PageManager {
             parent.setContentPane(entering);
             parent.setVisible(true);
         }
-
     }
 
     public void set(String name){

@@ -17,6 +17,9 @@ public class DisplayMouseHandler extends MouseAdapter {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        if(!board.active()){
+            return;
+        }
         for(SquareDisplayWrapper element : board.elements){
             Point2D transformed = new Point2D.Float();
             try {

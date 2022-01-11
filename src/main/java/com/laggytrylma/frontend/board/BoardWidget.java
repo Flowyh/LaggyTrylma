@@ -104,4 +104,8 @@ public class BoardWidget extends JPanel implements GameDisplayInterface {
     protected AffineTransform getAffineTransform(){
         return af;
     }
+
+    public boolean active() {
+        return game != null && control != null && state != null;
+    }
 }

@@ -7,17 +7,23 @@ import com.laggytrylma.frontend.states.Context;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.AbstractCommandHandler;
 import com.laggytrylma.utils.communication.commands.models.IModelCommands;
+import com.laggytrylma.utils.communication.commands.models.LobbyDescriptor;
 import com.laggytrylma.utils.communication.serializers.JSON.ObjectJSONSerializer;
 
+import javax.security.auth.login.LoginException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class MessageHandler extends AbstractCommandHandler {
   static private GameManager gm;
   static private Game game;
+  static private LobbyManager lm;
 
-  public MessageHandler(GameManager g){
+  public MessageHandler(GameManager g, LobbyManager l){
     gm = g;
+    lm = l;
   }
 
   @Override
@@ -113,7 +119,35 @@ public class MessageHandler extends AbstractCommandHandler {
   // Placeholder
   static class LobbyCommandHandler {
     static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
-      return 0;
+      Logger.debug("Lobby handler");
+      switch (cmd.command()) {
+        case "list_all" -> {
+          return list_all(args);
+        }
+        default -> {return 0;}
+      }
     }
+
+    private static int list_all(Map<String, String> args) {
+      Logger.debug("Listall handler");
+      List<LobbyDescriptor> lobbies = new LinkedList<>();
+        for(Map.Entry<String, String> entry : args.entrySet()){
+          int id = Integer.parseInt(entry.getKey());
+          JsonNode node = (JsonNode) ObjectJSONSerializer.deserialize(entry.getValue(), JsonNode.class);
+          if(node == null){
+            continue;
+          }
+          String owner = node.get("owner").asText();
+          int playersCount = node.get("players").asInt();
+
+          lobbies.add(new LobbyDescriptor(id, owner, playersCount));
+        }
+        lm.lobbiesList(lobbies);
+        return 0;
+    }
+
+
   }
-}
+
+
+  }

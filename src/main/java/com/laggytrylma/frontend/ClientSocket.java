@@ -15,10 +15,24 @@ import java.net.SocketTimeoutException;
 
 
 public class ClientSocket extends AbstractSocket {
+    private boolean force_close = false;
+
     public ClientSocket(Socket socket) throws IOException {
         super(socket);
        setOutput(new ObjectOutputStream(socket.getOutputStream()));
        setInput(new ObjectInputStream(socket.getInputStream()));
+    }
+
+    public boolean sendMessage(JSONCommandWrapper<?> msg){
+        try {
+            String serialized = msg.serialize();
+            System.out.println(serialized);
+            writeOutput(serialized);
+        } catch(IOException e) {
+            Logger.error(e.getMessage());
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -30,7 +44,7 @@ public class ClientSocket extends AbstractSocket {
     public void listen() {
         JSONCommandWrapper<?> reqJSON = null;
         System.out.println("Listening");
-        while (true) {
+        while (!socket.isClosed()) {
             System.out.println("Loop");
             try {
                 Object o = readInput();
@@ -43,12 +57,19 @@ public class ClientSocket extends AbstractSocket {
             } catch(EOFException e) { // Socket closing
                 break;
             } catch (IOException | ClassNotFoundException e) {
-                Logger.error(e.getMessage());
+                if(!force_close){
+                    Logger.error(e.getMessage());
+                }
                 break;
             }
             if(reqJSON != null) Logger.debug("Incoming command: " + reqJSON);
         }
         // quit()
+    }
+
+    public void close() throws IOException{
+        force_close = true;
+        super.close();
     }
 
     private boolean isJSONValid(String json) {
