@@ -49,7 +49,7 @@ public class BaseGameLobbyManager {
     return ObjectJSONSerializer.serialize(args);
   }
 
-  public Map<String, String> getAllLobbys() {
+  public Map<String, String> getAllLobbies() {
     Map<String, String> infos = new HashMap<>();
     for(int key: games.keySet()) {
       infos.put(Integer.toString(key), getLobbyInfo(key));
@@ -94,13 +94,23 @@ public class BaseGameLobbyManager {
   public void addNewClient(int id, UUID client) {
     BaseGameState lobby = games.get(id);
     lobby.addNewClient(client);
+    if(lobby.isLobbyReady()) startGame(client);
   }
 
   public void removeClient(UUID client) {
     BaseGameState lobby = getGameStateByClient(client);
-    if(lobby.isOwner(client)) lobby.passOwnership(null);
-    lobby.removeClient(client);
+    if(lobby != null){
+      if(lobby.isOwner(client)){
+        serv.lobbyManager.removeLobby(getLobbyIdByClient(client), client);
+        return;
+      }
+      lobby.removeClient(client);
+    }
+
     Map<UUID, BaseGameSocket> clients = serv.lobbyManager.getClientsFromGameState(client);
+    if(clients == null){
+      return;
+    }
     serv.cmdExecutor.executeCommand(new MessageAll(new BaseGameServerCommandsReceiver(clients, "Client " + client + " has left.")));
   }
 
@@ -113,9 +123,11 @@ public class BaseGameLobbyManager {
     BaseGameState lobby = getGameStateByClient(client);
     lobby.startGame();
     Game game = lobby.getGame();
+
+    Map<UUID, BaseGameSocket> clients = serv.lobbyManager.getClientsFromGameState(client);
     // Send game/player info to clients
-    serv.cmdExecutor.executeCommand(new SendAllGame(new BaseGameServerCommandsReceiver(serv.getClients(), game)));
-    serv.cmdExecutor.executeCommand(new SendAllPlayerInfo(new BaseGameServerCommandsReceiver(serv.getClients())));
-    serv.cmdExecutor.executeCommand(new SendAllNextPlayer(new BaseGameServerCommandsReceiver(serv.getClients(), game)));
+    serv.cmdExecutor.executeCommand(new SendAllGame(new BaseGameServerCommandsReceiver(clients, game)));
+    serv.cmdExecutor.executeCommand(new SendAllPlayerInfo(new BaseGameServerCommandsReceiver(clients)));
+    serv.cmdExecutor.executeCommand(new SendAllNextPlayer(new BaseGameServerCommandsReceiver(clients, game)));
   }
 }

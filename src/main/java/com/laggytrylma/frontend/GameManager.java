@@ -36,18 +36,14 @@ public class GameManager implements LocalGameInput, RemoteGameInput {
 
         updateDisplays();
 
-        // JSONCommandWrapper<GameCommands> request = new JSONCommandWrapper<>(GameCommands.UPDATE, )
 
         Map<String, String> args = new HashMap<>();
         args.put("piece", Integer.toString(piece.getId()));
         args.put("destination", Integer.toString(destination.getId()));
         JSONCommandWrapper<?> msg = new JSONCommandWrapper<>(GameCommands.MOVE, args);
-        try {
-            String serialized = msg.serialize();
-            System.out.println(serialized);
-            clientSocket.writeOutput(serialized);
-        } catch(IOException e) {
-          Logger.error(e.getMessage());
+        boolean succes = clientSocket.sendMessage(msg);
+        if(!succes){
+            return false;
         }
 
         return true;

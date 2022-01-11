@@ -23,6 +23,10 @@ public class MenuPage extends Page{
         title.setFont(new Font("Open Sans Light", Font.BOLD, 30));
         this.add(title, "center, gapbottom 30, wrap");
 
+        JTextField nickname = new JTextField("Player");
+        nickname.setFont(new Font("Open Sans Light", Font.PLAIN, 15));
+        this.add(nickname, "wrap, height ::50, width 50%, center, sg button");
+
         JTextField address = new JTextField("127.0.0.1:21375");
         address.setFont(new Font("Open Sans Light", Font.PLAIN, 15));
         this.add(address, "wrap, height ::50, width 50%, center, sg button");
@@ -31,7 +35,8 @@ public class MenuPage extends Page{
         connect.setFont(new Font("Open Sans Light", Font.PLAIN, 15));
         connect.addActionListener( (e) -> {
                 String addr = address.getText();
-                ctx.connect(addr);
+                String nick = nickname.getText();
+                ctx.connect(addr, nick);
         });
 
         this.add(connect, "sg button, center, wrap");

@@ -2,14 +2,12 @@ package com.laggytrylma.backend.sockets;
 
 import com.laggytrylma.backend.server.*;
 import com.laggytrylma.backend.server.commands.*;
-import com.laggytrylma.common.models.Game;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.AbstractCommandHandler;
 import com.laggytrylma.utils.communication.commands.models.IModelCommands;
 import com.laggytrylma.utils.communication.commands.models.LobbyCommands;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -139,6 +137,7 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
 
     private static int createHandler(UUID client) {
       int newLobbyId = lobbyManager.createNewLobby(client);
+      lobbyManager.addNewClient(newLobbyId, client);
       Map<String, String> args = new HashMap<>();
       args.put("id", Integer.toString(newLobbyId));
       return cmdExecutor.executeCommand(new SendCommandToPlayer(new BaseGameServerCommandsReceiver(serv.getClients(), client, LobbyCommands.CREATE, args)));
@@ -176,7 +175,7 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
     }
 
     static int listAllHandler(UUID client) {
-      Map<String, String> args = lobbyManager.getAllLobbys();
+      Map<String, String> args = lobbyManager.getAllLobbies();
       return cmdExecutor.executeCommand(new SendCommandToPlayer(new BaseGameServerCommandsReceiver(serv.getClients(), client, LobbyCommands.LIST_ALL, args)));
     }
   }

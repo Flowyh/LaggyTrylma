@@ -1,17 +1,19 @@
 package com.laggytrylma.frontend.states;
 import com.laggytrylma.frontend.ClientSocket;
 import com.laggytrylma.frontend.GameManager;
+import com.laggytrylma.frontend.LobbyManager;
 import com.laggytrylma.frontend.pages.PageManager;
+import com.laggytrylma.utils.Logger;
 
 public class Context {
     AbstractState state = new DisconnectedState(this);
     GameManager gm = new GameManager();
-
+    LobbyManager lm = new LobbyManager();
     private PageManager pm;
     public ClientSocket client;
 
-    public void connect(String address){
-        state.connect(address);
+    public void connect(String address, String nick){
+        state.connect(address, nick);
     }
 
     public void disconnect(){
@@ -30,9 +32,14 @@ public class Context {
 
     public GameManager getGameManager(){return gm;}
 
+    public LobbyManager getLobbyManager(){return lm;};
+
     public void setPageManager(PageManager pm){
         this.pm = pm;
     }
 
 
+    public void createLobby(int playerCount) {
+        state.createLobby(playerCount);
+    }
 }
