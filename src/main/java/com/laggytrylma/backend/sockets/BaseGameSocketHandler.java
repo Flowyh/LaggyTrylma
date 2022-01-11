@@ -2,6 +2,7 @@ package com.laggytrylma.backend.sockets;
 
 import com.laggytrylma.backend.server.*;
 import com.laggytrylma.backend.server.commands.*;
+import com.laggytrylma.common.models.Player;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.AbstractCommandHandler;
 import com.laggytrylma.utils.communication.commands.models.IModelCommands;
@@ -76,6 +77,12 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
       Map<UUID, BaseGameSocket> lobbyClients = lobbyManager.getClientsFromGameState(client);
       if (gameState.comparePieceOwnerAndClient(pieceId, client)) {
         if (gameState.movePiece(pieceId, destId)) {
+          Player winner = gameState.getGame().getWinner();
+          if(winner != null) {
+            serv.cmdExecutor.executeCommand(new SendAllWinner(new BaseGameServerCommandsReceiver(lobbyClients, winner)));
+            lobbyManager.removeClient(client);
+            return 2;
+          }
           cmdExecutor.executeCommand(new MessageAllExcluding(new BaseGameServerCommandsReceiver(lobbyClients, res, client)));
           return 1;
         }
@@ -158,6 +165,7 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
 
     private static int deleteHandler(String id, UUID client) {
       int lobbyId = Integer.parseInt(id);
+      if(lobbyManager.getGameOwnerById(lobbyId) != client) return -1;
       lobbyManager.removeLobby(lobbyId, client);
       return 1;
     }

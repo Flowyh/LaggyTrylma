@@ -2,6 +2,7 @@ package com.laggytrylma.backend.server;
 
 import com.laggytrylma.backend.sockets.BaseGameSocket;
 import com.laggytrylma.common.models.Game;
+import com.laggytrylma.common.models.Player;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.models.GameCommands;
 import com.laggytrylma.utils.communication.commands.models.IModelCommands;
@@ -20,6 +21,7 @@ public class BaseGameServerCommandsReceiver {
   private Map<String, String> args;
   private IModelCommands cmd;
   private Game game;
+  private Player player;
 
   public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients) {
     this.clients = clients;
@@ -38,6 +40,11 @@ public class BaseGameServerCommandsReceiver {
   public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, Game game) {
     this.clients = clients;
     this.game = game;
+  }
+
+  public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, Player player) {
+    this.clients = clients;
+    this.player = player;
   }
 
   public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, Object msg, UUID uuid) {
@@ -78,7 +85,7 @@ public class BaseGameServerCommandsReceiver {
     return 1;
   }
 
-  //clients, uuid, msg
+  // clients, uuid, msg
   public int messageAllExcluding() {
     for (UUID key : clients.keySet()) {
       if(key == uuid) continue;
@@ -91,7 +98,7 @@ public class BaseGameServerCommandsReceiver {
     return 1;
   }
 
-  //clients, uuid, cmd, args
+  // clients, uuid, cmd, args
   public int sendCommandToPlayer() {
     JSONCommandWrapper<?> msg = new JSONCommandWrapper<>(cmd, args);
     try {
@@ -103,7 +110,7 @@ public class BaseGameServerCommandsReceiver {
     return 1;
   }
 
-  //clients, uuid
+  // clients, uuid
   public int sendPlayerInfo() {
     BaseGameSocket client = clients.get(uuid);
     if(client == null) return -1;
@@ -114,7 +121,7 @@ public class BaseGameServerCommandsReceiver {
     return sendCommandToPlayer();
   }
 
-  //clients, uuid, game
+  // clients, uuid, game
   public int sendGame() {
     Map<String, String> args = new HashMap<>();
     args.put("game", ObjectJSONSerializer.serialize(game));
@@ -123,7 +130,7 @@ public class BaseGameServerCommandsReceiver {
     return sendCommandToPlayer();
   }
 
-  //clients
+  // clients
   public int sendAllPlayerInfo() {
     for(UUID uuid: clients.keySet()) {
       this.uuid = uuid;
@@ -132,7 +139,7 @@ public class BaseGameServerCommandsReceiver {
     return 1;
   }
 
-  //clients, game
+  // clients, game
   public int sendAllGame() {
     for(UUID uuid: clients.keySet()) {
       this.uuid = uuid;
@@ -146,6 +153,16 @@ public class BaseGameServerCommandsReceiver {
     Map<String, String> args = new HashMap<>();
     args.put("player", Integer.toString(this.game.getCurrentPlayer().getId()));
     JSONCommandWrapper<?> msg = new JSONCommandWrapper<>(GameCommands.NEXT, args);
+    this.msg = msg.serialize();
+    messageAll();
+    return 1;
+  }
+
+  // clients, player
+  public int sendAllWinner() {
+    Map<String, String> args = new HashMap<>();
+    args.put("player", Integer.toString(this.player.getId()));
+    JSONCommandWrapper<?> msg = new JSONCommandWrapper<>(GameCommands.WIN, args);
     this.msg = msg.serialize();
     messageAll();
     return 1;

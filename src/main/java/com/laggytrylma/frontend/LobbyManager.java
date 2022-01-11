@@ -1,6 +1,5 @@
 package com.laggytrylma.frontend;
 
-import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.models.LobbyCommands;
 import com.laggytrylma.utils.communication.commands.models.LobbyDescriptor;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;

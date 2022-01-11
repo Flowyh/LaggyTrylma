@@ -99,13 +99,13 @@ public class BaseGameLobbyManager {
     BaseGameState lobby = getGameStateByClient(client);
     if(lobby != null){
       if(lobby.isOwner(client)){
-        serv.lobbyManager.removeLobby(getLobbyIdByClient(client), client);
+        removeLobby(getLobbyIdByClient(client), client);
         return;
       }
       lobby.removeClient(client);
     }
 
-    Map<UUID, BaseGameSocket> clients = serv.lobbyManager.getClientsFromGameState(client);
+    Map<UUID, BaseGameSocket> clients = getClientsFromGameState(client);
     if(clients == null){
       return;
     }
@@ -113,7 +113,6 @@ public class BaseGameLobbyManager {
   }
 
   public void removeLobby(int id, UUID client) {
-    if(client != getGameOwnerById(id)) return;
     Map<UUID, BaseGameSocket> clients = getClientsFromGameState(client);
     for(UUID key: clients.keySet()) {
       serv.cmdExecutor.executeCommand(new SendCommandToPlayer(new BaseGameServerCommandsReceiver(clients, key, LobbyCommands.DELETE, null)));
