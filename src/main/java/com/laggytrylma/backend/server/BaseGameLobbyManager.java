@@ -1,14 +1,12 @@
 package com.laggytrylma.backend.server;
 
-import com.laggytrylma.backend.server.commands.MessageAll;
-import com.laggytrylma.backend.server.commands.SendAllGame;
-import com.laggytrylma.backend.server.commands.SendAllNextPlayer;
-import com.laggytrylma.backend.server.commands.SendAllPlayerInfo;
+import com.laggytrylma.backend.server.commands.*;
 import com.laggytrylma.backend.sockets.BaseGameSocket;
 import com.laggytrylma.common.builders.AbstractGameBuilder;
 import com.laggytrylma.common.builders.ClassicTrylmaBuilder;
 import com.laggytrylma.common.builders.GameBuilderDirector;
 import com.laggytrylma.common.models.Game;
+import com.laggytrylma.utils.communication.commands.models.LobbyCommands;
 import com.laggytrylma.utils.communication.serializers.JSON.ObjectJSONSerializer;
 
 import java.util.*;
@@ -115,6 +113,11 @@ public class BaseGameLobbyManager {
   }
 
   public void removeLobby(int id, UUID client) {
+    if(client != getGameOwnerById(id)) return;
+    Map<UUID, BaseGameSocket> clients = getClientsFromGameState(client);
+    for(UUID key: clients.keySet()) {
+      serv.cmdExecutor.executeCommand(new SendCommandToPlayer(new BaseGameServerCommandsReceiver(clients, key, LobbyCommands.DELETE, null)));
+    }
     games.remove(id);
   }
 
