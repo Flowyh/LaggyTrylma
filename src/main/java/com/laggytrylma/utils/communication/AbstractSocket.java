@@ -11,7 +11,7 @@ public abstract class AbstractSocket implements Runnable {
   private final UUID uuid;
   private ObjectInput input;
   private ObjectOutput output;
-  private final Socket socket;
+  protected final Socket socket;
   public AbstractCommandHandler socketHandler;
 
   protected AbstractSocket(Socket socket) {

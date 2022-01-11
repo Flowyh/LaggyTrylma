@@ -11,13 +11,13 @@ import java.util.UUID;
 import static java.util.Collections.shuffle;
 
 public class BaseGameState {
-  private static BaseGameServer serv;
-  private static Game game = null;
-  public static int moves = 0;
-  public static int next = -1;
+  private BaseGameServer serv;
+  private Game game = null;
+  public int moves = 0;
+  public int next = -1;
   public int playerLimit = 6;
-  private static final ArrayList<UUID> currentClients = new ArrayList<>();
-  private static UUID gameOwner;
+  private final ArrayList<UUID> currentClients = new ArrayList<>();
+  private UUID gameOwner;
   private GameBuilderDirector gameBuilderDirector;
 
   public BaseGameState() { }

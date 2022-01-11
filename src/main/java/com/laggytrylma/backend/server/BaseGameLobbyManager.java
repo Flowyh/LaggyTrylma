@@ -115,7 +115,6 @@ public class BaseGameLobbyManager {
   }
 
   public void removeLobby(int id, UUID client) {
-    if(client != getGameOwnerById(id)) return;
     games.remove(id);
   }
 

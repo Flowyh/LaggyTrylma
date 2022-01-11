@@ -119,7 +119,6 @@ public class MessageHandler extends AbstractCommandHandler {
   // Placeholder
   static class LobbyCommandHandler {
     static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
-      Logger.debug("Lobby handler");
       switch (cmd.command()) {
         case "list_all" -> {
           return list_all(args);
@@ -129,7 +128,6 @@ public class MessageHandler extends AbstractCommandHandler {
     }
 
     private static int list_all(Map<String, String> args) {
-      Logger.debug("Listall handler");
       List<LobbyDescriptor> lobbies = new LinkedList<>();
         for(Map.Entry<String, String> entry : args.entrySet()){
           int id = Integer.parseInt(entry.getKey());
@@ -145,9 +143,5 @@ public class MessageHandler extends AbstractCommandHandler {
         lm.lobbiesList(lobbies);
         return 0;
     }
-
-
   }
-
-
-  }
+}
