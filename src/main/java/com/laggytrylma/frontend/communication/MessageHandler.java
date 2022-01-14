@@ -1,7 +1,9 @@
-package com.laggytrylma.frontend;
+package com.laggytrylma.frontend.communication;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.laggytrylma.common.models.Game;
+import com.laggytrylma.frontend.managers.GameManager;
+import com.laggytrylma.frontend.managers.LobbyManager;
 import com.laggytrylma.frontend.states.Context;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.AbstractCommandHandler;

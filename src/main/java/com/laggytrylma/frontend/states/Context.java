@@ -1,9 +1,8 @@
 package com.laggytrylma.frontend.states;
-import com.laggytrylma.frontend.ClientSocket;
-import com.laggytrylma.frontend.GameManager;
-import com.laggytrylma.frontend.LobbyManager;
+import com.laggytrylma.frontend.communication.ClientSocket;
+import com.laggytrylma.frontend.managers.GameManager;
+import com.laggytrylma.frontend.managers.LobbyManager;
 import com.laggytrylma.frontend.pages.PageManager;
-import com.laggytrylma.utils.Logger;
 
 public class Context {
     AbstractState state = new DisconnectedState(this);

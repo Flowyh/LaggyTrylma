@@ -1,5 +1,6 @@
-package com.laggytrylma.frontend;
+package com.laggytrylma.frontend.managers;
 
+import com.laggytrylma.frontend.communication.ClientSocket;
 import com.laggytrylma.utils.communication.commands.models.LobbyCommands;
 import com.laggytrylma.utils.communication.commands.models.LobbyDescriptor;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;

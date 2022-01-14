@@ -1,12 +1,10 @@
 package com.laggytrylma.frontend.states;
 
-import com.laggytrylma.frontend.ClientSocket;
+import com.laggytrylma.frontend.communication.ClientSocket;
 
-import com.laggytrylma.frontend.MessageHandler;
+import com.laggytrylma.frontend.communication.MessageHandler;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.models.ClientCommands;
-import com.laggytrylma.utils.communication.commands.models.GameCommands;
-import com.laggytrylma.utils.communication.commands.models.LobbyCommands;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
 
 import java.io.IOException;

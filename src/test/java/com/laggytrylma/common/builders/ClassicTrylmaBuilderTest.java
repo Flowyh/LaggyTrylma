@@ -1,6 +1,5 @@
 package com.laggytrylma.common.builders;
 
-import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Player;
 import org.junit.Test;
 
@@ -9,7 +8,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class ClassicTrylmaBuilderTest {

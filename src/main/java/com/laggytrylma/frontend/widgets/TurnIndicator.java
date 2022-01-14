@@ -2,7 +2,7 @@ package com.laggytrylma.frontend.widgets;
 
 import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Player;
-import com.laggytrylma.frontend.GameDisplayInterface;
+import com.laggytrylma.frontend.managers.GameDisplayInterface;
 
 import javax.swing.*;
 import java.awt.*;

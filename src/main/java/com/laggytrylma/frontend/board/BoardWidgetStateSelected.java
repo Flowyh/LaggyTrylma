@@ -16,7 +16,7 @@ public class BoardWidgetStateSelected extends BoardWidgetState {
 
     public void setSelected(SquareDisplayWrapper wrapper){
         selected = wrapper;
-        visitable = board.game.getAllowedMoves(wrapper.getSquare().getPiece()); // LAW OF DEMETER!!!!
+        visitable = board.game.getAllowedMoves(wrapper.getSquare().getPiece());
     }
 
     @Override
