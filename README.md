@@ -1,4 +1,4 @@
-##[Chińskie warcaby](https://en.wikipedia.org/wiki/Chinese_checkers)
+## [Chińskie warcaby](https://en.wikipedia.org/wiki/Chinese_checkers)
 
 Zadanie zaliczeniowa na Technologię Programowania Informatyka Algorytmiczna sem. 3.  
 
