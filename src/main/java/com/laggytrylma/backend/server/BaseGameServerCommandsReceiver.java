@@ -14,51 +14,119 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Receiver for GoF's Command pattern.
+ * Here lies all the logic which is needed for a successful command pattern execution.
+ */
 public class BaseGameServerCommandsReceiver {
+  /**
+   * Command client pool.
+   */
   private final Map<UUID, BaseGameSocket> clients;
+  /**
+   * Client's uuid.
+   */
   private UUID uuid;
+  /**
+   * Object to be sent over the socket.
+   */
   private Object msg;
+  /**
+   * Map of arguments for cmd wrapping.
+   */
   private Map<String, String> args;
+  /**
+   * Current command IModelCommands type.
+   */
   private IModelCommands cmd;
+  /**
+   * Client's game object.
+   */
   private Game game;
+  /**
+   * Client's player object.
+   */
   private Player player;
 
+  /**
+   * Class constructor
+   * @param clients command client pool
+   */
   public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients) {
     this.clients = clients;
   }
 
+  /**
+   * Class constructor
+   * @param clients command client pool
+   * @param msg object to be sent over the socket
+   */
   public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, Object msg) {
     this.clients = clients;
     this.msg = msg;
   }
 
+  /**
+   * Class constructor
+   * @param clients command client pool
+   * @param uuid client's uuid
+   */
   public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, UUID uuid) {
     this.clients = clients;
     this.uuid = uuid;
   }
 
+  /**
+   * Class constructor
+   * @param clients command client pool
+   * @param game client's game object
+   */
   public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, Game game) {
     this.clients = clients;
     this.game = game;
   }
 
+  /**
+   * Class constructor
+   * @param clients command client pool
+   * @param player client's player object
+   */
   public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, Player player) {
     this.clients = clients;
     this.player = player;
   }
 
+  /**
+   * Class constructor
+   * @param clients command client pool
+   * @param msg object to be sent over the socket
+   * @param uuid client's uuid
+   */
   public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, Object msg, UUID uuid) {
     this.clients = clients;
     this.msg = msg;
     this.uuid = uuid;
   }
 
+  /**
+   * Class constructor
+   * @param clients command client pool
+   * @param uuid client's uuid
+   * @param game client's game object
+   */
   public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, UUID uuid, Game game) {
     this.clients = clients;
     this.uuid = uuid;
     this.game = game;
   }
 
+  /**
+   * Class constructor
+   * @param clients command client pool
+   * @param uuid client's uuid
+   * @param cmd current command IModelCommands type
+   * @param args map of arguments for cmd wrapping
+   */
   public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, UUID uuid, IModelCommands cmd, Map<String, String> args) {
     this.clients = clients;
     this.uuid = uuid;
@@ -66,6 +134,13 @@ public class BaseGameServerCommandsReceiver {
     this.args = args;
   }
 
+  /**
+   * Class constructor
+   * @param clients command client pool
+   * @param msg object to be sent over the socket
+   * @param uuid client's uuid
+   * @param args map of arguments for cmd wrapping
+   */
   public BaseGameServerCommandsReceiver(Map<UUID, BaseGameSocket> clients, Object msg, UUID uuid, Map<String, String> args) {
     this.clients = clients;
     this.msg = msg;
@@ -73,7 +148,13 @@ public class BaseGameServerCommandsReceiver {
     this.args = args;
   }
 
-  // clients, msg
+
+
+  /**
+   * Message all client's command logic.
+   * Requires: clients, msg fields
+   * @return int execution status
+   */
   public int messageAll() {
     for (UUID key : clients.keySet()) {
       try {
@@ -85,7 +166,11 @@ public class BaseGameServerCommandsReceiver {
     return 1;
   }
 
-  // clients, uuid, msg
+  /**
+   * Message all clients excluding one command logic.
+   * Requires: clients, uuid, msg fields
+   * @return int execution status
+   */
   public int messageAllExcluding() {
     for (UUID key : clients.keySet()) {
       if(key == uuid) continue;
@@ -98,7 +183,11 @@ public class BaseGameServerCommandsReceiver {
     return 1;
   }
 
-  // clients, uuid, cmd, args
+  /**
+   * Send a specific command to given client command logic.
+   * Requires: clients, uuid, cmd, args fields
+   * @return int execution status
+   */
   public int sendCommandToPlayer() {
     JSONCommandWrapper<?> msg = new JSONCommandWrapper<>(cmd, args);
     try {
@@ -110,7 +199,11 @@ public class BaseGameServerCommandsReceiver {
     return 1;
   }
 
-  // clients, uuid
+  /**
+   * Send serialized player object to given player command logic.
+   * Requires: clients, uuid fields
+   * @return int execution status
+   */
   public int sendPlayerInfo() {
     BaseGameSocket client = clients.get(uuid);
     if(client == null) return -1;
@@ -121,7 +214,11 @@ public class BaseGameServerCommandsReceiver {
     return sendCommandToPlayer();
   }
 
-  // clients, uuid, game
+  /**
+   * Send serialized game object to a given player command logic.
+   * Requires: clients, uuid, game fields
+   * @return int execution status
+   */
   public int sendGame() {
     Map<String, String> args = new HashMap<>();
     args.put("game", ObjectJSONSerializer.serialize(game));
@@ -130,7 +227,11 @@ public class BaseGameServerCommandsReceiver {
     return sendCommandToPlayer();
   }
 
-  // clients
+  /**
+   * Send all clients their serialized player objects command logic.
+   * Requires: clients fields
+   * @return int execution status
+   */
   public int sendAllPlayerInfo() {
     for(UUID uuid: clients.keySet()) {
       this.uuid = uuid;
@@ -139,7 +240,11 @@ public class BaseGameServerCommandsReceiver {
     return 1;
   }
 
-  // clients, game
+  /**
+   * Send all clients serialized game object command logic.
+   * Requires: clients, game fields
+   * @return int execution status
+   */
   public int sendAllGame() {
     for(UUID uuid: clients.keySet()) {
       this.uuid = uuid;
@@ -148,7 +253,11 @@ public class BaseGameServerCommandsReceiver {
     return 1;
   }
 
-  // clients, game
+  /**
+   * Send all clients who is the next player in given game command logic.
+   * Requires: clients, game fields
+   * @return int execution status
+   */
   public int sendAllNextPlayer() {
     Map<String, String> args = new HashMap<>();
     args.put("player", Integer.toString(this.game.getCurrentPlayer().getId()));
@@ -158,7 +267,11 @@ public class BaseGameServerCommandsReceiver {
     return 1;
   }
 
-  // clients, player
+  /**
+   * Send all clients who is the game winner command logic.
+   * Requires: clients, player fields
+   * @return int execution status
+   */
   public int sendAllWinner() {
     Map<String, String> args = new HashMap<>();
     args.put("player", Integer.toString(this.player.getId()));

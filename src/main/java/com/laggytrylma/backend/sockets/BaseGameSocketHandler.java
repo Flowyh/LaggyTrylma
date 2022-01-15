@@ -13,17 +13,42 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Class for handling all the messages incoming from client connection sockets.
+ */
 public class BaseGameSocketHandler extends AbstractCommandHandler {
+  /**
+   * Bound BaseGameServer instance.
+   */
   protected static BaseGameServer serv;
+  /**
+   * Bound BaseGameServerCommandsExecutor instance.
+   */
   private static BaseGameServerCommandsExecutor cmdExecutor;
+  /**
+   * Bound BaseGameLobbyManager instance.
+   */
   private static BaseGameLobbyManager lobbyManager;
 
+  /**
+   * Bind BaseGameServer and it's associated BaseGameServerCommandsExecutor and BaseGameLobbyManager instances.
+   * @param s BaseGameServer instance.
+   */
   public void bindServer(BaseGameServer s) {
     serv = s;
     cmdExecutor = s.cmdExecutor;
     lobbyManager = s.lobbyManager;
   }
 
+  /**
+   * Handle given command.
+   * It should be properly deserialized first in processInput method ({@link com.laggytrylma.utils.communication.commands.AbstractCommandHandler#processInput(Object, UUID) See here})
+   * Then the proper command handler is determined by command's IModelCommands type, given arguments and issuer uuid.
+   * @param cmd IModelCommands type
+   * @param args Mapped command arguments to String keys and JSONs Strings.
+   * @param client issuer uuid
+   * @return Object command response
+   */
   @Override
   public Object handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
     Object result;
@@ -39,7 +64,17 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
     return result;
   }
 
+  /**
+   * Class for handling commands associated with Game model.
+   */
   private static class GameCommandHandler {
+    /**
+     * Handle Game commands.
+     * @param cmd IModelCommands type
+     * @param args Mapped command arguments to String keys and JSONs Strings
+     * @param client issuer uuid
+     * @return int execution status
+     */
     static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
       JSONCommandWrapper<?> cmdWrap = new JSONCommandWrapper<>(cmd, args);
       switch (cmd.command()) {
@@ -58,6 +93,11 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
       }
     }
 
+    /**
+     * Send player info to issuer.
+     * @param client issuer's uuid
+     * @return int execution status
+     */
     private static int playerInfoHandler(UUID client) {
       Map<UUID, BaseGameSocket> lobbyClients = lobbyManager.getClientsFromGameState(client);
       if (lobbyClients == null) return -1;
@@ -65,11 +105,25 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
       return 1;
     }
 
+    /**
+     * Start's game in issuer's lobby.
+     * @param client issuer's uuid.
+     * @return int execution status
+     */
     private static int startHandler(UUID client) {
       lobbyManager.startGame(client);
       return 1;
     }
 
+    /**
+     * Move piece in given lobby.
+     * Checks whether the move is legal and the piece was actually owned by the issuer.
+     * @param pieceJSON JSON String holding piece's info
+     * @param destJSON JSON String holding destination square's info
+     * @param client issuer's uuid
+     * @param res Response object to be send to all the clients if the move was successful
+     * @return int execution status
+     */
     private static int moveHandler(String pieceJSON, String destJSON, UUID client, String res) {
       int pieceId = Integer.parseInt(pieceJSON);
       int destId = Integer.parseInt(destJSON);
@@ -91,7 +145,17 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
     }
   }
 
+  /**
+   * Class for handling commands associated with Client model.
+   */
   private static class ClientCommandHandler {
+    /**
+     * Handle Client commands.
+     * @param cmd IModelCommands type
+     * @param args Mapped command arguments to String keys and JSONs Strings
+     * @param client issuer uuid
+     * @return int execution status
+     */
     static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
       switch (cmd.command()) {
         case "nickname" -> {
@@ -103,13 +167,29 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
       }
     }
 
+    /**
+     * Set client's nickname.
+     * @param nickname String new nickname
+     * @param client issuer uuid
+     * @return int execution status
+     */
     private static int nicknameHandler(String nickname, UUID client) {
       serv.getPlayerByUUID(client).setName(nickname);
       return 1;
     }
   }
 
+  /**
+   * Class for handling commands associated with Lobby model.
+   */
   private static class LobbyCommandHandler {
+    /**
+     * Handle Lobby commands.
+     * @param cmd IModelCommands type
+     * @param args Mapped command arguments to String keys and JSONs Strings
+     * @param client issuer uuid
+     * @return int execution status
+     */
     static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
       switch (cmd.command()) {
         case "create" -> {
@@ -142,6 +222,11 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
       }
     }
 
+    /**
+     * Create new lobby.
+     * @param client issuer's uuid
+     * @return int execution status
+     */
     private static int createHandler(UUID client) {
       int newLobbyId = lobbyManager.createNewLobby(client);
       lobbyManager.addNewClient(newLobbyId, client);
@@ -150,6 +235,14 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
       return cmdExecutor.executeCommand(new SendCommandToPlayer(new BaseGameServerCommandsReceiver(serv.getClients(), client, LobbyCommands.CREATE, args)));
     }
 
+    /**
+     * Send info of a given lobby to the issuer.
+     * If no id was specified we determine the lobby by issuer's uuid.
+     * If both didn't yield a proper lobby id, the command cannot be executed.
+     * @param id lobby id
+     * @param client issuer's uuid
+     * @return int execution status
+     */
     private static int infoHandler(String id, UUID client) {
       int lobbyId = id == null ? lobbyManager.getLobbyIdByClient(client) : Integer.parseInt(id);
       if(lobbyId == -1) return -1;
@@ -158,11 +251,24 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
       return cmdExecutor.executeCommand(new SendCommandToPlayer(new BaseGameServerCommandsReceiver(serv.getClients(), client, LobbyCommands.INFO, args)));
     }
 
+    /**
+     * Add new client to the lobby.
+     * @param id lobby id
+     * @param client issuer's uuid
+     * @return int execution status
+     */
     private static int joinHandler(String id, UUID client) {
       lobbyManager.addNewClient(Integer.parseInt(id), client);
       return 1;
     }
 
+    /**
+     * Delete lobby by given id.
+     * If issuer isn't the lobby owner, the command cannot be executed.
+     * @param id lobby id
+     * @param client issuer's uuid
+     * @return int execution status
+     */
     private static int deleteHandler(String id, UUID client) {
       int lobbyId = Integer.parseInt(id);
       if(lobbyManager.getGameOwnerById(lobbyId) != client) return -1;
@@ -170,11 +276,22 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
       return 1;
     }
 
+    /**
+     * Remove issuer's uuid from their lobby on leave.
+     * @param client issuer's uuid
+     * @return int execution status
+     */
     private static int leaveHandler(UUID client) {
       lobbyManager.removeClient(client);
       return 1;
     }
 
+    /**
+     * Set new player limit.
+     * @param player_limit new player limit
+     * @param client issuer's uuid
+     * @return int execution status
+     */
     private static int playerLimitHandler(String player_limit, UUID client) {
       BaseGameState gameState = lobbyManager.getGameStateByClient(client);
       if(!gameState.isOwner(client)) return -1;
@@ -182,6 +299,11 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
       return 1;
     }
 
+    /**
+     * Send info about all current lobbies to the issuer.
+     * @param client issuer's uuid
+     * @return int execution status
+     */
     static int listAllHandler(UUID client) {
       Map<String, String> args = lobbyManager.getAllLobbies();
       return cmdExecutor.executeCommand(new SendCommandToPlayer(new BaseGameServerCommandsReceiver(serv.getClients(), client, LobbyCommands.LIST_ALL, args)));

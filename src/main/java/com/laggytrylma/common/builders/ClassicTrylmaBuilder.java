@@ -7,10 +7,8 @@ import com.laggytrylma.common.models.Square;
 import com.laggytrylma.common.rules.AllPiecesInTargetWinRule;
 import com.laggytrylma.common.rules.FarMovement;
 import com.laggytrylma.common.rules.NearMovement;
-import com.laggytrylma.common.rules.NoLevingOfTargetBase;
+import com.laggytrylma.common.rules.NoLeavingOfTargetBase;
 import com.laggytrylma.utils.Logger;
-
-import java.awt.*;
 
 public class ClassicTrylmaBuilder extends AbstractGameBuilder{
     private Game game = null;
@@ -188,7 +186,7 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
         game.addRule(new NearMovement());
         game.addRule(new FarMovement());
         game.addRule(new AllPiecesInTargetWinRule());
-        game.addRule(new NoLevingOfTargetBase());
+        game.addRule(new NoLeavingOfTargetBase());
     }
 
     @Override
