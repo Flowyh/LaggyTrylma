@@ -18,7 +18,7 @@ public class ConnectionJSONSerializer extends StdSerializer<Connection> {
 
   /**
    * Class constructor, calls StdSerializer constructor.
-   * @param t Class<Connection>
+   * @param t Connection
    */
   protected ConnectionJSONSerializer(Class<Connection> t) {
       super(t);

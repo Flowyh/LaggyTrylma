@@ -92,7 +92,7 @@ public class Logger {
 
   /**
    * Display error OptionPane if UI's component root is present.
-   * Log error message to the console. (Skipped if depth < 1).
+   * Log error message to the console. (Skipped if depth less than 1).
    * @param msg Message to be written to the OptionPane
    */
   public static void error(String msg) {
@@ -106,7 +106,7 @@ public class Logger {
 
   /**
    * Log info message to the console.
-   * Skipped if depth < 2.
+   * Skipped if depth less than 2.
    * @param msg String to be logged.
    */
   public static void info(String msg) {
@@ -116,7 +116,7 @@ public class Logger {
 
   /**
    * Log debug message to the console.
-   * Skipped if depth < 3.
+   * Skipped if depth less than3.
    * @param msg String to be logged.
    */
   public static void debug(String msg) {
@@ -126,7 +126,7 @@ public class Logger {
 
   /**
    * Log test message to the console.
-   * Skipped if depth < 4.
+   * Skipped if depth less than 4.
    * @param msg String to be logged.
    */
   public static void test(String msg) {

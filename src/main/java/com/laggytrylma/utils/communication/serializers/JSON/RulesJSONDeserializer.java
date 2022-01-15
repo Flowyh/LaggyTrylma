@@ -21,7 +21,7 @@ public class RulesJSONDeserializer extends StdDeserializer<RuleInterface> {
     public RulesJSONDeserializer() { this(null); }
     /**
      * Class constructor, calls StdSerializer constructor.
-     * @param t Class<RuleInterface>
+     * @param t RuleInterface
      */
     public RulesJSONDeserializer(Class<RulesJSONDeserializer> t) {
         super(t);

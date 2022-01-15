@@ -18,7 +18,7 @@ public class JSONCommandSerializer extends StdSerializer<BaseCommandWrapper<?>> 
   protected JSONCommandSerializer() { this(null); }
   /**
    * Class constructor, calls StdSerializer constructor.
-   * @param t Class<BaseCommandWrapper>
+   * @param t BaseCommandWrapper
    */
   protected JSONCommandSerializer(Class<BaseCommandWrapper<?>> t) {
     super(t);

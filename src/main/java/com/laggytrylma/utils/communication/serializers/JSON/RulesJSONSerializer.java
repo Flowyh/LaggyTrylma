@@ -17,7 +17,7 @@ public class RulesJSONSerializer extends StdSerializer<RuleInterface> {
     protected RulesJSONSerializer() { this(null); }
     /**
      * Class constructor, calls StdSerializer constructor.
-     * @param t Class<RuleInterface>
+     * @param t RuleInterface
      */
     protected RulesJSONSerializer(Class<RuleInterface> t) {
         super(t);

@@ -24,7 +24,7 @@ public class GameJSONDeserializer extends StdDeserializer<Game> {
     public GameJSONDeserializer() { this(null); }
     /**
      * Class constructor, calls StdSerializer constructor.
-     * @param t Class<Game>
+     * @param t Game
      */
     public GameJSONDeserializer(Class<Game> t) {
         super(t);

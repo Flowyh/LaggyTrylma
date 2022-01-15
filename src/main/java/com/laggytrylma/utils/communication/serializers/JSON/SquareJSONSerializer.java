@@ -17,7 +17,7 @@ public class SquareJSONSerializer extends StdSerializer<Square> {
     protected SquareJSONSerializer() { this(null); }
   /**
    * Class constructor, calls StdSerializer constructor.
-   * @param t Class<Square>
+   * @param t Square
    */
     protected SquareJSONSerializer(Class<Square> t) {
       super(t);

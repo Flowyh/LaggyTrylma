@@ -22,7 +22,7 @@ public class JSONCommandDeserializer extends StdDeserializer<JSONCommandWrapper<
   public JSONCommandDeserializer() { this(null); }
   /**
    * Class constructor, calls StdSerializer constructor.
-   * @param t Class<BaseCommandWrapper>
+   * @param t BaseCommandWrapper
    */
   public JSONCommandDeserializer(Class<BaseCommandWrapper> t) {
     super(t);

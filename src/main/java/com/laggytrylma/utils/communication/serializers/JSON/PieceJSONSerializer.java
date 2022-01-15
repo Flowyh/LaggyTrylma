@@ -17,7 +17,7 @@ public class PieceJSONSerializer extends StdSerializer<Piece> {
     protected PieceJSONSerializer() { this(null); }
   /**
    * Class constructor, calls StdSerializer constructor.
-   * @param t Class<Piece>
+   * @param t Piece
    */
     protected PieceJSONSerializer(Class<Piece> t) {
         super(t);
