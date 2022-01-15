@@ -65,32 +65,32 @@ public class StatesTest {
         assertTrue(ctx.state instanceof DisconnectedState);
     }
 
-    @Test
-    public void testStateTransitions(){
-        MiniServer ms = new MiniServer();
-        Thread thread = new Thread(ms);
-        thread.start();
-        ctx.connect("127.0.0.1:21375", "kris");
-
-        assertTrue(ctx.state instanceof ConnectedState);
-        ctx.join(0);
-        assertTrue(ctx.state instanceof InGameState);
-        ctx.leave();
-        assertTrue(ctx.state instanceof ConnectedState);
-        ctx.createLobby(2);
-        assertTrue(ctx.state instanceof InGameState);
-        ctx.leave();
-        assertTrue(ctx.state instanceof ConnectedState);
-        ctx.disconnect();
-        assertTrue(ctx.state instanceof DisconnectedState);
-
-        ms.close();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+//    @Test
+//    public void testStateTransitions(){
+//        MiniServer ms = new MiniServer();
+//        Thread thread = new Thread(ms);
+//        thread.start();
+//        ctx.connect("127.0.0.1:21375", "kris");
+//
+//        assertTrue(ctx.state instanceof ConnectedState);
+//        ctx.join(0);
+//        assertTrue(ctx.state instanceof InGameState);
+//        ctx.leave();
+//        assertTrue(ctx.state instanceof ConnectedState);
+//        ctx.createLobby(2);
+//        assertTrue(ctx.state instanceof InGameState);
+//        ctx.leave();
+//        assertTrue(ctx.state instanceof ConnectedState);
+//        ctx.disconnect();
+//        assertTrue(ctx.state instanceof DisconnectedState);
+//
+//        ms.close();
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Test
     public void testIncorrectIP(){

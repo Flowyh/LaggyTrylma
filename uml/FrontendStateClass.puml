@@ -1,0 +1,34 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Context{
+    +connect(String address, String nick)
+    +disconnect()
+    +join(int game_id)
+    +leave()
+
+    +getPageManager(): PageManager
+    +getGameManager(): GameManager
+    +getLobbyManager(): LobbyManager
+    +setPageManager(PageManager pm)
+}
+
+LobbyManager <-o Context
+Context o->  GameManager
+
+abstract class AbstractState{
+    +connect(String address, String nick)
+    +disconnect()
+    +join(int game_id)
+    +leave()
+}
+
+Context o-> AbstractState
+
+class DisconnectedState extends AbstractState
+
+class ConnectedState extends AbstractState
+
+class InGameState extends AbstractState
+
+@enduml
