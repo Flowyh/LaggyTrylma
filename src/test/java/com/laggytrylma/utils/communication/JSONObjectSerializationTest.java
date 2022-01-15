@@ -1,5 +1,8 @@
 package com.laggytrylma.utils.communication;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.laggytrylma.common.builders.ClassicTrylmaBuilder;
 import com.laggytrylma.common.builders.GameBuilderDirector;
 import com.laggytrylma.common.models.Connection;
@@ -35,8 +38,20 @@ public class JSONObjectSerializationTest {
   }
 
   @Test
+  public void testObjectSerializationFail() {
+    assertNull(ObjectJSONSerializer.serialize(new JSONObjectSerializationTest()));
+  }
+
+  @Test
   public void testObjectDeserializationFail() {
     String test = "1asda{asda{asd{23";
+    assertNull(ObjectJSONSerializer.deserialize(test, Integer.class));
+  }
+
+  @Test
+  public void testObjectDeserializationJsonNodeFail() throws JsonProcessingException {
+    ObjectMapper mapper = new ObjectMapper();
+    JsonNode test = mapper.readTree("{\"k1\":\"v1\"}");
     assertNull(ObjectJSONSerializer.deserialize(test, Integer.class));
   }
 
@@ -51,6 +66,7 @@ public class JSONObjectSerializationTest {
     String serialized = ObjectJSONSerializer.serialize(trylma);
     Game trylma_deserialized = (Game)ObjectJSONSerializer.deserialize(serialized, Game.class);
 
+    assertNotNull(trylma_deserialized);
     assertEquals(trylma.getSquares().size(), trylma_deserialized.getSquares().size());
     assertEquals(trylma.getRules().size(), trylma_deserialized.getRules().size());
     assertEquals(trylma.getPieces().size(), trylma_deserialized.getPieces().size());
@@ -124,6 +140,13 @@ public class JSONObjectSerializationTest {
     String serialized = ObjectJSONSerializer.serialize(rule);
     assertEquals("{\"name\":\"com.laggytrylma.common.rules.FarMovement\"}", serialized);
     assertTrue(ObjectJSONSerializer.deserialize(serialized, RuleInterface.class) instanceof RuleInterface);
+  }
+
+  @Test
+  public void testRuleToJSONAllowedRuleFail(){
+    String serialized = "{\"name\":\"com.laggytrylma.common.rules.TESTESTT\"}";
+    assertEquals("{\"name\":\"com.laggytrylma.common.rules.TESTESTT\"}", serialized);
+    assertNull(ObjectJSONSerializer.deserialize(serialized, RuleInterface.class));
   }
 
   @Test

@@ -3,6 +3,7 @@ package com.laggytrylma.utils;
 import com.laggytrylma.helpers.AbstractSystemOutCatch;
 import org.junit.Test;
 
+import javax.swing.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -28,6 +29,15 @@ public class LoggerTest extends AbstractSystemOutCatch {
     Logger.setDepth(11);
     assertEquals("UNDEFINED", Logger.getLoggerDepth());
     Logger.setDepth(2);
+  }
+
+  @Test
+  public void testDialogPrompt() {
+    JFrame test = new JFrame();
+    Logger.setMessageBoxRoot(test);
+    Logger.error("Test");
+    Logger.setMessageBoxRoot(null);
+    test.dispose();
   }
 
   @Test

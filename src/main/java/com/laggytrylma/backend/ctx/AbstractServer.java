@@ -52,8 +52,8 @@ public abstract class AbstractServer {
   protected void close() {
     try {
       this.serverSocket.close();
-    } catch (IOException ioException) {
-      Logger.error(ioException.getMessage());
+    } catch (NullPointerException | IOException e) {
+      Logger.error(e.getMessage());
     }
   }
 
