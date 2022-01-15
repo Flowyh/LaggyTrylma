@@ -10,18 +10,42 @@ import com.laggytrylma.common.rules.NearMovement;
 import com.laggytrylma.common.rules.NoLeavingOfTargetBase;
 import com.laggytrylma.utils.Logger;
 
+/**
+ * Classic Trylma variant builder.
+ */
 public class ClassicTrylmaBuilder extends AbstractGameBuilder{
+    /**
+     * New Game instance.
+     */
     private Game game = null;
+    /**
+     * Array of Game's player objects.
+     */
     private Player[] players;
 
-    // diagonal coordinate system (u,v) ranging from 0 to 16 (inclusive), refer to drawings
+    /**
+     * 2D Array of Squares objects.
+     * Diagonal coordinate system (u,v) ranging from 0 to 16 (inclusive), refer to drawings
+     */
     Square[][] squares = new Square[17][17];
 
+    /**
+     * Converts Square's game coordinates to UI's (x, y) coordinates.
+     * @param u Square's game u coordinate
+     * @param v Square's game v coordinate
+     * @return UI's (x, y) coordinates
+     */
     private float[] convertCoordinatesToXY(int u, int v){
         float scale = 1/17f;
         return new float[] {scale * (v - u / 2f + 4), scale*u};
     }
 
+    /**
+     * Check whether Square is on "board" (outside pointing triangles).
+     * @param u Square's game u coordinate
+     * @param v Square's game v coordinate
+     * @return True if Square is on board, False if otherwise.
+     */
     private boolean onBoard(int u, int v){
         boolean insideDownPointingTriangle = (u >= 4) && (v <= 12) && (u-v <= 4);
         boolean insideUpPointingTriangle = (u <= 12) && (v >= 4) && (u-v >= -4);
@@ -30,7 +54,10 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
     }
 
     /**
-     * If cooridnates point to a Square inside the star, return it, otherwise return NULL;
+     * If coordinates point to a Square inside the star.
+     * @param u Square's game u coordinate
+     * @param v Square's game v coordinate
+     * @return Square object if it is inside the star, null if otherwise.
      */
     private Square getSquareConstrained(int u, int v){
         if(onBoard(u, v))
@@ -39,6 +66,11 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
             return null;
     }
 
+    /**
+     * Add connection to given square on (u, v) coordinates.
+     * @param u Square's u coordinate
+     * @param v Square's v coordinate
+     */
     private void addConnection(int u, int v){
         Square referenceSquare = getSquareConstrained(u, v);
         if(referenceSquare == null) {
@@ -61,11 +93,17 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
         }
     }
 
+    /**
+     * Instantiate a new Game object.
+     */
     @Override
     void makeInstance() {
         game = new Game();
     }
 
+    /**
+     * Instantiate squares and add them to Game's square list.
+     */
     @Override
     public void instantiateBoard() {
         // instantiate squares which are inside the start
@@ -80,6 +118,9 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
         }
     }
 
+    /**
+     * Add connections to every square.
+     */
     @Override
     public void makeConnections() {
         // add neighbours
@@ -90,6 +131,10 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
         }
     }
 
+    /**
+     * Connect player to the Game
+     * @param players Array of Game's Player objects
+     */
     @Override
     public void connectPlayers(Player[] players) {
         if(players.length != 6 && players.length != 4 && players.length != 3 && players.length != 2){
@@ -102,6 +147,9 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
         }
     }
 
+    /**
+     * Set Square's spawn/target Player objects.
+     */
     @Override
     public void setSquareOwnership() {
         for(int u=0; u<17; u++){
@@ -181,6 +229,9 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
         }
     }
 
+    /**
+     * Add classic Trylma rules to the Game instance.
+     */
     @Override
     public void addRules() {
         game.addRule(new NearMovement());
@@ -189,6 +240,9 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
         game.addRule(new NoLeavingOfTargetBase());
     }
 
+    /**
+     * Create Pieces object to the Game.
+     */
     @Override
     public void createPieces() {
         for(int u=0; u<17; u++) {
@@ -206,6 +260,9 @@ public class ClassicTrylmaBuilder extends AbstractGameBuilder{
         }
     }
 
+    /**
+     * @return new Game instance
+     */
     @Override
     public Game getResult() {
         return game;
