@@ -12,13 +12,29 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Custom JSONCommandWrapper.class JSON deserializer.
+ */
 public class JSONCommandDeserializer extends StdDeserializer<JSONCommandWrapper<?>>  {
-
+  /**
+   * Empty constructor (Jackson requires this).
+   */
   public JSONCommandDeserializer() { this(null); }
+  /**
+   * Class constructor, calls StdSerializer constructor.
+   * @param t BaseCommandWrapper
+   */
   public JSONCommandDeserializer(Class<BaseCommandWrapper> t) {
     super(t);
   }
 
+  /**
+   * Deserialize JSONCommandWrapper JSON String into JSONCommandWrapper object using Jackson custom deserializer.
+   * @param jsonParser JsonParser
+   * @param deserializationContext DeserializationContext
+   * @return deserialized JSONCommandWrapper object
+   * @throws IOException something bad happened.
+   */
   @Override
   public JSONCommandWrapper<?> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);

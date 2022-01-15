@@ -1,0 +1,112 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class GameBuilderDirector{
+    +setPlayers(Player[] players)
+    +build() : Game
+}
+
+class AbstractGameBuilder{
+    +makeInstance()
+    +instantiateBoard()
+    +makeConnections()
+    +connectPlayers(Player[] players)
+    +setSquareOwnership()
+    +addRules()
+    +createPieces()
+    +getResult(): Game
+}
+
+class ClassicTrylmaBuilder{
+    +makeInstance()
+    +instantiateBoard()
+    +makeConnections()
+    +connectPlayers(Player[] players)
+    +setSquareOwnership()
+    +addRules()
+    +createPieces()
+    +getResult(): Game
+}
+
+GameBuilderDirector o-> AbstractGameBuilder
+AbstractGameBuilder <|- ClassicTrylmaBuilder
+
+
+class Game{
++move(piece, destination): boolean
++getWinner(): Player
++getAllowedMoves(piece): Set<Square>
+
++addPlayer(player)
++addPiece(piece)
++addRule(rule)
++addSquare(square)
+
++getSquareById(id)
++getPieceById(id)
++getPlayerById(id)
+}
+
+class Piece{
+    -int id
+    -Player owner
+    -Square square
+    getSquare()
+    getPlayer()
+}
+
+class Square{
+-int id
+-List<Connection> connections
+-Player spawn, target
+-Piece piece
+
++addConnection(near, far): void
++setSpawnAndTarget(spawn, target) : void
++setPiece(Piece piece) : void
+
++getPiece()
++getSpawn()
++getTarget()
+}
+
+class Connection{
++Square near, far
+}
+
+class Player{
+-int id
+-String name
+-Color color
+}
+
+interface MovementRulesInterface{
+    +getAllowedMoves(Piece piece): Set<Square>
+    +filterBannedMoves(Piece piece, Set<Square> targets): Set<Square>
+}
+
+
+MovementRulesInterface <|-- FarMovement
+MovementRulesInterface <|-- NearMovement
+MovementRulesInterface <|-- NoLeavingOfTargetBase
+
+
+interface WinRulesInterface{
+ +getWinner(Game game) : Player
+}
+WinRulesInterface <|-- AllPiecesInTargetWinRule
+
+
+Game *--> Square
+Game *--> Piece
+Game *--> Player
+Square *--> Connection
+Game *---> WinRulesInterface
+Game *---> MovementRulesInterface
+
+Square <-> Piece
+Piece -> Player
+
+AbstractGameBuilder -- Game : <<creates>>
+
+@enduml

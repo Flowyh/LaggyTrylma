@@ -7,13 +7,29 @@ import com.laggytrylma.common.models.Square;
 
 import java.io.IOException;
 
+/**
+ * Custom Square.class JSON serializer.
+ */
 public class SquareJSONSerializer extends StdSerializer<Square> {
-
+  /**
+   * Empty constructor (Jackson requires this).
+   */
     protected SquareJSONSerializer() { this(null); }
+  /**
+   * Class constructor, calls StdSerializer constructor.
+   * @param t Square
+   */
     protected SquareJSONSerializer(Class<Square> t) {
       super(t);
     }
 
+  /**
+   * Serialize Square object into JSON String using Jackson custom serializer.
+   * @param square Square
+   * @param jsonGenerator JsonGenerator
+   * @param serializerProvider SerializerProvider
+   * @throws IOException something bad happened.
+   */
     @Override
     public void serialize(Square square, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
       jsonGenerator.writeStartObject();

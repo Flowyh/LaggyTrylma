@@ -8,9 +8,21 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * GoF's builder pattern for creating new BaseGameSocket instances.
+ */
 public class BaseGameSocketBuilder implements AbstractSocketBuilder {
+  /**
+   * New BaseGameSocket instance holder.
+   */
   BaseGameSocket socket;
 
+  /**
+   * Create new BaseGameSocket instance, bind socket connection and set Input/OutputStreams.
+   * @param socket client's connection socket
+   * @return AbstractSocketBuilder for next methods
+   * @throws IOException socket exceptions
+   */
   @Override
   public AbstractSocketBuilder setSocket(Socket socket) throws IOException {
     this.socket = new BaseGameSocket(socket);
@@ -19,6 +31,10 @@ public class BaseGameSocketBuilder implements AbstractSocketBuilder {
     return this;
   }
 
+  /**
+   * Setup socket handler and call socket's setup method.
+   * @return AbstractSocketBuilder for next methods
+   */
   @Override
   public AbstractSocketBuilder setupSocket() {
     this.socket.setSocketHandler(new BaseGameSocketHandler());
@@ -26,6 +42,10 @@ public class BaseGameSocketBuilder implements AbstractSocketBuilder {
     return this;
   }
 
+  /**
+   * Return created BaseGameSocket instance.
+   * @return AbstractSocket new instance.
+   */
   @Override
   public AbstractSocket build() {
     return socket;

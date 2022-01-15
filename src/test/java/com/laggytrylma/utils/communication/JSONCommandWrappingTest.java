@@ -1,11 +1,17 @@
 package com.laggytrylma.utils.communication;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.laggytrylma.utils.communication.commands.models.GameCommands;
+import com.laggytrylma.utils.communication.commands.models.IModelCommands;
 import com.laggytrylma.utils.communication.commandwrappers.BaseCommandWrapper;
+import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandSerializer;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
 import org.junit.Test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -57,5 +63,24 @@ public class JSONCommandWrappingTest {
     String res = test.serialize();
     assertNull(res);
     verify(test).serialize();
+  }
+
+  @Test
+  public void testSerializeFail() {
+    Map<String, String > args = new HashMap<>();
+    IModelCommands mockCmd = new IModelCommands() {
+      @Override
+      public String command() {
+        return (String) new Object();
+      }
+
+      @Override
+      public String model() {
+        return (String) new Object();
+      }
+    };
+    JSONCommandWrapper<?> test = new JSONCommandWrapper<>(mockCmd, args);
+    String res = test.serialize();
+    assertNull(res);
   }
 }

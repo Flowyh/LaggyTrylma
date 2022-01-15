@@ -1,0 +1,62 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface GameDisplayInterface{
++startGame(Game game)
++setWhoAmI(Player player)
++removeGame()
++win(Player winner)
++update()
+}
+
+class BoardWidget implements GameDisplayInterface{
+    +attachControl(LocalGameInput control)
+    +setState(AbstractBoardState state)
+    +clickedOn(SquareDisplayWrapper squareWrapper)
+    +movePiece(Piece piece, Square destination)
+
+}
+
+class Game
+BoardWidget --> Game
+
+LocalGameInput <- BoardWidget
+interface LocalGameInput{
++localMove(Piece piece, Square destination): boolean
+}
+
+
+BoardWidget *--> SquareDisplayWrapper
+class SquareDisplayWrapper{
+-Square square
+-Shape shape
+
++draw(Graphics2D g2d)
++drawHighlighted(Graphics2D g2d)
++contains(Point2D point) : boolean
+}
+
+BoardWidget o-> AbstractBoardState
+
+abstract class AbstractBoardState{
+    +AbstractBoardState(BoardWidget board)
+    +clickedOn(SquareDisplayWrapper wrapper)
+    +draw(Graphics2D g2d)
+}
+
+class BoardStateIdle extends AbstractBoardState{
+
+}
+
+class BoardStateSelected extends AbstractBoardState{
+
+}
+
+
+'split
+
+
+
+
+
+@enduml

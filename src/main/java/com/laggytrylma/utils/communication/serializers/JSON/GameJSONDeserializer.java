@@ -8,20 +8,35 @@ import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Piece;
 import com.laggytrylma.common.models.Player;
 import com.laggytrylma.common.models.Square;
-import com.laggytrylma.common.rules.MovementRulesInterface;
 import com.laggytrylma.common.rules.RuleInterface;
 
 
 import java.io.IOException;
 import java.util.Iterator;
 
+/**
+ * Custom Game.class JSON deserializer.
+ */
 public class GameJSONDeserializer extends StdDeserializer<Game> {
-
+    /**
+     * Empty constructor (Jackson requires this).
+     */
     public GameJSONDeserializer() { this(null); }
+    /**
+     * Class constructor, calls StdSerializer constructor.
+     * @param t Game
+     */
     public GameJSONDeserializer(Class<Game> t) {
         super(t);
     }
 
+    /**
+     * Deserialize Game JSON String into Game object using Jackson custom deserializer.
+     * @param jsonParser JsonParser
+     * @param deserializationContext DeserializationContext
+     * @return deserialized Game object
+     * @throws IOException something bad happened.
+     */
     @Override
     public Game deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         JsonNode root = jsonParser.readValueAsTree();

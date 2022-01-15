@@ -4,8 +4,8 @@ import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Piece;
 import com.laggytrylma.common.models.Player;
 import com.laggytrylma.common.models.Square;
-import com.laggytrylma.frontend.GameDisplayInterface;
-import com.laggytrylma.frontend.LocalGameInput;
+import com.laggytrylma.frontend.managers.GameDisplayInterface;
+import com.laggytrylma.frontend.managers.LocalGameInput;
 import com.laggytrylma.utils.Logger;
 
 

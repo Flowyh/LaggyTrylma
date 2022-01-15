@@ -7,7 +7,15 @@ import com.laggytrylma.common.models.Square;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Move to nearest empty Square rule.
+ */
 public class NearMovement implements MovementRulesInterface {
+    /**
+     * Check if Piece's near neighbours are not occupied.
+     * @param piece Piece to be checked
+     * @return Set of visitable squares.
+     */
     @Override
     public Set<Square> getAllowedMoves(Piece piece) {
         Set<Square> visitable = new HashSet<>();
@@ -22,6 +30,12 @@ public class NearMovement implements MovementRulesInterface {
         return visitable;
     }
 
+    /**
+     * No filtering
+     * @param piece Piece to be checked
+     * @param targets Set of visitable squares (pre-filtered).
+     * @return same Set of visitable squares (pre-filtered).
+     */
     @Override
     public Set<Square> filterBannedMoves(Piece piece, Set<Square> targets) {
         return targets;

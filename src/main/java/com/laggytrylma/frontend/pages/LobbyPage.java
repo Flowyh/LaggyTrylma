@@ -1,6 +1,6 @@
 package com.laggytrylma.frontend.pages;
 
-import com.laggytrylma.frontend.LobbyDisplayInterface;
+import com.laggytrylma.frontend.managers.LobbyDisplayInterface;
 import com.laggytrylma.frontend.states.Context;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.models.LobbyDescriptor;

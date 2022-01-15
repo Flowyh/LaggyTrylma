@@ -14,7 +14,7 @@ public class NoLeavingOfTargetBaseTest {
   @Test
   public void testNoLeavingOfTargetBaseCantLeave() {
     Game game = new Game();
-    NoLevingOfTargetBase test = new NoLevingOfTargetBase();
+    NoLeavingOfTargetBase test = new NoLeavingOfTargetBase();
     NearMovement nearMovement = new NearMovement();
     Square square = new Square(1, 1, 1);
     Square dest = new Square(2,2,2);

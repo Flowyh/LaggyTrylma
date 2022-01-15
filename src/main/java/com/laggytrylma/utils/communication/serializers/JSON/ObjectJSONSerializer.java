@@ -8,19 +8,31 @@ import com.laggytrylma.common.models.Connection;
 import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Piece;
 import com.laggytrylma.common.models.Square;
-import com.laggytrylma.common.rules.MovementRulesInterface;
 import com.laggytrylma.common.rules.RuleInterface;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.serializers.AbstractObjectSerializer;
 
 import java.awt.*;
 
+/**
+ * Class for serializing various object into JSONs.
+ * Uses GoF's Singleton pattern to keep only one instance of it.
+ */
 public class ObjectJSONSerializer extends AbstractObjectSerializer {
+  /**
+   * Jackson's object mapper
+   */
   private static final ObjectMapper objectMapper = new ObjectMapper();
 
-  // SINGLETON
+  /**
+   * GoF's singleton instance.
+   */
   private static ObjectJSONSerializer instance = new ObjectJSONSerializer();
-  // DOUBLE-CHECKED LOCKING
+
+  /**
+   * Get instance of this class using double-checked locking method.
+   * @return ObjectJSONSerializer instance.
+   */
   public static ObjectJSONSerializer getInstance() {
     ObjectJSONSerializer localRef = instance;
     if (localRef == null) {
@@ -34,10 +46,16 @@ public class ObjectJSONSerializer extends AbstractObjectSerializer {
     return localRef;
   }
 
+  /**
+   * ObjectJSONSerializer constructor.
+   */
   private ObjectJSONSerializer() {
     setup();
   }
 
+  /**
+   * Setup serializers and deserializers.
+   */
   @Override
   protected void setup() {
     SimpleModule module = new SimpleModule();
@@ -55,6 +73,11 @@ public class ObjectJSONSerializer extends AbstractObjectSerializer {
     objectMapper.readerFor(Color.class);
   }
 
+  /**
+   * Serializer given Object into JSON String.
+   * @param o Object to be serialized
+   * @return JSON String
+   */
   public static String serialize(Object o) {
     try {
         return objectMapper.writeValueAsString(o);
@@ -64,6 +87,12 @@ public class ObjectJSONSerializer extends AbstractObjectSerializer {
     return null;
   }
 
+  /**
+   * Deserialize given JSON String into given Class type.
+   * @param o JSON String
+   * @param cl Class type to be deserialized into
+   * @return new Class instance
+   */
   public static Object deserialize(String o, Class<?> cl) {
     try {
       return objectMapper.readValue(o, cl);
@@ -73,6 +102,12 @@ public class ObjectJSONSerializer extends AbstractObjectSerializer {
     return null;
   }
 
+  /**
+   * Deserialize given JsonNode into given Class type.
+   * @param node JsonNode
+   * @param cl Class type to be deserialized into
+   * @return new Class instance
+   */
   public static Object deserialize(JsonNode node, Class<?> cl){
     try {
       return objectMapper.treeToValue(node, cl);

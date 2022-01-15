@@ -1,7 +1,5 @@
 package com.laggytrylma.frontend.board;
 
-import com.laggytrylma.frontend.board.SquareDisplayWrapper;
-
 import java.awt.*;
 
 public abstract class BoardWidgetState {

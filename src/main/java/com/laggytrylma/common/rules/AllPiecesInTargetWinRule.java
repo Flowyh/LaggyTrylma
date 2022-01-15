@@ -9,7 +9,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * All pieces in target triangle win condition.
+ */
 public class AllPiecesInTargetWinRule implements WinRulesInterface{
+    /**
+     * Check whether all Player's pieces are within target triangle.
+     * @param game Game object
+     * @return Player winner
+     */
     @Override
     public Player getWinner(Game game) {
         List<Player> potentialWinners = new LinkedList<>(game.getPlayers());

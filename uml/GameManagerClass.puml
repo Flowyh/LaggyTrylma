@@ -1,0 +1,43 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class GameManager implements LocalGameInput, RemoteGameInput{
+    +attachClientSocket(ClientSocket clientSocket)
+    +attachGameDisplay(GameDisplayInterface gameDisplay)
+}
+
+GameManager --> Game
+GameManager o-> GameDisplayInterface
+class Game
+
+interface LocalGameInput{
++localMove(Piece piece, Square destination) : boolean
+}
+interface RemoteGameInput{
+    +remoteMove(int pieceId, int destId)
+    +startGame(Game game)
+    +assignPlayer(int playerId)
+    +setCurrentPlayer(int nextPlayer)
+    +win(int playerId)
+}
+
+interface GameDisplayInterface{
+        void updateGame()
+        void startGame(Game game)
+        void setWhoAmI(Player player)
+        void removeGame()
+        void win(Player winner)
+}
+
+class ClientSocket{
+    +ClientSocket(Socket socket)
+    +sendMessage(JSONCommandWrapper msg) : boolean
+    +setup()
+    +listen()
+    +close()
+}
+
+'ClientSocket -> RemoteGameInput
+ClientSocket <- GameManager
+
+@enduml

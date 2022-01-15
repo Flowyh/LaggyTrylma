@@ -1,15 +1,14 @@
-package com.laggytrylma.frontend;
+package com.laggytrylma.frontend.managers;
 
 import com.laggytrylma.common.models.Game;
 import com.laggytrylma.common.models.Piece;
 import com.laggytrylma.common.models.Player;
 import com.laggytrylma.common.models.Square;
+import com.laggytrylma.frontend.communication.ClientSocket;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.models.GameCommands;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
 
-import javax.swing.*;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,12 +41,8 @@ public class GameManager implements LocalGameInput, RemoteGameInput {
         args.put("piece", Integer.toString(piece.getId()));
         args.put("destination", Integer.toString(destination.getId()));
         JSONCommandWrapper<?> msg = new JSONCommandWrapper<>(GameCommands.MOVE, args);
-        boolean succes = clientSocket.sendMessage(msg);
-        if(!succes){
-            return false;
-        }
-
-        return true;
+        boolean success = clientSocket.sendMessage(msg);
+        return success;
     }
 
     @Override
@@ -81,10 +76,6 @@ public class GameManager implements LocalGameInput, RemoteGameInput {
     public void setCurrentPlayer(int nextPlayer) {
         Player player = game.getPlayerById(nextPlayer);
         game.setCurrentPlayer(player);
-
-        if(player == me){
-            Logger.debug("My turn!");
-        }
 
         updateDisplays();
     }

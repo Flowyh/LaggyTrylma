@@ -1,4 +1,4 @@
-package com.laggytrylma.frontend;
+package com.laggytrylma.frontend.managers;
 
 import com.laggytrylma.common.models.Piece;
 import com.laggytrylma.common.models.Square;
