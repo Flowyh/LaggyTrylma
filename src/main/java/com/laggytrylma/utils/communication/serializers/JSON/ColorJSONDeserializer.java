@@ -9,7 +9,17 @@ import com.fasterxml.jackson.databind.node.TextNode;
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * Custom Color.class JSON deserializer.
+ */
 public class ColorJSONDeserializer extends JsonDeserializer<Color> {
+  /**
+   * Deserialize Color JSON String using Jackson custom deserializer.
+   * @param p JsonParser
+   * @param ctx DeserializationContext
+   * @return Color object
+   * @throws IOException something bad happened
+   */
   @Override
   public Color deserialize(JsonParser p, DeserializationContext ctx) throws IOException {
     TreeNode root = p.getCodec().readTree(p);

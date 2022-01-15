@@ -11,13 +11,26 @@ import com.laggytrylma.utils.communication.commands.models.IModelCommands;
 
 import java.util.Map;
 
+/**
+ * Command JSON Wrapper.
+ * @param <T> Command enum type of given model (IModelCommands).
+ */
 @JsonSerialize(using = JSONCommandSerializer.class)
 @JsonDeserialize(using = JSONCommandDeserializer.class)
 public class JSONCommandWrapper<T extends IModelCommands> extends BaseCommandWrapper<T> {
+  /**
+   * Class constructor. Calls BaseCommandWrapper constructor.
+   * @param cmd given IModelCommands type
+   * @param args command arguments
+   */
   public JSONCommandWrapper(T cmd, Map<String, String> args) {
     super(cmd, args);
   }
 
+  /**
+   * Deserialize into JSONCommandWrapper using serialized JSON String.
+   * @param serialized JSON String
+   */
   public JSONCommandWrapper(String serialized) {
     super(serialized);
     try {
@@ -32,6 +45,10 @@ public class JSONCommandWrapper<T extends IModelCommands> extends BaseCommandWra
     }
   }
 
+  /**
+   * Serialize wrapper into JSON String.
+   * @return serialized JSON String. Null if an exception was caught.
+   */
   @Override
   public String serialize() {
     try {
