@@ -33,3 +33,6 @@ target/
 hs_err_pid*
 replay_pid*
 /docs/
+
+# Environment variables
+/src/main/resources/application.properties

@@ -1,11 +1,9 @@
 package com.laggytrylma.backend;
 
 import com.laggytrylma.common.models.Game;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.bson.types.ObjectId;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
 public class GameRepoWrap {
@@ -15,10 +13,10 @@ public class GameRepoWrap {
         repository = gameRepo;
     }
 
-    public void save(Game game){
+    public void create(Game game){
         GameArchive ga = new GameArchive(game);
         repository.save(ga);
-    };
+    }
 
     public List<Game> findAll(){
         List<Game> games = new LinkedList<>();
@@ -28,5 +26,30 @@ public class GameRepoWrap {
         }
 
         return games;
+    }
+
+    public Map<ObjectId, Date> getArchivedIdsDates() {
+        Map<ObjectId, Date> result = new HashMap<>();
+        for(GameArchive ga : repository.findAll()){
+            result.put(ga.id, ga.creationDate);
+        }
+        return result;
+    }
+
+    public Game getGameById(String id) {
+        if(repository.findById(id).isEmpty()) return null;
+        GameArchive game = repository.findById(id).get();
+        return game.getGame();
+    }
+
+    public void deleteGameById(String id) {
+        repository.deleteById(id);
+    }
+
+    public void updateGameById(String id, Game game) {
+        if(repository.findById(id).isEmpty()) return;
+        GameArchive ga = repository.findById(id).get();
+        ga.setGame(game);
+        repository.save(ga);
     }
 }
