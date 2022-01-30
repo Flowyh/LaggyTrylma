@@ -26,6 +26,11 @@ public class Game {
      * List of Game's Players.
      */
     private final List<Player> players = new LinkedList<>();
+
+    /**
+     * List of Game's win conditions.
+     */
+    private final List<Move> movesHistory = new LinkedList<>();
     /**
      * List of Game's rules.
      */
@@ -131,6 +136,7 @@ public class Game {
         Square startingSquare = piece.getSquare();
         startingSquare.setPiece(null);
         piece.setSquare(finalPosition);
+        movesHistory.add(new Move(piece, startingSquare, finalPosition));
 
         return true;
     }
