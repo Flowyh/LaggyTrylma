@@ -8,12 +8,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 
+@Component
 public class GameRepoWrap {
+    @Autowired
     GameRepo repository;
-
-    GameRepoWrap(GameRepo gameRepo){
-        repository = gameRepo;
-    }
 
     public void save(Game game){
         GameArchive ga = new GameArchive(game);
