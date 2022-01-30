@@ -4,6 +4,11 @@ package com.laggytrylma.utils.communication.commands.models;
  * Enum holding all Lobby model possible commands.
  */
 public enum LobbyCommands implements IModelCommands {
+
+  LIST_ARCHIVE("list_archive"),
+
+  GET_ARCHIVED_GAME("get_archived_game"),
+
   /**
    * Create new model.
    */
@@ -40,6 +45,8 @@ public enum LobbyCommands implements IModelCommands {
    * List all available lobbies.
    */
   LIST_ALL("list_all");
+
+
 
   /**
    * Command name.

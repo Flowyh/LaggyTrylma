@@ -3,6 +3,7 @@ package com.laggytrylma.frontend.pages;
 import com.laggytrylma.frontend.managers.LobbyDisplayInterface;
 import com.laggytrylma.frontend.states.Context;
 import com.laggytrylma.utils.Logger;
+import com.laggytrylma.utils.communication.ArchiveGameDescriptor;
 import com.laggytrylma.utils.communication.commands.models.LobbyDescriptor;
 import net.miginfocom.swing.MigLayout;
 
@@ -44,10 +45,16 @@ public class LobbyPage extends Page implements LobbyDisplayInterface {
         title.setFont(new Font("Open Sans Light", Font.BOLD, 30));
         this.add(title, "center, gapbottom 30, wrap");
 
+        JButton archiveButton = new JButton("Games archive");
+        archiveButton.setFont(new Font("Open Sans Light", Font.PLAIN, 15));
+        archiveButton.addActionListener((e) -> ctx.getPageManager().push("ARCHIVE"));
+        this.add(archiveButton, "sg button, center, wrap");
+
         JButton newGameButton = new JButton("New game");
         newGameButton.setFont(new Font("Open Sans Light", Font.PLAIN, 15));
         newGameButton.addActionListener((e) -> ctx.getPageManager().push("NEW_GAME"));
         this.add(newGameButton, "sg button, center, wrap");
+
 
         gamesList = new JPanel();
         this.add(gamesList, "grow, wrap, height 90%");
@@ -91,5 +98,10 @@ public class LobbyPage extends Page implements LobbyDisplayInterface {
     @Override
     public void updateListAllLobbies(List<LobbyDescriptor> lobbies) {
         updateGames(lobbies);
+    }
+
+    @Override
+    public void updateArchive(List<ArchiveGameDescriptor> archivedGames) {
+
     }
 }

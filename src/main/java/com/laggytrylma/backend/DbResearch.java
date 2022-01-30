@@ -17,17 +17,15 @@ import java.util.Map;
 @SpringBootApplication
 @EnableMongoAuditing
 public class DbResearch implements CommandLineRunner {
-    @Autowired
-    GameRepo repository;
 
+    @Autowired
+    GameRepoWrap repoWrap;
 
     public static void main(String[] args){
         SpringApplication.run(DbResearch.class, args);
     }
 
     public void run(String... args) throws Exception{
-        GameRepoWrap repoWrap = new GameRepoWrap(repository);
-
         GameBuilderDirector gbd = new GameBuilderDirector(new ClassicTrylmaBuilder());
         gbd.setPlayers(new Player[] {new Player(), new Player()});
         Game game = gbd.build();

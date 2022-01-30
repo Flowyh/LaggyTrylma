@@ -6,7 +6,9 @@ import org.bson.types.ObjectId;
 import java.util.*;
 
 
+@Component
 public class GameRepoWrap {
+    @Autowired
     GameRepo repository;
 
     GameRepoWrap(GameRepo gameRepo){
