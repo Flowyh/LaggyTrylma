@@ -1,5 +1,6 @@
 package com.laggytrylma.backend.ctx;
 
+import com.laggytrylma.backend.GameRepoWrap;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.AbstractSocket;
 import com.laggytrylma.utils.communication.AbstractSocketBuilder;
@@ -39,6 +40,8 @@ public abstract class AbstractServer {
    * Is the server running?
    */
   protected boolean running = true;
+
+  protected GameRepoWrap repoWrapper;
 
   /**
    * AbstractServer class constructor
@@ -124,4 +127,8 @@ public abstract class AbstractServer {
    * Negate server's running flag.
    */
   protected void flipRunFlag() { running = !running; }
+
+  public void bindRepoWrapper(GameRepoWrap repoWrap) {
+    this.repoWrapper = repoWrap;
+  }
 }

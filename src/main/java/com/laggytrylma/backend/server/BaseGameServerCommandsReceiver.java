@@ -6,6 +6,7 @@ import com.laggytrylma.common.models.Player;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.models.GameCommands;
 import com.laggytrylma.utils.communication.commands.models.IModelCommands;
+import com.laggytrylma.utils.communication.commands.models.LobbyCommands;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
 import com.laggytrylma.utils.communication.serializers.JSON.ObjectJSONSerializer;
 
@@ -223,7 +224,6 @@ public class BaseGameServerCommandsReceiver {
     Map<String, String> args = new HashMap<>();
     args.put("game", ObjectJSONSerializer.serialize(game));
     this.args = args;
-    this.cmd = GameCommands.START;
     return sendCommandToPlayer();
   }
 
@@ -245,7 +245,8 @@ public class BaseGameServerCommandsReceiver {
    * Requires: clients, game fields
    * @return int execution status
    */
-  public int sendAllGame() {
+  public int startGame() {
+    this.cmd = GameCommands.START;
     for(UUID uuid: clients.keySet()) {
       this.uuid = uuid;
       sendGame();
@@ -279,5 +280,15 @@ public class BaseGameServerCommandsReceiver {
     this.msg = msg.serialize();
     messageAll();
     return 1;
+  }
+
+  /**
+   * Send serialized game object to a given player command logic.
+   * Requires: clients, uuid, game fields
+   * @return int execution status
+   */
+  public int sendArchivedGame() {
+    this.cmd = LobbyCommands.GET_ARCHIVED_GAME;
+    return sendGame();
   }
 }

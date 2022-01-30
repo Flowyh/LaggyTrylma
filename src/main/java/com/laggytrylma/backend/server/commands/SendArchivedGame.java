@@ -2,10 +2,7 @@ package com.laggytrylma.backend.server.commands;
 
 import com.laggytrylma.backend.server.BaseGameServerCommandsReceiver;
 
-/**
- * Send all clients serialized game object.
- */
-public class SendAllGame implements BaseServerCommand {
+public class SendArchivedGame implements BaseServerCommand {
   /**
    * Command emitter.
    */
@@ -15,7 +12,7 @@ public class SendAllGame implements BaseServerCommand {
    * Class constructor
    * @param em new command emitter
    */
-  public SendAllGame(BaseGameServerCommandsReceiver em) {
+  public SendArchivedGame(BaseGameServerCommandsReceiver em) {
     this.emitter = em;
   }
 
@@ -25,6 +22,6 @@ public class SendAllGame implements BaseServerCommand {
    */
   @Override
   public int execute() {
-    return emitter.sendAllGame();
+    return emitter.sendArchivedGame();
   }
 }

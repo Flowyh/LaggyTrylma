@@ -1,5 +1,6 @@
 package com.laggytrylma.backend.server;
 
+import com.laggytrylma.backend.GameRepoWrap;
 import com.laggytrylma.backend.ctx.AbstractServer;
 import com.laggytrylma.common.models.Player;
 import com.laggytrylma.utils.communication.AbstractSocketBuilder;
@@ -39,6 +40,8 @@ public class BaseGameServer extends AbstractServer {
    * Current client/player id.
    */
   private int clientID = 0;
+
+  public final GameRepoWrap repoWrapper = super.repoWrapper;
 
   /**
    * Class constructor

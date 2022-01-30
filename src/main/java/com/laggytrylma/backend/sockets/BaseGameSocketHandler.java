@@ -5,6 +5,8 @@ import com.laggytrylma.backend.server.commands.*;
 import com.laggytrylma.common.models.Player;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.AbstractCommandHandler;
+import com.laggytrylma.utils.communication.commands.models.ClientCommands;
+import com.laggytrylma.utils.communication.commands.models.GameCommands;
 import com.laggytrylma.utils.communication.commands.models.IModelCommands;
 import com.laggytrylma.utils.communication.commands.models.LobbyCommands;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
@@ -77,14 +79,14 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
      */
     static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
       JSONCommandWrapper<?> cmdWrap = new JSONCommandWrapper<>(cmd, args);
-      switch (cmd.command()) {
-        case "player_info" -> {
+      switch ((GameCommands) cmd) {
+        case PLAYER_INFO -> {
           return playerInfoHandler(client);
         }
-        case "start" -> {
+        case START -> {
           return startHandler(client);
         }
-        case "move" -> {
+        case MOVE -> {
           return moveHandler(args.get("piece"), args.get("destination"), client, cmdWrap.serialize());
         }
         default -> {
@@ -157,8 +159,8 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
      * @return int execution status
      */
     static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
-      switch (cmd.command()) {
-        case "nickname" -> {
+      switch ((ClientCommands) cmd) {
+        case NICKNAME -> {
           return nicknameHandler(args.get("nickname"), client);
         }
         default -> {
@@ -191,30 +193,36 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
      * @return int execution status
      */
     static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
-      switch (cmd.command()) {
-        case "create" -> {
+      switch ((LobbyCommands) cmd) {
+        case CREATE -> {
           return createHandler(client);
         }
-        case "rules" -> {
+        case RULES -> {
           return 2;
         }
-        case "info" -> {
+        case INFO -> {
           return infoHandler(args.get("id"), client);
         }
-        case "join" -> {
+        case JOIN -> {
           return joinHandler(args.get("id"), client);
         }
-        case "delete" -> {
+        case DELETE -> {
           return deleteHandler(args.get("id"), client);
         }
-        case "leave" -> {
+        case LEAVE -> {
           return leaveHandler(client);
         }
-        case "player_limit" -> {
+        case PLAYER_LIMIT -> {
           return playerLimitHandler(args.get("player_limit"), client);
         }
-        case "list_all" -> {
+        case LIST_ALL -> {
           return listAllHandler(client);
+        }
+        case LIST_ARCHIVE -> {
+          return listArchiveHandler(client);
+        }
+        case GET_ARCHIVED_GAME -> {
+          return getArchivedGameHandler(args.get("id"), client);
         }
         default -> {
           return 0;
@@ -304,9 +312,18 @@ public class BaseGameSocketHandler extends AbstractCommandHandler {
      * @param client issuer's uuid
      * @return int execution status
      */
-    static int listAllHandler(UUID client) {
+    private static int listAllHandler(UUID client) {
       Map<String, String> args = lobbyManager.getAllLobbies();
       return cmdExecutor.executeCommand(new SendCommandToPlayer(new BaseGameServerCommandsReceiver(serv.getClients(), client, LobbyCommands.LIST_ALL, args)));
+    }
+
+    private static int listArchiveHandler(UUID client) {
+      Map<String, String> args = serv.repoWrapper.getArchivedIdsDates();
+      return cmdExecutor.executeCommand(new SendCommandToPlayer(new BaseGameServerCommandsReceiver(serv.getClients(), client, LobbyCommands.LIST_ARCHIVE, args)));
+    }
+
+    private static int getArchivedGameHandler(String id, UUID client) {
+      return cmdExecutor.executeCommand(new SendArchivedGame(new BaseGameServerCommandsReceiver(serv.getClients(), client, serv.repoWrapper.getGameById(id))));
     }
   }
 }

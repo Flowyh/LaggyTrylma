@@ -211,7 +211,7 @@ public class BaseGameLobbyManager {
 
     Map<UUID, BaseGameSocket> clients = getClientsFromGameState(client);
     // Send game/player info to clients
-    serv.cmdExecutor.executeCommand(new SendAllGame(new BaseGameServerCommandsReceiver(clients, game)));
+    serv.cmdExecutor.executeCommand(new StartGame(new BaseGameServerCommandsReceiver(clients, game)));
     serv.cmdExecutor.executeCommand(new SendAllPlayerInfo(new BaseGameServerCommandsReceiver(clients)));
     serv.cmdExecutor.executeCommand(new SendAllNextPlayer(new BaseGameServerCommandsReceiver(clients, game)));
   }
