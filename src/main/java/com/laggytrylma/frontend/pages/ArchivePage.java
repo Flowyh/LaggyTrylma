@@ -4,13 +4,17 @@ import com.laggytrylma.frontend.managers.LobbyDisplayInterface;
 import com.laggytrylma.frontend.states.Context;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.ArchiveGameDescriptor;
+import com.laggytrylma.utils.communication.commands.models.LobbyCommands;
 import com.laggytrylma.utils.communication.commands.models.LobbyDescriptor;
+import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 
 public class ArchivePage extends Page implements LobbyDisplayInterface{
@@ -20,11 +24,14 @@ public class ArchivePage extends Page implements LobbyDisplayInterface{
     public ArchivePage(Context ctx) {
         super(ctx);
         buildUI();
+        ctx.getLobbyManager().attachLobbyDisplay(this);
     }
 
     @Override
     public void onOpen(){
-
+        Map<String, String> args = new HashMap<>();
+        JSONCommandWrapper<?> msg = new JSONCommandWrapper<>(LobbyCommands.LIST_ARCHIVE, args);
+        ctx.client.sendMessage(msg);
     }
 
     @Override

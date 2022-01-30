@@ -155,7 +155,7 @@ public class MessageHandler extends AbstractCommandHandler {
         if(node == null){
           continue;
         }
-        String timestamp = node.get("timestamp").asText();
+        String timestamp = node.get("date").asText();
 
         archives.add(new ArchiveGameDescriptor(id, timestamp));
       }

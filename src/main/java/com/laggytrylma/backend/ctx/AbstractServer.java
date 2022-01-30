@@ -41,7 +41,7 @@ public abstract class AbstractServer {
    */
   protected boolean running = true;
 
-  protected GameRepoWrap repoWrapper;
+  public GameRepoWrap repoWrapper;
 
   /**
    * AbstractServer class constructor

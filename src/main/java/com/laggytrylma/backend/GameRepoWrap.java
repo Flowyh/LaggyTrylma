@@ -1,6 +1,8 @@
 package com.laggytrylma.backend;
 
+import com.laggytrylma.backend.server.BaseGameState;
 import com.laggytrylma.common.models.Game;
+import com.laggytrylma.utils.communication.serializers.JSON.ObjectJSONSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +36,10 @@ public class GameRepoWrap {
     public Map<String, String> getArchivedIdsDates() {
         Map<String, String> result = new HashMap<>();
         for(GameArchive ga : repository.findAll()){
-            result.put(ga.id.toString(), ga.creationDate.toString());
+            Map<String, String> ga_args = new HashMap<>();
+            ga_args.put("date", ga.creationDate.toString());
+
+            result.put(ga.id.toString(), ObjectJSONSerializer.serialize(ga_args));
         }
         return result;
     }

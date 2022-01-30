@@ -63,4 +63,5 @@ public class ConnectedState extends AbstractState {
         JSONCommandWrapper<?> msg = new JSONCommandWrapper<>(LobbyCommands.GET_ARCHIVED_GAME, args);
         ctx.client.sendMessage(msg);
     }
+
 }

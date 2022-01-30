@@ -30,6 +30,7 @@ public class Main implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     Logger.setDepth(4);
+    System.out.println(repoWrap);
     AbstractServer server = BaseGameServer.getInstance();
     server.bindRepoWrapper(repoWrap);
     server.startServer(100, null);

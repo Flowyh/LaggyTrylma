@@ -41,8 +41,6 @@ public class BaseGameServer extends AbstractServer {
    */
   private int clientID = 0;
 
-  public final GameRepoWrap repoWrapper = super.repoWrapper;
-
   /**
    * Class constructor
    * @param port server's port
