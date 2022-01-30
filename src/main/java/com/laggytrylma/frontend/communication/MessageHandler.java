@@ -6,8 +6,11 @@ import com.laggytrylma.frontend.managers.GameManager;
 import com.laggytrylma.frontend.managers.LobbyManager;
 import com.laggytrylma.frontend.states.Context;
 import com.laggytrylma.utils.Logger;
+import com.laggytrylma.utils.communication.ArchiveGameDescriptor;
 import com.laggytrylma.utils.communication.commands.AbstractCommandHandler;
+import com.laggytrylma.utils.communication.commands.models.GameCommands;
 import com.laggytrylma.utils.communication.commands.models.IModelCommands;
+import com.laggytrylma.utils.communication.commands.models.LobbyCommands;
 import com.laggytrylma.utils.communication.commands.models.LobbyDescriptor;
 import com.laggytrylma.utils.communication.serializers.JSON.ObjectJSONSerializer;
 
@@ -49,23 +52,23 @@ public class MessageHandler extends AbstractCommandHandler {
 
   static class GameCommandHandler {
    static Object handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
-      switch (cmd.command()) {
-        case "start" -> {
+      switch ((GameCommands)cmd) {
+        case START -> {
           return start(args.get("game"));
         }
-        case "next" -> {
+        case NEXT -> {
           return next(args.get("player"));
         }
-        case "move" -> {
+        case MOVE -> {
           return move(args.get("piece"), args.get("destination"));
         }
-        case "player_info" -> {
+        case PLAYER_INFO -> {
           return player(args.get("player"));
         }
-        case "game_info" -> {
+        case GAME_INFO -> {
           return 6;
         }
-        case "win" -> {
+        case WIN -> {
           return win(args.get("player"));
         }
         default -> {
@@ -130,15 +133,34 @@ public class MessageHandler extends AbstractCommandHandler {
 
   static class LobbyCommandHandler {
     static int handleCommand(IModelCommands cmd, Map<String, String> args, UUID client) {
-      switch (cmd.command()) {
-        case "list_all" -> {
+      switch ((LobbyCommands)cmd) {
+        case LIST_ALL -> {
           return list_all(args);
         }
-        case "delete" -> {
+        case DELETE -> {
           return delete();
+        }
+        case LIST_ARCHIVE -> {
+          return list_archive(args);
         }
         default -> {return 0;}
       }
+    }
+
+    private static int list_archive(Map<String, String> args) {
+      List<ArchiveGameDescriptor> archives = new LinkedList<>();
+      for(Map.Entry<String, String> entry : args.entrySet()){
+        String id = entry.getKey();
+        JsonNode node = (JsonNode) ObjectJSONSerializer.deserialize(entry.getValue(), JsonNode.class);
+        if(node == null){
+          continue;
+        }
+        String timestamp = node.get("timestamp").asText();
+
+        archives.add(new ArchiveGameDescriptor(id, timestamp));
+      }
+      lm.archivesList(archives);
+      return 0;
     }
 
     private static int delete() {
@@ -148,19 +170,19 @@ public class MessageHandler extends AbstractCommandHandler {
 
     private static int list_all(Map<String, String> args) {
       List<LobbyDescriptor> lobbies = new LinkedList<>();
-        for(Map.Entry<String, String> entry : args.entrySet()){
-          int id = Integer.parseInt(entry.getKey());
-          JsonNode node = (JsonNode) ObjectJSONSerializer.deserialize(entry.getValue(), JsonNode.class);
-          if(node == null){
-            continue;
-          }
-          String owner = node.get("owner").asText();
-          int playersCount = node.get("players").asInt();
-
-          lobbies.add(new LobbyDescriptor(id, owner, playersCount));
+      for(Map.Entry<String, String> entry : args.entrySet()){
+        int id = Integer.parseInt(entry.getKey());
+        JsonNode node = (JsonNode) ObjectJSONSerializer.deserialize(entry.getValue(), JsonNode.class);
+        if(node == null){
+          continue;
         }
-        lm.lobbiesList(lobbies);
-        return 0;
+        String owner = node.get("owner").asText();
+        int playersCount = node.get("players").asInt();
+
+        lobbies.add(new LobbyDescriptor(id, owner, playersCount));
+      }
+      lm.lobbiesList(lobbies);
+      return 0;
     }
   }
 }

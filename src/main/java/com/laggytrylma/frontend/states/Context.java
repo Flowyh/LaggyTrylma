@@ -42,5 +42,5 @@ public class Context {
         state.createLobby(playerCount);
     }
 
-    public void replay(int id) { state.replay(id);}
+    public void replay(String id) { state.replay(id);}
 }

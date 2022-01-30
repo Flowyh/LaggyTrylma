@@ -1,20 +1,18 @@
 package com.laggytrylma.utils.communication;
 
 public class ArchiveGameDescriptor {
-    private int id;
+    private String id;
     private String date;
-    public ArchiveGameDescriptor(int id, String date){
+    public ArchiveGameDescriptor(String id, String date){
         this.id = id;
         this.date = date;
     }
 
-    public int getId(){
+    public String getId(){
         return id;
     }
 
     public String getDate(){
         return date;
     }
-
-
 }

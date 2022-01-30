@@ -25,5 +25,5 @@ public abstract class AbstractState {
 
     public void createLobby(int playerCount){};
 
-    public void replay(int id){};
+    public void replay(String id){};
 }

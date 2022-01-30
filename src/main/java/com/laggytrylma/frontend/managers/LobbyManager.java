@@ -1,6 +1,7 @@
 package com.laggytrylma.frontend.managers;
 
 import com.laggytrylma.frontend.communication.ClientSocket;
+import com.laggytrylma.utils.communication.ArchiveGameDescriptor;
 import com.laggytrylma.utils.communication.commands.models.LobbyCommands;
 import com.laggytrylma.utils.communication.commands.models.LobbyDescriptor;
 import com.laggytrylma.utils.communication.commandwrappers.JSON.JSONCommandWrapper;
@@ -32,5 +33,11 @@ public class LobbyManager {
         Map<String, String> args = new HashMap<>();
         JSONCommandWrapper<?> msg = new JSONCommandWrapper<>(LobbyCommands.LIST_ALL, args);
         clientSocket.sendMessage(msg);
+    }
+
+    public void archivesList(List<ArchiveGameDescriptor> archives) {
+        for(LobbyDisplayInterface lobbyDisplay : lobbyDisplays){
+            lobbyDisplay.updateArchive(archives);
+        }
     }
 }
