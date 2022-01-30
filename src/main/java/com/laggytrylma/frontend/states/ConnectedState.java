@@ -55,4 +55,9 @@ public class ConnectedState extends AbstractState {
         ctx.state = new InGameState(ctx);
         ctx.getPageManager().push("GAME");
     }
+
+    @Override
+    public void replay(int id){
+
+    }
 }

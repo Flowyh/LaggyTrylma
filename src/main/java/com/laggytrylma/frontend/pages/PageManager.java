@@ -18,6 +18,7 @@ public class PageManager {
         pages.add(new GamePage(ctx));
         pages.add(new LobbyPage(ctx));
         pages.add(new NewGamePage(ctx));
+        pages.add(new ArchivePage(ctx));
     }
 
     public void push(String name){
