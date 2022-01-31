@@ -318,4 +318,8 @@ public class BaseGameState {
     game = gameBuilderDirector.build();
     game.setCurrentPlayer(game.getPlayerById(next));
   }
+
+    public void archive() {
+      serv.repoWrapper.create(game);
+    }
 }

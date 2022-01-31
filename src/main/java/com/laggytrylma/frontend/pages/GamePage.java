@@ -1,5 +1,6 @@
 package com.laggytrylma.frontend.pages;
 
+import com.laggytrylma.frontend.widgets.ReplayWidget;
 import com.laggytrylma.frontend.widgets.TurnIndicator;
 import com.laggytrylma.frontend.board.BoardWidget;
 import com.laggytrylma.frontend.states.Context;
@@ -20,15 +21,21 @@ public class GamePage extends Page{
 
         JLabel title = new JLabel("LaggyTrylma");
         title.setFont(new Font("Open Sans Light", Font.BOLD, 60));
-        add(title, "center, wrap, height 10%");
+        add(title, "center, wrap, span, height 10%");
 
         TurnIndicator turnIndicator = new TurnIndicator();
         turnIndicator.setFont(new Font("Open Sans", Font.BOLD, 30));
-        add(turnIndicator, "wrap, growx");
+        add(turnIndicator, "growx");
         ctx.getGameManager().attachGameDisplay(turnIndicator);
 
+        ReplayWidget replayPanel = new ReplayWidget();
+        replayPanel.setFont(new Font("Open Sans", Font.BOLD, 30));
+        add(replayPanel, "wrap, align right");
+        ctx.getGameManager().attachGameDisplay(replayPanel);
+        replayPanel.attachControl(ctx.getGameManager());
+
         BoardWidget display = new BoardWidget();
-        add(display, "grow, height 90%, wrap");
+        add(display, "span, grow, height 90%, wrap");
         ctx.getGameManager().attachGameDisplay(display);
         display.attachControl(ctx.getGameManager());
 

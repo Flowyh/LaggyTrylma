@@ -186,7 +186,7 @@ public class BaseGameLobbyManager {
   }
 
   /**
-   * Remove given lobby
+   * Remove given lobby and save game to archive
    * @param id lobby id
    * @param client uuid of a client that has issued lobby removal (used to determine other clients in the same lobby)
    */
@@ -197,6 +197,7 @@ public class BaseGameLobbyManager {
         serv.cmdExecutor.executeCommand(new SendCommandToPlayer(new BaseGameServerCommandsReceiver(clients, key, LobbyCommands.DELETE, new HashMap<>())));
       }
     }
+    games.get(id).archive();
     games.remove(id);
   }
 

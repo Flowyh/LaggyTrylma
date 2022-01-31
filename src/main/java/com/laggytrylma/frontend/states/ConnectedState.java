@@ -62,6 +62,9 @@ public class ConnectedState extends AbstractState {
         args.put("id", id);
         JSONCommandWrapper<?> msg = new JSONCommandWrapper<>(LobbyCommands.GET_ARCHIVED_GAME, args);
         ctx.client.sendMessage(msg);
+
+        ctx.state = new ReplayState(ctx);
+        getPageManager().push("GAME");
     }
 
 }

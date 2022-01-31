@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.laggytrylma.common.models.Connection;
-import com.laggytrylma.common.models.Game;
-import com.laggytrylma.common.models.Piece;
-import com.laggytrylma.common.models.Square;
+import com.laggytrylma.common.models.*;
 import com.laggytrylma.common.rules.RuleInterface;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.serializers.AbstractObjectSerializer;
@@ -64,6 +61,7 @@ public class ObjectJSONSerializer extends AbstractObjectSerializer {
     module.addSerializer(Connection.class, new ConnectionJSONSerializer());
     module.addSerializer(RuleInterface.class, new RulesJSONSerializer());
     module.addSerializer(Piece.class, new PieceJSONSerializer());
+    module.addSerializer(Move.class, new MoveJSONSerializer());
 
     module.addDeserializer(Game.class, new GameJSONDeserializer());
     module.addDeserializer(Color.class, new ColorJSONDeserializer());

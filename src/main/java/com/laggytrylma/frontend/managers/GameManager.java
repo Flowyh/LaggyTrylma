@@ -1,9 +1,6 @@
 package com.laggytrylma.frontend.managers;
 
-import com.laggytrylma.common.models.Game;
-import com.laggytrylma.common.models.Piece;
-import com.laggytrylma.common.models.Player;
-import com.laggytrylma.common.models.Square;
+import com.laggytrylma.common.models.*;
 import com.laggytrylma.frontend.communication.ClientSocket;
 import com.laggytrylma.utils.Logger;
 import com.laggytrylma.utils.communication.commands.models.GameCommands;
@@ -98,6 +95,9 @@ public class GameManager implements LocalGameInput, RemoteGameInput {
         for(GameDisplayInterface gameDisplay : gameDisplays){
             gameDisplay.win(winner);
         }
+    }
 
+    public void replay(Game game){
+        startGame(new GameReplay(game));
     }
 }

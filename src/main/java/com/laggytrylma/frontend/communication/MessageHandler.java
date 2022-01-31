@@ -143,8 +143,21 @@ public class MessageHandler extends AbstractCommandHandler {
         case LIST_ARCHIVE -> {
           return list_archive(args);
         }
+        case GET_ARCHIVED_GAME -> {
+          return get_archived_game(args.get("game"));
+        }
         default -> {return 0;}
       }
+    }
+
+    private static int get_archived_game(String gameJSON) {
+      Logger.debug("Received the serialized Game!");
+      Game deserialized = (Game) ObjectJSONSerializer.deserialize(gameJSON, Game.class);
+      if(deserialized != null) {
+        gm.replay(deserialized);
+        return 1;
+      }
+      return -1;
     }
 
     private static int list_archive(Map<String, String> args) {

@@ -17,32 +17,32 @@ public class Game {
     /**
      * List of Game's pieces.
      */
-    private final List<Piece> pieces = new LinkedList<>();
+    protected List<Piece> pieces = new LinkedList<>();
     /**
      * List of Game's squares.
      */
-    private final List<Square> squares = new LinkedList<>();
+    protected List<Square> squares = new LinkedList<>();
     /**
      * List of Game's Players.
      */
-    private final List<Player> players = new LinkedList<>();
+    protected List<Player> players = new LinkedList<>();
 
     /**
      * List of Game's win conditions.
      */
-    private final List<Move> movesHistory = new LinkedList<>();
+    protected List<Move> movesHistory = new LinkedList<>();
     /**
      * List of Game's rules.
      */
-    private final List<MovementRulesInterface> movementRules = new LinkedList<>();
+    protected List<MovementRulesInterface> movementRules = new LinkedList<>();
     /**
      * List of Game's win conditions.
      */
-    private final List<WinRulesInterface> winRules = new LinkedList<>();
+    protected List<WinRulesInterface> winRules = new LinkedList<>();
     /**
      * Current player that has to perform a move.
      */
-    private Player currentPlayer;
+    protected Player currentPlayer;
 
     /**
      * Set current player.
@@ -136,9 +136,13 @@ public class Game {
         Square startingSquare = piece.getSquare();
         startingSquare.setPiece(null);
         piece.setSquare(finalPosition);
-        movesHistory.add(new Move(piece, startingSquare, finalPosition));
+        saveMove(piece, startingSquare, finalPosition);
 
         return true;
+    }
+
+    public void saveMove(Piece piece, Square startingSquare, Square finalPosition){
+        movesHistory.add(new Move(piece, startingSquare, finalPosition));
     }
 
     /**
@@ -221,5 +225,9 @@ public class Game {
      */
     public void addPiece(Piece piece) {
         pieces.add(piece);
+    }
+
+    public List<Move> getMovesHistory() {
+        return movesHistory;
     }
 }

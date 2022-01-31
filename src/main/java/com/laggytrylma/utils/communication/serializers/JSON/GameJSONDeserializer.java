@@ -44,6 +44,7 @@ public class GameJSONDeserializer extends StdDeserializer<Game> {
         JsonNode rulesNode = root.get("rules");
         JsonNode squaresNode = root.get("squares");
         JsonNode playersNode = root.get("players");
+        JsonNode movesNode = root.get("movesHistory");
 
         Game game = new Game();
 
@@ -115,6 +116,19 @@ public class GameJSONDeserializer extends StdDeserializer<Game> {
                 square.addConnection(near, far);
             }
 
+        }
+
+        for (Iterator<JsonNode> it = movesNode.elements(); it.hasNext(); ){
+            JsonNode moveNode = it.next();
+            int pieceId = moveNode.get("piece").asInt();
+            int fromId = moveNode.get("from").asInt();
+            int toId = moveNode.get("to").asInt();
+
+            Piece piece = game.getPieceById(pieceId);
+            Square from = game.getSquareById(fromId);
+            Square to = game.getSquareById(toId);
+
+            game.saveMove(piece, from, to);
         }
 
         return game;
